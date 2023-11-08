@@ -1,0 +1,19 @@
+.PostBox {
+    width: 100%;
+    height: 500px;
+    background-color: aqua;
+}
+
+.Container {
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.Post {
+    width: 20%;
+    height: 40px;
+    background-color: chartreuse;
+    margin-bottom: 10px;
+}
