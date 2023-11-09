@@ -18,9 +18,9 @@ export class UserDatabase {
         });
     }
 
-    signUp(key: number, name: string, privilege: number, password: string) {
+    signUp(key: number, id: string, password: string, identifyCode: string, email: string, name: string, nickname: string, birthday: string, privilege: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`INSERT INTO users (\`key\`, name, privilege, password) VALUES (${key}, '${name}', ${privilege}, '${password}')`, (err: any, result: any) => {
+            this.db.query(`INSERT INTO users (\`key\`, id, password, identifyCode, email, name, nickname, birthday, privilege) VALUES (${key}, ${id}, ${password}, ${identifyCode}, ${email}, ${name}, ${nickname}, ${birthday}, ${privilege}')`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -29,9 +29,9 @@ export class UserDatabase {
         });
     }
 
-    login(key: number, name: string, password: string) {
+    login(id: string, password: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`SELECT * FROM users WHERE \`key\`=${key} AND name='${name}' AND password='${password}'`, (err: any, result: any) => {
+            this.db.query(`SELECT * FROM users WHERE id='${id}' AND password='${password}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -97,9 +97,9 @@ export class UserDatabase {
         });
     }
 
-    getPrivilege(key: number) {
+    getPrivilege(id: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT privilege FROM users WHERE \`key\`=${key}`, (err: any, result: any) => {
+            this.db.query(`SELECT privilege FROM users WHERE \`id\`=${id}`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
