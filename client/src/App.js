@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PostList from './routes/PostList';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Main from './routes/main/main';
 import Profile from './routes/profile/profile';
 import Signup from './routes/signup/signup';
 import Signin from './routes/signin/signin';
-import BigBang from './routes/bigbang/post';
+import PostList from './routes/bigbang/PostList';
 
 function App() {
   function user() {
@@ -23,10 +25,8 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/signin' element={<Signin />} />
-        <Route path='/bigbang/post' element={<BigBang />} />
+        <Route path='/post/list' element={<PostList />} />
       </Routes>
     </Router>
   );
 }
-
-export default App;

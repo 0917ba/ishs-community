@@ -28,7 +28,7 @@ function Signin() {
     };
     const res = await fetch('http://localhost:3001/signin', formData);
     const status = res.status;
-    const data = await res.json();
+    //const data = await res.json();
   };
 
   useEffect = (() => {}, []);
