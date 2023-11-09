@@ -26,7 +26,9 @@ function Signin() {
         password: inputPw,
       }),
     };
-    const res = await fetch('http://localhost:3001/signin', formData);
+
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+    const res = await fetch(`serverUrl`, formData);
     const status = res.status;
     //const data = await res.json();
   };
