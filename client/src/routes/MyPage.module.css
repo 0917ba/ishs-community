@@ -54,7 +54,7 @@
     position: static;
     width: 300px;
     height: 570px;
-    border: 2px solid rgb(0, 0, 0);
+    border-right : thin solid #c0c0c0;
 }
 
 .UserImage{
@@ -64,7 +64,6 @@
 }
 
 .MovePageList{
-    border: 2px solid #f69fdd;
     position: relative;
     width: 150px;
     top: 45px;
@@ -77,7 +76,6 @@
 }
 
 .MemberInformation{
-    border: 2px solid #f69fdd;
     position: relative;
     top: 80px;
     left: 87.5px;
