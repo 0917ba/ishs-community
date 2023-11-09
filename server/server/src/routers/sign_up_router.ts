@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { UserDatabase } from "../database/user_data";
+import { UserDatabase } from "../database/user_repository";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 

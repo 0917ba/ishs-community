@@ -5,7 +5,7 @@ export enum PrivilegeEnum {
     WRITE_COMMENT = 1 << 3,
     UPDATE_POST = 1 << 4,
     DELETE_POST = 1 << 5,
-    ALL = 0xffffffff,
+    ALL = 0x111111,
 }
 
 export class UserPrivilege {
