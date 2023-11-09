@@ -1,5 +1,26 @@
 import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
+import { UUID } from '../util/uuid_generator';
+import { Role } from '../util/role';
+import { PrivilegeEnum } from '../util/user_privilege';
+import { CodeManager, IdentiFier } from '../util/identifier';
+
+/*
+uid int AI PK 
+id varchar(45) 
+password varchar(45) 
+nickname varchar(45)
+email varchar(45) 
+profileImage varchar(45) 
+studentName varchar(45) 
+generation int 
+classNumber int 
+studentNumber int 
+birthday datetime 
+privilege int 
+role enum('DEVELOPER','STUDENT','TEACHER','USER','ADMIN') 
+penalty int
+*/
 
 export class UserDatabase {
     mysql = require('mysql');
@@ -18,14 +39,19 @@ export class UserDatabase {
         });
     }
 
-    signUp(key: number, id: string, password: string, identifyCode: string, email: string, name: string, nickname: string, birthday: string, privilege: number) {
+    signUp(id: string, password: string, nickname: string, email: string, studentName: string, birthday: string): Promise<boolean> {
+        let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`INSERT INTO users (\`key\`, id, password, identifyCode, email, name, nickname, birthday, privilege) VALUES (${key}, ${id}, ${password}, ${identifyCode}, ${email}, ${name}, ${nickname}, ${birthday}, ${privilege}')`, (err: any, result: any) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(result.affectedRows > 0);
-            });
+            this.db.query(
+                `INSERT INTO users (uid, id, password, nickname, email, profileImage, studentName, generation, classNumber, studentNumber, birthday, privilege, role, penalty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [uid, id, password, nickname, email, '', studentName, 0, 0, 0, birthday, PrivilegeEnum.DEFAULT, Role.ADMIN, 0],
+                (err: any, res: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    logger.debug(`Created new user of uid ${res.insertId}`);
+                    resolve(true);
+                });
         });
     }
 
