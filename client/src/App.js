@@ -1,6 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import PostList from './routes/PostList';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Main from './routes/main/main';
 import Profile from './routes/profile/profile';
@@ -30,3 +28,5 @@ function App() {
     </Router>
   );
 }
+
+export default App;
