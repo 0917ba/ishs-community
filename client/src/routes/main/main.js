@@ -1,7 +1,5 @@
-import styles from './main.css';
+import styles from './main.module.css';
 
-function Main() {
-    
-}
+function Main() {}
 
 export default Main;

@@ -1,9 +1,5 @@
-import styles from './post.css';
+import styles from './post.module.css';
 
-
-function Post() {
-        
-
-}
+function Post() {}
 
 export default Post;

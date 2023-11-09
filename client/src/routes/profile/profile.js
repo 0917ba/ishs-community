@@ -1,24 +1,6 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import styles from './profile.css';
+import styles from './profile.module.css';
 import { useEffect } from 'react';
 
-function Profile() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const params = useParams();
-
-
-    useEffect(() => {
-    }, [match]);
-
-    <Link to=""/>
-    navigate=("/profile/${userId}")
-    console.log({history,location,match })
-
-
-
-
-
-}
+function Profile() {}
 
 export default Profile;
