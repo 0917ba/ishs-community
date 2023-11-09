@@ -50,8 +50,8 @@ export class UserDatabase {
         });
     }
 
-    getUser(key: number) {
-        this.db.query(`SELECT * FROM users WHERE \`key\`=${key}`, (err: any, result: any) => {
+    getUser(id: string) {
+        this.db.query(`SELECT * FROM users WHERE id=${id}`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
