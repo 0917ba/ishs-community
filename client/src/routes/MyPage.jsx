@@ -110,7 +110,7 @@ function MovePageBox() {
     }, 1000);
   }, []);
 
-  return <div className={styles.MySelectbox}>
+  return <div className={styles.MyMovebox}>
     <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserImage} />
     <div className={styles.MovePageList}>
       {
@@ -125,7 +125,6 @@ function MovePageBox() {
   </div>
 }
 
-
 function SelectPageBox() {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -135,7 +134,7 @@ function SelectPageBox() {
     }, 1000);
   }, []);
 
-  return <div className={styles.Myprintbox}>
+  return <div className={styles.MySelectbox}>
     <h1>나의 활동</h1>
     <hr></hr>
     {
@@ -144,6 +143,8 @@ function SelectPageBox() {
     <button onclick="location.href='address'">로그아웃</button>
   </div>
 }
+
+
 
 function MyPage() {
   return (
