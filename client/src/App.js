@@ -5,6 +5,8 @@ import Profile from './routes/profile/profile';
 import Signup from './routes/signup/signup';
 import Signin from './routes/signin/signin';
 import PostList from './routes/bigbang/PostList';
+import SignupSuccess from './routes/signup/signupSuccess';
+import Special from './routes/signup/special';
 
 function App() {
   function user() {
@@ -22,8 +24,10 @@ function App() {
         <Route path='/main' element={<Main />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/signup/success' element={<SignupSuccess />} />
         <Route path='/signin' element={<Signin />} />
         <Route path='/post/list' element={<PostList />} />
+        <Route path='/special' element={<Special />} />
       </Routes>
     </Router>
   );
