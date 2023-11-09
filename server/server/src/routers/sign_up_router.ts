@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { UserDatabase } from "../database/user_data";
+import { UserDatabase } from "../database/user_repository";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 
@@ -8,12 +8,16 @@ const userDatabase = new UserDatabase();
 
 signUpRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     let key: number = req.body.key;
-    let name: string = req.body.name;
-    let privilege: number = req.body.privilege;
+    let id: string = req.body.id;
     let password: string = req.body.password;
+    let identifyCode: string = req.body.identifyCode;
+    let email: string = req.body.email;
+    let name: string = req.body.name;
+    let nickname: string = req.body.nickname;
+    let birthday: string = req.body.birthday == null ? "" : req.body.birthday;
     let checker = new QueryChecker();
-    if (privilege >= 0 && checker.notNull(key, name, password)) {
-        if (checker.hasInvalidString(name, password)) {
+    if (checker.notNull(key, id, password, identifyCode, email, name, nickname)) {
+        if (checker.hasInvalidString(id, password, identifyCode, email, name, nickname)) {
             res.status(400).send("Invalid characters in name or password");
         }
         else {
