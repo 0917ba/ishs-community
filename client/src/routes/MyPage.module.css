@@ -11,9 +11,82 @@
     padding-right: 20px;
 }
 
-.Post {
-    width: 20%;
-    height: 40px;
-    background-color: chartreuse;
+.Maincontainer {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.Mainbox {
+    float: right;
+    align-self: center;
+}
+
+.BackGroundColor{
+    background: #274182;
+    height: 290px;
+}
+
+
+.Myboxcontainer {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.static {
+    border: 2px solid #B8860B;
+    position: static;
+}
+
+.relative {
+    border: 2px solid #CD5C5C;
+    position: relative;
+    bottom: 190px;
+    width: 1200px;
+    height: 570px;
+    background: rgb(255, 255, 255);
+}
+
+.MySelectbox{
+    float: left;
+    position: static;
+    width: 300px;
+    height: 570px;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.UserImage{
+    position: relative;
+    top: 30px;
+    left: 35px;
+}
+
+.MovePageList{
+    border: 2px solid #f69fdd;
+    position: relative;
+    width: 150px;
+    top: 45px;
+    left: 40px;
+}
+
+.ButtonMovePageList{
+    clear: both;
     margin-bottom: 10px;
+}
+
+.MemberInformation{
+    border: 2px solid #f69fdd;
+    position: relative;
+    top: 80px;
+    left: 87.5px;
+    width: 125px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+.Myprintbox{
+    float: left;
+    flex-basis: 50%;
 }
