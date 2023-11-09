@@ -1,16 +1,32 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import PostList from "./routes/PostList";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PostList from './routes/PostList';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import Main from './routes/main/main';
+import Profile from './routes/profile/profile';
+import Signup from './routes/signup/signup';
+import Signin from './routes/signin/signin';
+import PostList from './routes/bigbang/PostList';
+
 function App() {
+  function user() {
+    //const params = useParams();
+    //const userId = params.id;
+  }
+  function post() {
+    //const params = useParams();
+    //const postId = params.id;
+  }
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
-        <Route path="/about" element={<h1>About</h1>} />
-        <Route path="/dashboard" element={<h1>Dashboard</h1>} />
-        <Route path="/post/list" element={<PostList />} />
+        <Route path='/main' element={<Main />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/signin' element={<Signin />} />
+        <Route path='/post/list' element={<PostList />} />
       </Routes>
     </Router>
   );
 }
-
-export default App;
