@@ -122,6 +122,97 @@ export class BoardDatabase {
         });
     }
 
+    getView(uid: string) {
+        return new Promise<number>((resolve, reject) => {
+            this.db.query(`SELECT view FROM users WHERE uid=${uid}`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                let view: number = result[0].view;
+                resolve(view);
+            });
+        });
+    }
+
+    async upView(uid: string) {
+        let view: number = await this.getView(uid);
+        view++;
+        this.db.query(`UPDATE posts SET view=${view} WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
+    getLike(uid: string) {
+        return new Promise<number>((resolve, reject) => {
+            this.db.query(`SELECT like FROM users WHERE uid=${uid}`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                let like: number = result[0].like;
+                resolve(like);
+            });
+        });
+    }
+
+    async upLike(uid: string) {
+        let like: number = await this.getLike(uid);
+        like++;
+        this.db.query(`UPDATE posts SET like=${like} WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
+    async downLike(uid: string) {
+        let like: number = await this.getLike(uid);
+        like--;
+        this.db.query(`UPDATE posts SET like=${like} WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
+    getDislike(uid: string) {
+        return new Promise<number>((resolve, reject) => {
+            this.db.query(`SELECT dislike FROM users WHERE uid=${uid}`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                let dislike: number = result[0].dislike;
+                resolve(dislike);
+            });
+        });
+    }
+
+    async upDislike(uid: string) {
+        let dislike: number = await this.getDislike(uid);
+        dislike++;
+        this.db.query(`UPDATE posts SET dislike=${dislike} WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
+    async downDislike(uid: string) {
+        let dislike: number = await this.getDislike(uid);
+        dislike--;
+        this.db.query(`UPDATE posts SET dislike=${dislike} WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
     close() {
         this.db.end();
     }
