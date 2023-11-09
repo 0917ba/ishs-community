@@ -4,6 +4,7 @@ import styles from './signup.module.css';
 
 function Signup() {
   const navigate = useNavigate();
+  const [PWmessage, setPWMessage] = useState('');
   const [message, setMessage] = useState('');
 
   const [inputKey, setInputKey] = useState('');
@@ -64,7 +65,6 @@ function Signup() {
         key: inputKey,
         id: inputId,
         password: inputPassword,
-        password_check: inputPassword_check,
         identify_code: inputIdentify_code,
         email: inputEmail,
         name: inputName,
@@ -90,6 +90,28 @@ function Signup() {
     //const data = await res.json();
   };
 
+  const DataCheck = () => {
+    if (
+      inputId === '' ||
+      inputPassword === '' ||
+      inputIdentify_code === '' ||
+      inputEmail === '' ||
+      inputName === '' ||
+      inputNickname === ''
+    ) {
+      return true;
+    }
+    if (inputPassword !== inputPassword_check) {
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    if (inputPassword_check !== inputPassword) {
+      setPWMessage('비밀번호가 일치하지 않습니다.');
+    } else setPWMessage('비밀번호가 일치합니다.');
+  }, [inputPassword, inputPassword_check]);
   return (
     <div>
       <div>
@@ -114,14 +136,19 @@ function Signup() {
         />
       </div>
       <div>
-        <label>비밀번호 | </label>
-        <input
-          type='password'
-          name='비밀번호'
-          placeholder='비밀번호를 입력해 주세요.'
-          value={inputPassword}
-          onChange={onChangePassword}
-        />
+        <span>
+          <label>비밀번호 | </label>
+          <input
+            type='password'
+            name='비밀번호'
+            placeholder='비밀번호를 입력해 주세요.'
+            value={inputPassword}
+            onChange={onChangePassword}
+          />
+        </span>
+        <span>
+          <p>{PWmessage}</p>
+        </span>
       </div>
       <div>
         <label>비밀번호 확인 | </label>
@@ -184,7 +211,7 @@ function Signup() {
         />
       </div>
       <div>
-        <button type='button' onClick={onClickSignup}>
+        <button type='button' onClick={onClickSignup} disabled={DataCheck()}>
           회원가입하기
         </button>
       </div>
