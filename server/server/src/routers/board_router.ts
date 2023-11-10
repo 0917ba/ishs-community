@@ -22,9 +22,13 @@ boardRouter.all('*', (req: Request, res: Response, next: NextFunction) => {
 boardRouter.post('/create', (req: Request, res: Response, next: NextFunction) => {
     let title: string = req.body.title;
     let content: string = req.body.content;
+
     let checker = new QueryChecker();
+
     let userPrivilege = new UserPrivilege(req.session.privilege ? req.session.privilege : 0);
+
     try {
+        // FIXME: use EXIT-WHEN-FAIL pattern
         if (!userPrivilege.hasPrivilegeAll(PrivilegeEnum.WRITE_POST)) {
             if(checker.notNull(title, content)) {
                 if(title.length > 30 || content.length > 9000) {
@@ -32,6 +36,7 @@ boardRouter.post('/create', (req: Request, res: Response, next: NextFunction) =>
                 }
                 else {
                     // TODO: USER UID HERE(0)
+                    // TODO: purify content
                     boardDatabase.addPost(title, content, 0);
                     res.status(200).send(respRest(200, 0));
                 }
@@ -52,7 +57,9 @@ boardRouter.post('/create', (req: Request, res: Response, next: NextFunction) =>
 boardRouter.delete('/delete', (req: Request, res: Response, next: NextFunction) => {
     let code: number = req.body.code;
     let userPrivilege = new UserPrivilege(req.session.privilege ? req.session.privilege : 0);
+
     try {
+        // FIXME: use EXIT-WHEN-FAIL pattern
         if (!userPrivilege.hasPrivilegeAll(PrivilegeEnum.DELETE_POST)) {
             boardDatabase.existsByCode(code)
             .then((rex: boolean) => {
@@ -86,14 +93,19 @@ boardRouter.put('/update', (req: Request, res: Response, next: NextFunction) => 
     let code: number = req.body.code;
     let title: string = req.body.title;
     let content: string = req.body.content;
+
     let checker = new QueryChecker();
+
     let userPrivilege = new UserPrivilege(req.session.privilege ? req.session.privilege : 0);
+
     try {
         if (!userPrivilege.hasPrivilegeAll(PrivilegeEnum.UPDATE_POST)) {
+            // FIXME: use EXIT-WHEN-FAIL pattern
             if(checker.notNull(title, content)) {
                 if(title.length > 30 || content.length > 9000) {
                     res.status(400).send(respRest(400, 4));
                 }
+                // TODO: purify content
                 else {
                     boardDatabase.existsByCode(code)
                     .then((rex: boolean) => {

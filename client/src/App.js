@@ -4,9 +4,12 @@ import Main from './routes/main/main';
 import Profile from './routes/profile/profile';
 import Signup from './routes/signup/signup';
 import Signin from './routes/signin/signin';
-import PostList from './routes/bigbang/PostList';
 import SignupSuccess from './routes/signup/signupSuccess';
 import Special from './routes/signup/special';
+import FindPw from './routes/signin/findPW';
+import PostList from "./component/PostList/PostList";
+import BigBangBar from "./component/BigBang/BingBang";
+import MainMy from "./component/MainMy/MainMy";                                                                      
 
 function App() {
   function user() {
@@ -28,6 +31,10 @@ function App() {
         <Route path='/signin' element={<Signin />} />
         <Route path='/post/list' element={<PostList />} />
         <Route path='/special' element={<Special />} />
+        <Route path='/findpw' element={<FindPw />} />
+        <Route path="/post/list" element={<PostList />} />
+        <Route path="/post/bigbang" element={<BigBangBar />} />
+        <Route path="/post/mainmy" element={<MainMy />} />
       </Routes>
     </Router>
   );
