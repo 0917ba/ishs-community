@@ -71,9 +71,17 @@ app.use('*', (req: Request, res: Response, next: NextFunction) => {
 });
 
 // routers
+// app.use('/test', require('./routers/test_router'));
+// app.use('/board', require('./routers/board_router'))
+
+app.use('/signup', require('./routers/signup_router'));
 app.use('/login', require('./routers/login_router'));
-app.use('/signup', require('./routers/sign_up_router'));
 app.use('/logout', require('./routers/logout_router'));
+app.use('/user', require('./routers/userInfo_router'));
+app.use('/post', require('./routers/post_router'));
+app.use('/comment', require('./routers/comment_router'));
+app.use('/reaction', require('./routers/reaction_router'));
+app.use('/report', require('./routers/report_router'));
 app.use('/test', require('./routers/test_router'));
 app.use('/board', require('./routers/board_router'))
 
