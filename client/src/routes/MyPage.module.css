@@ -41,7 +41,7 @@
 }
 
 .relative {
-    border: 2px solid #CD5C5C;
+    border: 2px solid #241c1c;
     position: relative;
     bottom: 190px;
     width: 1200px;
@@ -90,7 +90,6 @@
     position: static;
     width: 880px;
     height: 570px;
-    border : thin solid #0015ff;
 }
 
 .MySelectTitle{
@@ -98,29 +97,53 @@
     bottom: 5px;
 }
 
+.hrstyle{
+    position: relative;
+    float: left;
+    width: 840px;
+    bottom: 12px;
+}
+
 .writingboxcontainer {
     flex: 1;
     display: flex;
-    justify-content: space-around;
+    width: 840px;
+    justify-content: space-between;
 }
 
 .writingbox {
     width: 200px;
     height: 40px;
     background: rgb(185, 183, 183);
-    border : thin solid #4c5185;
     text-align: center;
     line-height: 40px;
+    margin-bottom: 40px;
 }
 
-.hrstyle{
+.HelpUserBox{
+    float: left;
     position: relative;
-    bottom: 12px;
+    width: 840px;
+    height: 40px;
+    border: 2px solid #c0c0c0;
+    margin-bottom: 20px;
+}
+
+.HelpImage{
+    position: relative;
+    top: 5px;
+    left: 20px;
+}
+
+.Helptext{
+    position: relative;
+    bottom: 45.75px;
+    left: 70px;
 }
 
 .logout{
     position: relative;
-    top: 360px;
+    top: 75px;
     left: 720px;
     width: 125px;
     height: 30px;

@@ -84,7 +84,7 @@ function MainPageBox() {
 
 
 function MoveMyPage(props){
-  return <div className={styles.Post}>
+  return <div>
     <div onclick={props.moveMyPageSite} className={styles.ButtonMovePageList}>
       <h4>{props.moveMyPage}</h4>
     </div>
@@ -137,9 +137,12 @@ function SelectPageBox() {
   return <div className={styles.MySelectbox}>
     <h1 className={styles.MySelectTitle}>나의 활동</h1>
     <hr className={styles.hrstyle}></hr>
-    <WritingPageBox />
     {
-      isLoading ? <div>Loading...</div> : <div>Loading End</div>
+      isLoading ? <div>Loading...</div> : 
+      <div>
+        <WritingPageBox />
+        <HelpUserBox />
+      </div>
     }
     <button onclick="location.href='address'" className={styles.logout}>로그아웃</button>
   </div>
@@ -168,7 +171,7 @@ function WritingPageBox() {
     }, 1000);
   }, []);
 
-  return <div className={styles.Maincontainer}>
+  return <div className={styles.writingboxcontainer}>
     {
       isLoading ? <div>Loading...</div> :
       Writingpagelist.map((Writingpagelist, index) => {
@@ -178,7 +181,45 @@ function WritingPageBox() {
   </div>
 }
 
+function HelpUserPage(props){
+  return <div>
+    <div onclick={props.HelpPageSite} className={styles.HelpUserBox}>
+      <img src={props.HelpImg} height="30px" width="30px" className={styles.HelpImage} />
+      <h4 className={styles.Helptext}>{props.HelpUserName}</h4>
+    </div>
+  </div>
+}
 
+const _helpUser = [
+  { helpimg: "/img/question.png", helpusername: '자주 묻는 질문', helppagesite:"location.href='address'"},
+  { helpimg: "/img/service_center.png", helpusername: '고객센터', helppagesite:"location.href='address'"},
+  { helpimg: "/img/Terms_of_Use.png", helpusername: '이용약관', helppagesite:"location.href='address'"},
+  { helpimg: "/img/Gambling_addiction_counseling.png", helpusername: '도박 중독 상담', helppagesite:"location.href='address'"},
+]
+
+function HelpUserBox() {
+  const [helpUser, sethelpUser] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      sethelpUser(_helpUser);
+    }, 1000);
+  }, []);
+
+  return <div>
+    <div>
+      {
+        isLoading ? <div>Loading...</div> :
+        helpUser.map((helpUser, index) => {
+          return <HelpUserPage key={index} HelpImg={helpUser.helpimg} 
+          HelpUserName={helpUser.helpusername} HelpPageSite={helpUser.helppagesite}/>
+        })
+      }
+    </div>
+  </div>
+}
 
 function MyPage() {
   return (
