@@ -5,7 +5,7 @@
     "database": {
         "host": "210.114.22.146",
         "port": 3306,
-        "user": "root",
+        "user": "root", //FIXME: DO NOT EXPOSE UNENCRYPTED PASSWORD IN PUBLIC FILE
         "password": "ishs123!",
         "database": "test"
     }

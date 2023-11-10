@@ -1,6 +1,7 @@
 import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
 
+//FIXME: use central log instead o console.log
 export class BoardDatabase {
     mysql = require('mysql');
     db = this.mysql.createConnection({
@@ -49,7 +50,7 @@ export class BoardDatabase {
         this.db.query(
             'delete from posts where uid=?',
             [code],
-            (err: any, res: any) => {
+            (err: any) => {
                 if(err) {
                     throw err;
                 }
@@ -62,7 +63,7 @@ export class BoardDatabase {
         this.db.query(
             'update posts set title=?, content=? where uid=?',
             [title, content, code],
-            (err: any, res: any) => {
+            (err: any) => {
                 if(err) {
                     throw err;
                 }
