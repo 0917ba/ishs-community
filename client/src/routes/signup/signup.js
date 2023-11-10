@@ -136,30 +136,31 @@ function Signup() {
         />
       </div>
       <div>
-        <span>
-          <label>비밀번호 | </label>
-          <input
-            type='password'
-            name='비밀번호'
-            placeholder='비밀번호를 입력해 주세요.'
-            value={inputPassword}
-            onChange={onChangePassword}
-          />
-        </span>
-        <span>
-          <p>{PWmessage}</p>
-        </span>
-      </div>
-      <div>
-        <label>비밀번호 확인 | </label>
+        <label>비밀번호 | </label>
         <input
           type='password'
-          name='비밀번호 확인'
-          placeholder='비밀번호를 다시 입력해 주세요.'
-          value={inputPassword_check}
-          onChange={onChangePassword_check}
+          name='비밀번호'
+          placeholder='비밀번호를 입력해 주세요.'
+          value={inputPassword}
+          onChange={onChangePassword}
         />
       </div>
+      <div>
+        <span>
+          <label>비밀번호 확인 | </label>
+          <input
+            type='password'
+            name='비밀번호 확인'
+            placeholder='비밀번호를 다시 입력해 주세요.'
+            value={inputPassword_check}
+            onChange={onChangePassword_check}
+          />
+        </span>
+      </div>
+
+      <span>
+        <p>{PWmessage}</p>
+      </span>
       <div>
         <label>인증 코드 | </label>
         <input
