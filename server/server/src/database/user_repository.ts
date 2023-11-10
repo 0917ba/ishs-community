@@ -1,26 +1,6 @@
 import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
-import { Role } from '../util/role';
-import { PrivilegeEnum } from '../util/user_privilege';
-import { CodeManager, IdentiFier } from '../util/identifier';
-
-/*
-uid int AI PK 
-id varchar(45) 
-password varchar(45) 
-nickname varchar(45)
-email varchar(45) 
-profileImage varchar(45) 
-studentName varchar(45) 
-generation int 
-classNumber int 
-studentNumber int 
-birthday datetime 
-privilege int 
-role enum('DEVELOPER','STUDENT','TEACHER','USER','ADMIN') 
-penalty int
-*/
 
 export class UserDatabase {
     mysql = require('mysql');
@@ -39,12 +19,12 @@ export class UserDatabase {
         });
     }
 
-    signUp(id: string, password: string, nickname: string, email: string, studentName: string, birthday: string): Promise<boolean> {
+    signup(id: string, password: string, nickname: string, email: string, studentName: string, generation: number, classNumber: number, studentNumber: number, privilege: number, role: string, penalty: number): Promise<boolean> {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
-                `INSERT INTO users (uid, id, password, nickname, email, profileImage, studentName, generation, classNumber, studentNumber, birthday, privilege, role, penalty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [uid, id, password, nickname, email, '', studentName, 0, 0, 0, birthday, PrivilegeEnum.DEFAULT, Role.ADMIN, 0],
+                `INSERT INTO users (uid, id, password, nickname, email, profileImage, studentName, generation, classNumber, studentNumber, birthday, privilege, role, penalty)
+                VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`, [uid, id, password, nickname, email, '', studentName, generation, classNumber, studentNumber, '', privilege, role, penalty],
                 (err: any, res: any) => {
                     if (err) {
                         reject(err);
@@ -55,7 +35,7 @@ export class UserDatabase {
         });
     }
 
-    login(id: string, password: string) {
+    signin(id: string, password: string) {
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(`SELECT * FROM users WHERE id='${id}' AND password='${password}'`, (err: any, result: any) => {
                 if (err) {
@@ -66,9 +46,19 @@ export class UserDatabase {
         });
     }
     
+    getUserByUid(uid: string) {
+        return new Promise<any>((resolve, reject) => {
+            this.db.query(`SELECT * FROM users WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(result);
+            });
+        });
+    }
 
-    getUsers() {
-        this.db.query('SELECT * FROM users', (err: any, result: any) => {
+    setPassword(uid: string, password: string) {
+        this.db.query(`UPDATE users SET password='${password}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -76,8 +66,8 @@ export class UserDatabase {
         });
     }
 
-    getUser(id: string) {
-        this.db.query(`SELECT * FROM users WHERE id=${id}`, (err: any, result: any) => {
+    setEmail(uid: string, email: string) {
+        this.db.query(`UPDATE users SET email='${email}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -85,8 +75,8 @@ export class UserDatabase {
         });
     }
 
-    removeUser(key: number) {
-        this.db.query(`DELETE FROM users WHERE \`key\`=${key}`, (err: any, result: any) => {
+    setPrivilege(uid: string, privilege: number) {
+        this.db.query(`UPDATE users SET privilege=${privilege} WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -94,44 +84,79 @@ export class UserDatabase {
         });
     }
 
-    updateUser(key: number, name: string, privilege: number, password: string) {
-        this.db.query(`UPDATE users SET name='${name}', privilege=${privilege}, password='${password}' WHERE \`key\`=${key}`, (err: any, result: any) => {
-            if (err) {
-                throw err;
-            }
-            console.log(result);
-        });
-    }
-
-    userExists(key: number): boolean {
-        this.db.query(`SELECT * FROM users WHERE \`key\`=${key}`, (err: any, result: any) => {
-            if (err) {
-                throw err;
-            }
-            console.log(result);
-            return result.length > 0;
-        });
-        return false;
-    }
-
-    updateUserKey(key: number, name: string, password: string) {
-        this.db.query(`UPDATE users SET \`key\`=${key} WHERE name='${name}' AND password='${password}'`, (err: any, result: any) => {
-            if (err) {
-                throw err;
-            }
-            console.log(result);
-        });
-    }
-
-    getPrivilege(id: string) {
+    getPrivilege(uid: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT privilege FROM users WHERE \`id\`=${id}`, (err: any, result: any) => {
+            this.db.query(`SELECT privilege FROM users WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
                 let privilege: number = result[0].privilege;
                 resolve(privilege);
             });
+        });
+    }
+
+    setNickname(uid: string, nickname: string) {
+        this.db.query(`UPDATE users SET nickname='${nickname}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
+    setBirthday(uid: string, birthday: string) {
+        this.db.query(`UPDATE users SET birthday='${birthday}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
+    setProfileImage(uid: string, profileImage: string) {
+        this.db.query(`UPDATE users SET profileImage='${profileImage}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        });
+    }
+
+    setPenalty(uid: string, penalty: number) {
+        this.db.query(`UPDATE users SET penalty=${penalty} WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result);
+        }); 
+    }
+
+    getPenalty(uid: string) {
+        return new Promise<number>((resolve, reject) => {
+            this.db.query(`SELECT penalty FROM users WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                let penalty: number = result[0].penalty;
+                resolve(penalty);
+            });
+        });
+    }
+
+    addPenalty(uid: string) {
+        this.getPenalty(uid).then((penalty: number) => {
+            penalty++;
+            this.setPenalty(uid, penalty);
+        });
+    }
+
+    setRole(uid: string, role: string) {
+        this.db.query(`UPDATE users SET role='${role}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            if (err) {
+                throw err;
+            }
+            console.log(result); 
         });
     }
 

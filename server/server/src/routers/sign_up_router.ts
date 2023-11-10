@@ -15,12 +15,12 @@ signUpRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     let password: string = req.body.password;
     let identifyCode: string = req.body.identifyCode;
     let email: string = req.body.email;
-    let name: string = req.body.name;
+    let studentName: string = req.body.name;
     let nickname: string = req.body.nickname;
     let birthday: string = req.body.birthday;
     let checker = new QueryChecker();
     if (checker.notNull(key, id, password, identifyCode, email, name, nickname)) {
-        if (checker.hasInvalidString(id, password, identifyCode, email, name, nickname, birthday)) {
+        if (checker.hasInvalidString(id, password, identifyCode, email, studentName, nickname, birthday)) {
             res.status(400).send("Invalid characters in name or password");
         }
         else {
@@ -29,15 +29,17 @@ signUpRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
             let penalty = 0;
             let classNumber = parseInt(key.toString().split("")[1]);
             let studentNumber = parseInt(key.toString().substring(2));      
-            userDatabase.signUp(key, id, password, identifyCode, email, name, nickname, birthday, privilege).then((result: boolean) => {
+            userDatabase.signUp(id, password, nickname, email, studentName, 0, classNumber, studentNumber, privilege, role, penalty).then((result: boolean) => {
                 if (result) {
                     req.session.key = key;
                     req.session.id = id;
-                    req.session.email = email;
-                    req.session.name = name;
                     req.session.nickname = nickname;
+                    req.session.email = email;
+                    req.session.studentName = studentName;
                     req.session.birthday = birthday;
                     req.session.privilege = privilege;
+                    req.session.role = role;
+                    req.session.penalty = penalty;
                     req.session.save(() => console.log("Session saved"));
                     res.status(200).send(respRest(200, 0));
                 } else {
