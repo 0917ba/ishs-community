@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { BoardDatabase } from "../database/board_repository";
+import { BoardDatabase } from "../database/post_repository";
 import { QueryChecker } from "../util/query_checker";
 import { PrivilegeEnum, UserPrivilege } from "../util/user_privilege";
 
