@@ -135,12 +135,46 @@ function SelectPageBox() {
   }, []);
 
   return <div className={styles.MySelectbox}>
-    <h1>나의 활동</h1>
-    <hr></hr>
+    <h1 className={styles.MySelectTitle}>나의 활동</h1>
+    <hr className={styles.hrstyle}></hr>
+    <WritingPageBox />
     {
       isLoading ? <div>Loading...</div> : <div>Loading End</div>
     }
-    <button onclick="location.href='address'">로그아웃</button>
+    <button onclick="location.href='address'" className={styles.logout}>로그아웃</button>
+  </div>
+}
+
+function WritingPageTitle(props) {
+  return <div onclick={props.moveMyPageSite} className={styles.writingbox}>
+    <div>{props.writing}</div>
+  </div>
+}
+
+const _Writingpagelist = [
+  { writingpageName: '내 커뮤니티 글', writingpageSite: "location.href='address'"},
+  { writingpageName: '내가 작성한 댓글', writingpageSite: "location.href='address'"},
+  { writingpageName: '내가 추천한 글', writingpageSite: "location.href='address'"},
+]
+
+function WritingPageBox() {
+  const [Writingpagelist, setwritingpagelist] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setwritingpagelist(_Writingpagelist);
+    }, 1000);
+  }, []);
+
+  return <div className={styles.Maincontainer}>
+    {
+      isLoading ? <div>Loading...</div> :
+      Writingpagelist.map((Writingpagelist, index) => {
+        return <WritingPageTitle key={index} writing={Writingpagelist.writingpageName} moveMyPageSite={Writingpagelist.writingpageSite}/>
+      })
+    }
   </div>
 }
 

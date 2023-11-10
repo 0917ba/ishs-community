@@ -82,6 +82,7 @@
     width: 125px;
     height: 30px;
     border-radius: 20px;
+    background: rgb(255, 255, 255);
 }
 
 .MySelectbox{
@@ -90,4 +91,39 @@
     width: 880px;
     height: 570px;
     border : thin solid #0015ff;
+}
+
+.MySelectTitle{
+    position: relative;
+    bottom: 5px;
+}
+
+.writingboxcontainer {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+.writingbox {
+    width: 200px;
+    height: 40px;
+    background: rgb(185, 183, 183);
+    border : thin solid #4c5185;
+    text-align: center;
+    line-height: 40px;
+}
+
+.hrstyle{
+    position: relative;
+    bottom: 12px;
+}
+
+.logout{
+    position: relative;
+    top: 360px;
+    left: 720px;
+    width: 125px;
+    height: 30px;
+    border-radius: 20px;
+    background: rgb(255, 255, 255);
 }
