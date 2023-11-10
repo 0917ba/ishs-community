@@ -3,10 +3,16 @@
         "port": 80
     },
     "database": {
-        "host": "210.114.22.146",
+        "host": "jrh.ishs.co.kr",
         "port": 3306,
-        "user": "root", //FIXME: DO NOT EXPOSE UNENCRYPTED PASSWORD IN PUBLIC FILE
-        "password": "ishs123!",
-        "database": "test"
+        "user": "root",
+        "password": "ishs12345!",
+        "database": {
+            "user": "user",
+            "post": "post",
+            "comment": "comment",
+            "report": "report",
+            "reaction": "reaction"
+        }
     }
 }

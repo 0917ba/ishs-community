@@ -1,11 +1,11 @@
 export enum PrivilegeEnum {
     CONNECT = 1 << 0,
-    STUDENT = 1 << 1,
-    WRITE_POST = 1 << 2,
-    WRITE_COMMENT = 1 << 3,
-    UPDATE_POST = 1 << 4,
-    DELETE_POST = 1 << 5,
+    WRITE_POST = 1 << 1,
+    WRITE_COMMENT = 1 << 2,
+    UPDATE_POST = 1 << 3,
+    DELETE_POST = 1 << 4,
     ALL = 0x111111,
+    DEFAULT = CONNECT | WRITE_POST | WRITE_COMMENT
 }
 
 export class UserPrivilege {

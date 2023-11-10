@@ -4,12 +4,12 @@ class UUIDManager {
     public static UUIDs: string[] = [];
 }
 
-class UUID {
+export class UUID {
 
     constructor() {
     }
 
-    generateUUID(): string {
+    public generateUUID(): string {
         let uuid: string;
         do {
             uuid = v4();
