@@ -13,10 +13,9 @@ loginRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
         if (checker.hasInvalidString(id, password)) {
             res.status(400).send("Invalid characters in name or password");
         } else {
-            userDatabase.login(id, password).then((result: boolean) => {
+            userDatabase.signin(id, password).then((result: boolean) => {
                 if (result) {
                     req.session.id = id;
-                    req.session.password = password;
                     userDatabase.getPrivilege(id).then((privilege: number) => {
                         req.session.privilege = privilege;
                         req.session.save(() => console.log("Session saved"));

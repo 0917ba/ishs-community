@@ -1,6 +1,7 @@
 import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
+import { User } from '../dto/user';
 
 export class UserDatabase {
     mysql = require('mysql');
@@ -8,7 +9,7 @@ export class UserDatabase {
         host: cf.database.host,
         user: cf.database.user,
         password: cf.database.password,
-        database: cf.database.database
+        database: cf.database.database.user
     });   
     constructor() {
         this.db.connect((err: any) => {
@@ -23,13 +24,12 @@ export class UserDatabase {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
-                `INSERT INTO users (uid, id, password, nickname, email, profileImage, studentName, generation, classNumber, studentNumber, birthday, privilege, role, penalty)
-                VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`, [uid, id, password, nickname, email, '', studentName, generation, classNumber, studentNumber, '', privilege, role, penalty],
+                `INSERT INTO user (uid, id, password, nickname, email, profileImage, studentName, generation, classNumber, studentNumber, birthday, privilege, role, penalty)
+                VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`, [uid, id, password, nickname, email, '', studentName, generation, classNumber, studentNumber, null, privilege, role, penalty],
                 (err: any, res: any) => {
                     if (err) {
                         reject(err);
                     }
-                    logger.debug(`Created new user of uid ${res.insertId}`);
                     resolve(true);
                 });
         });
@@ -37,7 +37,7 @@ export class UserDatabase {
 
     signin(id: string, password: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`SELECT * FROM users WHERE id='${id}' AND password='${password}'`, (err: any, result: any) => {
+            this.db.query(`SELECT * FROM user WHERE id='${id}' AND password='${password}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -47,8 +47,20 @@ export class UserDatabase {
     }
     
     getUserByUid(uid: string) {
+        return new Promise<User>((resolve, reject) => {
+            this.db.query(`SELECT * FROM user WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                let res = User.fromObject(result[0]);
+                resolve(res);
+            });
+        });
+    }
+
+    getUserById(id: string) {
         return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM users WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT * FROM user WHERE id='${id}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -58,7 +70,7 @@ export class UserDatabase {
     }
 
     setPassword(uid: string, password: string) {
-        this.db.query(`UPDATE users SET password='${password}' WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET password='${password}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -67,7 +79,7 @@ export class UserDatabase {
     }
 
     setEmail(uid: string, email: string) {
-        this.db.query(`UPDATE users SET email='${email}' WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET email='${email}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -76,7 +88,7 @@ export class UserDatabase {
     }
 
     setPrivilege(uid: string, privilege: number) {
-        this.db.query(`UPDATE users SET privilege=${privilege} WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET privilege=${privilege} WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -86,7 +98,7 @@ export class UserDatabase {
 
     getPrivilege(uid: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT privilege FROM users WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT privilege FROM user WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -97,7 +109,7 @@ export class UserDatabase {
     }
 
     setNickname(uid: string, nickname: string) {
-        this.db.query(`UPDATE users SET nickname='${nickname}' WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET nickname='${nickname}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -106,7 +118,7 @@ export class UserDatabase {
     }
 
     setBirthday(uid: string, birthday: string) {
-        this.db.query(`UPDATE users SET birthday='${birthday}' WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET birthday='${birthday}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -115,7 +127,7 @@ export class UserDatabase {
     }
 
     setProfileImage(uid: string, profileImage: string) {
-        this.db.query(`UPDATE users SET profileImage='${profileImage}' WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET profileImage='${profileImage}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -124,7 +136,7 @@ export class UserDatabase {
     }
 
     setPenalty(uid: string, penalty: number) {
-        this.db.query(`UPDATE users SET penalty=${penalty} WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET penalty=${penalty} WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }
@@ -134,7 +146,7 @@ export class UserDatabase {
 
     getPenalty(uid: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT penalty FROM users WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT penalty FROM user WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -152,7 +164,7 @@ export class UserDatabase {
     }
 
     setRole(uid: string, role: string) {
-        this.db.query(`UPDATE users SET role='${role}' WHERE uid='${uid}'`, (err: any, result: any) => {
+        this.db.query(`UPDATE user SET role='${role}' WHERE uid='${uid}'`, (err: any, result: any) => {
             if (err) {
                 throw err;
             }

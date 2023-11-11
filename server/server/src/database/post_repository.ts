@@ -7,7 +7,7 @@ export class PostDatabase {
         host: cf.database.host,
         user: cf.database.user,
         password: cf.database.password,
-        database: cf.database.database
+        database: cf.database.database.post
     });   
     constructor() {
         this.db.connect((err: any) => {
