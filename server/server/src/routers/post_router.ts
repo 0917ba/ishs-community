@@ -22,9 +22,9 @@ postRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
 
 postRouter.patch('/', (req: Request, res: Response, next: NextFunction) => {
     // FIXME: use necessary session variables only
-    let uid: string = req.session.uid;
-    let title: string = req.session.title;
-    let content: string = req.session.content;
+    let uid: string = req.body.uid;
+    let title: string = req.body.title;
+    let content: string = req.body.content;
 
     let checker = new QueryChecker();
 
@@ -36,7 +36,7 @@ postRouter.patch('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 postRouter.get('/', (req: Request, res: Response, next: NextFunction) => {
-    let uid = req.query.uid;
+    let uid = req.body.uid;
 
     let checker = new QueryChecker();
 
@@ -48,7 +48,7 @@ postRouter.get('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 postRouter.delete('/', (req: Request, res: Response, next: NextFunction) => {
-    let uid: string = req.session.uid;
+    let uid: string = req.body.uid;
 
     let checker = new QueryChecker();
 

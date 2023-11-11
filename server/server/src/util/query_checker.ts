@@ -6,6 +6,7 @@ export class QueryChecker {
             if (element == null) {
                 result = false;
             }
+            console.log(element);
         });
         return result;
     }

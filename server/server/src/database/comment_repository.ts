@@ -8,7 +8,7 @@ export class CommentDatabase {
         host: cf.database.host,
         user: cf.database.user,
         password: cf.database.password,
-        database: cf.database.database
+        database: cf.database.database.comment
     });   
     constructor() {
         this.db.connect((err: any) => {

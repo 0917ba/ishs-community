@@ -6,15 +6,15 @@ const commentRouter = require('express').Router();
 
 commentRouter.post('/comment', (req: Request, res: Response, next: NextFunction) => {
     //FIXME: session must include necessary information only
-    let authorId: string = req.session.authorId;
-    let author: string = req.session.author;
-    let postId: string = req.session.postId;
-    let target: string = req.session.target;
-    let content: string = req.session.content;
+    let authorId: string = req.body.authorId;
+    let author: string = req.body.author;
+    let postId: string = req.body.postId;
+    let target: string = req.body.target;
+    let content: string = req.body.content;
 
     let checker = new QueryChecker();
     //TODO: purify content
-    if (checker.notNull(authorId, author)) {
+    if (checker.notNull(authorId, author, postId, content)) {
         res.status(200).send(respRest(200, 0));
     } else {
         res.status(400).send(respRest(400, 1));
@@ -22,9 +22,9 @@ commentRouter.post('/comment', (req: Request, res: Response, next: NextFunction)
 });
 
 commentRouter.patch('/comment', (req: Request, res: Response, next: NextFunction) => {
-    let target: string = req.session.target;
-    let content: string = req.session.content;
-    let uid: string = req.session.uid;
+    let target: string = req.body.target;
+    let content: string = req.body.content;
+    let uid: string = req.body.uid;
 
     let checker = new QueryChecker();
     // TODO: purify content
