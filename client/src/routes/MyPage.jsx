@@ -68,9 +68,8 @@ function MainPageBox() {
     setTimeout(() => {
       setIsLoading(false);
       setmainpagelist(_mainpagelist);
-    }, 1000);
+    }, 1);
   }, []);
-
   return <div className={styles.Maincontainer}>
     <img src="/img/log_ishs_image.png" height="60px" width="160px" className={styles.Mainbox}/>
     {
@@ -124,6 +123,21 @@ function MovePageBox() {
     className={styles.MemberInformation}>회원 정보 수정</button>
   </div>
 }
+
+// function Notification() {
+//   const [isLoading, setIsLoading] = useState(true)
+
+//   useEffect(() => {
+//     setTimeout(() => {
+//       setIsLoading(false);
+//     }, 1000);
+//   }, []);
+
+//   return <div>
+//     <div className={styles.notification}>공지</div>
+//       <div>오늘은 9월 첫날입니다.</div>
+//   </div>
+// }
 
 function SelectPageBox() {
   const [isLoading, setIsLoading] = useState(true)
@@ -221,11 +235,14 @@ function HelpUserBox() {
   </div>
 }
 
+
+
 function MyPage() {
   return (
-    <div>
+    <div className={styles.static}>
       <MainPageBox />
       <div className={styles.BackGroundColor}></div>
+      {/* <Notification /> */}
       <div className={styles.Myboxcontainer}>
         <div className={styles.relative}>
             <MovePageBox />

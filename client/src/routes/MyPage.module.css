@@ -11,6 +11,7 @@
     padding-right: 20px;
 }
 
+
 .Maincontainer {
     flex: 1;
     display: flex;
@@ -23,8 +24,27 @@
 }
 
 .BackGroundColor{
+    position: static;
     background: #274182;
-    height: 290px;
+    height: 40vh;
+}
+
+.notification{
+    position: relative;
+    bottom: 180px;
+    left: 240px;
+    width: 125px;
+    height: 30px;
+    border-radius: 20px;
+    background: rgb(0, 145, 255);
+    border: 2px solid #ffffff;
+    text-align: center;
+    line-height: 30px;
+}
+
+html{
+    min-width: 10vw;
+    min-height: 100vh;
 }
 
 
@@ -38,22 +58,33 @@
 .static {
     border: 2px solid #B8860B;
     position: static;
+    width: 100vw;
+    height: 100vh;
+    flex: 1;
+}
+.static:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
 }
 
 .relative {
     border: 2px solid #241c1c;
     position: relative;
-    bottom: 190px;
-    width: 1200px;
-    height: 570px;
+    /* width: 80vw;
+    height: 42vw; */
+    width: 80%;
+    height: 60%;
+    bottom: 15vw;
     background: rgb(255, 255, 255);
 }
+
 
 .MyMovebox{
     float: left;
     position: static;
-    width: 300px;
-    height: 570px;
+    width: 15vw;
+    height: 100%;
     border-right : thin solid #c0c0c0;
 }
 
