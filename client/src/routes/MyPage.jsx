@@ -124,20 +124,20 @@ function MovePageBox() {
   </div>
 }
 
-// function Notification() {
-//   const [isLoading, setIsLoading] = useState(true)
+function Notification() {
+  const [isLoading, setIsLoading] = useState(true)
 
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setIsLoading(false);
-//     }, 1000);
-//   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
-//   return <div>
-//     <div className={styles.notification}>공지</div>
-//       <div>오늘은 9월 첫날입니다.</div>
-//   </div>
-// }
+  return <div>
+    <div className={styles.notification}>공지</div>
+      <div className={styles.notificationDetail}>오늘은 9월 첫날입니다.</div>
+  </div>
+}
 
 function SelectPageBox() {
   const [isLoading, setIsLoading] = useState(true)
@@ -239,17 +239,19 @@ function HelpUserBox() {
 
 function MyPage() {
   return (
-    <div className={styles.static}>
-      <MainPageBox />
-      <div className={styles.BackGroundColor}></div>
-      {/* <Notification /> */}
-      <div className={styles.Myboxcontainer}>
-        <div className={styles.relative}>
-            <MovePageBox />
-            <SelectPageBox />
+    <body>
+      <div className={styles.static}>
+        <MainPageBox />
+        <div className={styles.BackGroundColor}></div>
+        <Notification />
+        <div className={styles.Myboxcontainer}>
+          <div className={styles.relative}>
+              <MovePageBox />
+              <SelectPageBox />
+          </div>
         </div>
       </div>
-    </div>
+    </body>
   );
 }
 
