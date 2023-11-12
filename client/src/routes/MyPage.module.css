@@ -107,7 +107,7 @@ body{
     width: 15vw;
     height: 100%;
     display: block;
-    border-right : thin solid #c0c0c0;
+    border-right : 0.1vmin solid  #c0c0c0;
 }
 
 .UserImage{
@@ -164,14 +164,9 @@ body{
 .MySelectTitle{
     position: relative;
     font-size: 3vmin;
-    bottom: 0vh;
-}
-
-.hrstyle{
-    position: relative;
-    float: left;
+    padding-bottom: 0.9vh;
     width: 95%;
-    bottom: 1vh;
+    border-bottom: 0.1vh solid  #c0c0c0;;
 }
 
 .writingboxcontainer {
@@ -214,14 +209,56 @@ body{
 .Helptext{
     position: relative;
     font-size: 1.6vmin;
-    bottom: 4vh;
+    bottom: 3.5vh;
     left: 4vw;
+}
+
+.UserInformationImage{
+    position: relative;
+    top: 6vh;
+    left: 2vw;
+    width: 15vw;
+    max-width: 100%;
+    height: auto;
+    display: block;
+
+}
+
+
+.HrUserInformation{
+    position: relative;
+    float: left;
+    bottom: 11vh;;
+    left: 19vw;
+    width: 55%;
+    font-size: 2vmin;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 3vh;
+}
+
+.UserAuthority{
+    position: relative;
+    float: center;
+    top: 13vh;
+    right: 17vw;
+    width: auto;
+    font-size: 3vmin;
+}
+
+.explanationUserAuthority{
+    position: relative;
+    float: center;
+    color: gray;
+    top: 22vh;
+    left: 13vw;
+    width: auto;
+    font-size: 2vmin;
 }
 
 .logout{
     position: relative;
-    top: 13vh;
-    left: 54vw;
+    top: 25vh;
+    right: 1.7vw;
     width: auto;
     height: auto;
     font-size: 1.4vmin;
