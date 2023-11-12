@@ -15,11 +15,23 @@ loginRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
         } else {
             userDatabase.signin(id, password).then((result: boolean) => {
                 if (result) {
-                    req.session.id = id;
-                    userDatabase.getPrivilege(id).then((privilege: number) => {
-                        req.session.privilege = privilege;
+                    userDatabase.getUserById(id).then((user) => {
+                        req.session.uid = user.getUid();
+                        req.session.userid = id;
+                        req.session.nickname = user.getNickname();
+                        req.session.email = user.getEmail();
+                        req.session.studentName = user.getStudentName();
+                        req.session.generation = user.getGeneration();
+                        req.session.classNumber = user.getClassNumber();
+                        req.session.studentNumber = user.getStudentNumber();
+                        req.session.birthday = user.getBirthday();
+                        req.session.privilege = user.getPrivilege();
+                        req.session.role = user.getRole();
+                        req.session.penalty = user.getPenalty();
                         req.session.save(() => console.log("Session saved"));
                         res.status(200).send(respRest(200, 0));
+                    }).catch((err: any) => {
+                        res.status(500).send(respRest(500, 2));
                     });
                 } else {
                     res.status(400).send(respRest(400, 1));

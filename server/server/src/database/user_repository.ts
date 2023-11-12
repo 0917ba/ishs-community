@@ -59,12 +59,12 @@ export class UserDatabase {
     }
 
     getUserById(id: string) {
-        return new Promise<any>((resolve, reject) => {
+        return new Promise<User>((resolve, reject) => {
             this.db.query(`SELECT * FROM user WHERE id='${id}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(User.fromObject(result[0]));
             });
         });
     }
