@@ -1,47 +1,6 @@
 import styles from './MyPage.module.css';
 import { useEffect, useState } from "react";
 
-// function Post(props) {
-//   return <div className={styles.Post}>
-//     <div>{props.title}</div>
-//     <div>{props.content}</div>
-//   </div>
-// }
-
-// const _posts = [
-//   { title: 'hello', content: 'world' },
-//   { title: 'ishs', content: 'world' },
-//   { title: 'raibit', content: 'world' },
-// ]
-
-// function PostBox() {
-//   const [posts, setPosts] = useState([])
-//   const [isLoading, setIsLoading] = useState(true)
-
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setIsLoading(false);
-//       setPosts(_posts);
-//     }, 1000);
-//   }, []);
-
-//   return <div className={styles.PostBox}>
-//     <div>Post Box</div>
-//     {
-//       isLoading ? <div>Loading...</div> :
-//       posts.map((post, index) => {
-//         return <Post key={index} title={post.title} content={post.content} />
-//       })
-//     }
-//   </div>
-// }
-
-// function MainPageTitle(props) {
-//   const [a, setA] = useState(false);
-//   return <div className={props.a}>
-//     <div>{props.title}</div>
-//   </div>
-// }
 
 function MainPageTitle(props) {
   return <div onclick={props.moveMyPageSite} className={styles.Mainbox}>
@@ -121,23 +80,24 @@ function MovePageBox() {
     </div>
     <button onclick="window.open('address','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
     className={styles.MemberInformation}>회원 정보 수정</button>
+    <button onclick="location.href='address'" className={styles.logout}>로그아웃</button>
   </div>
 }
 
-// function Notification() {
-//   const [isLoading, setIsLoading] = useState(true)
+function Notification() {
+  const [isLoading, setIsLoading] = useState(true)
 
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setIsLoading(false);
-//     }, 1000);
-//   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
-//   return <div>
-//     <div className={styles.notification}>공지</div>
-//       <div>오늘은 9월 첫날입니다.</div>
-//   </div>
-// }
+  return <div>
+    <div className={styles.notification}>공지</div>
+      <div className={styles.notificationDetail}>오늘은 9월 첫날입니다.</div>
+  </div>
+}
 
 function SelectPageBox() {
   const [isLoading, setIsLoading] = useState(true)
@@ -150,15 +110,17 @@ function SelectPageBox() {
 
   return <div className={styles.MySelectbox}>
     <h1 className={styles.MySelectTitle}>나의 활동</h1>
-    <hr className={styles.hrstyle}></hr>
     {
       isLoading ? <div>Loading...</div> : 
       <div>
         <WritingPageBox />
-        <HelpUserBox />
+        {/* <HelpUserBox /> */}
+        <UserInformationBox />
+        {/* <누적벌점 /> */}
+        {/* */}
       </div>
     }
-    <button onclick="location.href='address'" className={styles.logout}>로그아웃</button>
+    
   </div>
 }
 
@@ -235,21 +197,96 @@ function HelpUserBox() {
   </div>
 }
 
+function UserInformation(props){
+  return <div>
+    <div className={styles.HrUserInformation}>사용자 명 : {props.UserName}</div>
+    <div className={styles.HrUserInformation}>사용자 ID : {props.UserId}</div>
+    <div className={styles.HrUserInformation}>사용자 학번 : {props.UserStudentID}</div>
+  </div>
+}
+
+const _userInformation = [
+  { userName: '인곽이', userId: 'ISHS2930', userStudentID: "2501"},
+]
+
+function UserInformationBox() {
+  const [userInformation, setuserInformation] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setuserInformation(_userInformation);
+    }, 1000);
+  }, []);
+
+  return <div>
+    <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserInformationImage} />
+    <div>
+      {
+        isLoading ? <div>Loading...</div> :
+        userInformation.map((userInformation, index) => {
+          return <UserInformation key={index} UserName={userInformation.userName} 
+          UserId={userInformation.userId}
+          UserStudentID={userInformation.userStudentID}/>
+        })
+      }
+    </div>
+    <UserAuthorityBox /> 
+    <div className={styles.explanationUserAuthority}>⨀ 사용자 권한 더 알아보기</div>
+  </div>
+}
+
+function UserAuthority(props){
+  return <div>
+    <div className={styles.UserAuthority}>사용자 권한 : {props.UserAuthorityName}</div>
+  </div>
+}
+
+const _userauthority = [
+  {Userauthority: '사용자 권한'}
+]
+
+function UserAuthorityBox() {
+  const [userauthority, setuserauthority] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setuserauthority(_userauthority);
+    }, 1000);
+  }, []);
+
+  return <div>
+    <div>
+      {
+        isLoading ? <div>Loading...</div> :
+        userauthority.map((userauthority, index) => {
+          return <UserAuthority key={index} UserAuthorityName={userauthority.Userauthority}/>
+        })
+      }
+    </div>
+  </div>
+}
+
 
 
 function MyPage() {
   return (
-    <div className={styles.static}>
-      <MainPageBox />
-      <div className={styles.BackGroundColor}></div>
-      {/* <Notification /> */}
-      <div className={styles.Myboxcontainer}>
-        <div className={styles.relative}>
-            <MovePageBox />
-            <SelectPageBox />
+    <body>
+      <div className={styles.static}>
+        <MainPageBox />
+        <div className={styles.BackGroundColor}></div>
+        <Notification />
+        <div className={styles.Myboxcontainer}>
+          <div className={styles.relative}>
+              <MovePageBox />
+              <SelectPageBox />
+          </div>
         </div>
       </div>
-    </div>
+    </body>
   );
 }
 

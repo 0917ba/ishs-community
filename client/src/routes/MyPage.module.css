@@ -16,11 +16,15 @@
     flex: 1;
     display: flex;
     justify-content: space-around;
+    font-size: 1.4vmin;
+    max-width: 100%;
 }
 
 .Mainbox {
     float: right;
     align-self: center;
+    width: 6vw;
+    height: 5vh;
 }
 
 .BackGroundColor{
@@ -31,20 +35,34 @@
 
 .notification{
     position: relative;
-    bottom: 180px;
-    left: 240px;
-    width: 125px;
-    height: 30px;
-    border-radius: 20px;
-    background: rgb(0, 145, 255);
-    border: 2px solid #ffffff;
+    bottom: 29vh;
+    left: 10vw;
+    width: 4vw;
     text-align: center;
-    line-height: 30px;
+    font-size: 1.4vmin;
+    color: #ffffff;
+    border-radius: 20vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    background: rgb(114, 165, 204);
 }
 
-html{
+.notificationDetail{
+    position: relative;
+    bottom: 31.8vh;
+    left: 17vw;
+    font-size: 1.7vmin;
+    color: #ffffff;
+}
+
+
+body{
     min-width: 10vw;
     min-height: 100vh;
+    margin: 0;
 }
 
 
@@ -62,6 +80,7 @@ html{
     height: 100vh;
     flex: 1;
 }
+
 .static:after {
     content: "";
     display: block;
@@ -69,14 +88,16 @@ html{
 }
 
 .relative {
-    border: 2px solid #241c1c;
+    border: 0.2vmin solid #241c1c;
     position: relative;
-    /* width: 80vw;
-    height: 42vw; */
+    justify-content: space-between;
     width: 80%;
-    height: 60%;
+    max-width: 100%;
+    height: 70vh;
+    display: flex;
     bottom: 15vw;
     background: rgb(255, 255, 255);
+    overflow: hidden;
 }
 
 
@@ -85,20 +106,29 @@ html{
     position: static;
     width: 15vw;
     height: 100%;
-    border-right : thin solid #c0c0c0;
+    display: block;
+    border-right : 0.1vmin solid  #c0c0c0;
 }
 
 .UserImage{
     position: relative;
-    top: 30px;
-    left: 35px;
+    top: 5vh;
+    left: 2.75vw;
+    width: 10vw;
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 .MovePageList{
     position: relative;
-    width: 150px;
-    top: 45px;
-    left: 40px;
+    width: 100%;
+    top: 10vh;
+    left: 2.5vw;
+    max-width: 100%;
+    font-size: 1.7vmin;
+    height: auto;
+    display: block;
 }
 
 .ButtonMovePageList{
@@ -108,76 +138,136 @@ html{
 
 .MemberInformation{
     position: relative;
-    top: 80px;
-    left: 87.5px;
-    width: 125px;
-    height: 30px;
-    border-radius: 20px;
+    top: 20vh;
+    left: 4.25vw;
+    width: auto;
+    height: auto;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    border-radius: 20vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border: 0.2vmin solid #241c1c;
+    padding-right: 1vw;
     background: rgb(255, 255, 255);
 }
 
 .MySelectbox{
     float: right;
     position: static;
-    width: 880px;
-    height: 570px;
+    display: block;
+    width: 62vw;
+    height: 100%;
 }
 
 .MySelectTitle{
     position: relative;
-    bottom: 5px;
-}
-
-.hrstyle{
-    position: relative;
-    float: left;
-    width: 840px;
-    bottom: 12px;
+    font-size: 3vmin;
+    padding-bottom: 0.9vh;
+    width: 95%;
+    border-bottom: 0.1vh solid  #c0c0c0;;
 }
 
 .writingboxcontainer {
     flex: 1;
     display: flex;
-    width: 840px;
+    width: 95%;
     justify-content: space-between;
 }
 
 .writingbox {
-    width: 200px;
-    height: 40px;
+    width: 10vw;
+    height: auto;
+    padding-top: 0.7vh;
+    padding-bottom: 0.7vh;
+    font-size: 2vmin;
     background: rgb(185, 183, 183);
     text-align: center;
-    line-height: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 3vh;
 }
 
 .HelpUserBox{
     float: left;
     position: relative;
-    width: 840px;
-    height: 40px;
-    border: 2px solid #c0c0c0;
-    margin-bottom: 20px;
+    width: 58.8vw;;
+    height: 5vh;
+    border: 0.2vmin solid #c0c0c0;
+    margin-bottom: 3vh;
 }
 
 .HelpImage{
     position: relative;
-    top: 5px;
-    left: 20px;
+    top: 1vh;
+    left: 1vw;
+    width: 1.7vw;
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 .Helptext{
     position: relative;
-    bottom: 45.75px;
-    left: 70px;
+    font-size: 1.6vmin;
+    bottom: 3.5vh;
+    left: 4vw;
+}
+
+.UserInformationImage{
+    position: relative;
+    top: 6vh;
+    left: 2vw;
+    width: 15vw;
+    max-width: 100%;
+    height: auto;
+    display: block;
+
+}
+
+
+.HrUserInformation{
+    position: relative;
+    float: left;
+    bottom: 11vh;;
+    left: 19vw;
+    width: 55%;
+    font-size: 2vmin;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 3vh;
+}
+
+.UserAuthority{
+    position: relative;
+    float: center;
+    top: 13vh;
+    right: 17vw;
+    width: auto;
+    font-size: 3vmin;
+}
+
+.explanationUserAuthority{
+    position: relative;
+    float: center;
+    color: gray;
+    top: 22vh;
+    left: 13vw;
+    width: auto;
+    font-size: 2vmin;
 }
 
 .logout{
     position: relative;
-    top: 75px;
-    left: 720px;
-    width: 125px;
-    height: 30px;
-    border-radius: 20px;
+    top: 25vh;
+    right: 1.7vw;
+    width: auto;
+    height: auto;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    border-radius: 20vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border: 0.2vmin solid #241c1c;
+    padding-right: 1vw;
     background: rgb(255, 255, 255);
 }
