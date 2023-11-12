@@ -1,7 +1,24 @@
+type UserType = {
+    uid: string;
+    id: string;
+    password: string;
+    nickname: string;
+    email: string;
+    profileImage: string;
+    studentName: string;
+    generation: number;
+    classNumber: number;
+    studentNumber: number;
+    birthday: string;
+    privilege: number;
+    role: string;
+    penalty: number;
+};
+
 export class User {
     
     private readonly uid: string;
-    private readonly id: string;
+    private id: string;
     private password: string;
     private nickname: string;
     private email: string;
@@ -12,10 +29,10 @@ export class User {
     private studentNumber: number;
     private birthday: string;
     private privilege: number;
-    private role: number;
+    private role: string;
     private penalty: number;
 
-    constructor(uid: string, id: string, password: string, nickname: string, email: string, profileImage: string, studentName: string, generation: number, classNumber: number, studentNumber: number, birthday: string, privilege: number, role: number, penalty: number) {
+    constructor(uid: string, id: string, password: string, nickname: string, email: string, profileImage: string, studentName: string, generation: number, classNumber: number, studentNumber: number, birthday: string, privilege: number, role: string, penalty: number) {
         this.uid = uid;
         this.id = id;
         this.password = password;
@@ -80,12 +97,16 @@ export class User {
         return this.privilege;
     }
 
-    public getRole(): number {
+    public getRole(): string {
         return this.role;
     }
 
     public getPenalty(): number {
         return this.penalty;
+    }
+
+    public setId(id: string) {
+        this.id = id;
     }
 
     public setPassword(password: string) {
@@ -124,7 +145,7 @@ export class User {
         this.privilege = privilege;
     }
 
-    public setRole(role: number) {
+    public setRole(role: string) {
         this.role = role;
     }
 
@@ -132,7 +153,7 @@ export class User {
         this.penalty = penalty;
     }
 
-    public toObject(): any {
+    public toObject(): UserType {
         return {
             uid: this.uid,
             id: this.id,
