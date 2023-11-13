@@ -1,0 +1,18 @@
+{
+    "server":{
+        "port": 80
+    },
+    "database": {
+        "host": "jrh.ishs.co.kr",
+        "port": 3306,
+        "user": "root",
+        "password": "ishs12345!",
+        "database": {
+            "user": "user",
+            "post": "post",
+            "comment": "comment",
+            "report": "report",
+            "reaction": "reaction"
+        }
+    }
+}
