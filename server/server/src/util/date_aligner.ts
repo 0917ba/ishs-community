@@ -1,5 +1,5 @@
-export class dataAligner {
-    notNull(...params: Date[]) {
+export class dateAligner {
+    dateAlign(...params: Date[]) {
         let result: Date[] = [];
         params.forEach((element: Date) => {
             if (element != null) {
