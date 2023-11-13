@@ -9,7 +9,9 @@ import Special from './routes/signup/special';
 import FindPw from './routes/signin/findPW';
 import PostList from "./component/PostList/PostList";
 import BigBangBar from "./component/BigBang/BingBang";
-import MainMy from "./component/MainMy/MainMy";                                                                      
+import MainMy from "./component/MainMy/MainMy";
+import PostList from "./routes/PostList";
+import MyPage from "./routes/MyPage";
 
 function App() {
   function user() {
@@ -33,6 +35,7 @@ function App() {
         <Route path='/special' element={<Special />} />
         <Route path='/findpw' element={<FindPw />} />
         <Route path="/post/list" element={<PostList />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/post/bigbang" element={<BigBangBar />} />
         <Route path="/post/mainmy" element={<MainMy />} />
       </Routes>
