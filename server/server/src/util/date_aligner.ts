@@ -1,22 +1,11 @@
 export class dateAligner {
-    dateAlign(...params: Date[]) {
-        let result: Date[] = [];
-        params.forEach((element: Date) => {
-            if (element != null) {
-                if(result.length == 0) {
-                    result.push(element);
-                }
-                else {
-                    var i: number = 0
-                    result.forEach((element2: Date) => {
-                        if(element2 <= element) {
-                            i = result.indexOf(element2);
-                        }
-                    });
-                    result.splice(i, 0, element);
-                }
-            }
-        });
+    dateAlign(...params: object[]) {
+        let result = params;
+        result.sort(function (x: any, y: any) {
+            const a = x['date'];
+            const b = y['date'];
+            return a - b;
+        })
         return result;
     }
 }
