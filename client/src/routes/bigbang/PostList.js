@@ -20,6 +20,20 @@ function PostBox() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    (async () => {
+      const formData = {
+        mgitethod: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          withCredentials: true,
+        },
+        body: JSON.stringify({}),
+      };
+      const serverUrl = process.env.REACT_APP_SERVER_URL;
+      res = await fetch('serverUrl', formData);
+    })();
+  }, []);
+  useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
       setPosts(_posts);
