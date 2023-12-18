@@ -3,6 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import styles from './signup.module.css';
 
 function Signup() {
+  useEffect(() => {
+    (async () => {
+      const formData = {
+        mgitethod: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          withCredentials: true,
+        },
+        body: JSON.stringify({}),
+      };
+      const serverUrl = process.env.REACT_APP_SERVER_URL;
+      res = await fetch(`serverUrl` + `/check_session`, formData);
+    })();
+  }, []);
+
   const navigate = useNavigate();
   const [PWmessage, setPWMessage] = useState('');
   const [message, setMessage] = useState('');
@@ -74,7 +89,7 @@ function Signup() {
     };
 
     const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const res = await fetch(`serverUrl`, formData);
+    const res = await fetch(`serverUrl` + `/signup`, formData);
     const status = res.status;
     const getMessage = res.message;
 

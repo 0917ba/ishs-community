@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
+import { Type } from "../util/type";
+import { Status } from "../util/status";
 
 const reactionRouter = require('express').Router();
 
 reactionRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
-    let type: string = req.session.type; // 나중에 enum으로 바꿔야 함.
+    let type: Type = req.session.type;
     let userId: string = req.session.userId;
     let targetId: string = req.session.targetId;
-    let status: string = req.session.status; // 나중에 enum으로 바꿔야 함.
+    let status: Status = req.session.status;
     let checker = new QueryChecker();
     if (checker.notNull(type, userId)) {
         res.status(200).send(respRest(200, 0));
