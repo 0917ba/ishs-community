@@ -63,6 +63,8 @@ body{
     min-width: 10vw;
     min-height: 100vh;
     margin: 0;
+    overflow-x: hidden;
+    overflow-y: hidden
 }
 
 
@@ -257,8 +259,8 @@ body{
 
 .logout{
     position: relative;
-    top: 25vh;
-    right: 1.7vw;
+    top: 21vh;
+    left: 5vw;
     width: auto;
     height: auto;
     font-size: 1.4vmin;
@@ -270,4 +272,30 @@ body{
     border: 0.2vmin solid #241c1c;
     padding-right: 1vw;
     background: rgb(255, 255, 255);
+}
+
+.userRankName{
+    position: relative;
+    font-size: 4vmin;
+    left: 20vw;
+    bottom: 16vh;
+}
+
+.modaluserRank{
+    position: relative;
+    left: 45vw;
+    top: 45vh;
+}
+
+.atpGuide{
+    position: relative;
+    font-size: 4vmin;
+    left: 2vw;
+}
+
+.atp{
+    position: relative;
+    font-size: 10vmin;
+    top: 6vh;
+    left: 15vw;
 }
