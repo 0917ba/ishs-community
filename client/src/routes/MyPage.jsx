@@ -1,5 +1,6 @@
 import styles from './MyPage.module.css';
 import { useEffect, useState } from "react";
+import Modal from "react-modal"
 
 
 function MainPageTitle(props) {
@@ -78,10 +79,39 @@ function MovePageBox() {
         })
       }
     </div>
-    <button onclick="window.open('address','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
-    className={styles.MemberInformation}>회원 정보 수정</button>
+    <MemberInformationBtn />
     <button onclick="location.href='address'" className={styles.logout}>로그아웃</button>
   </div>
+}
+
+function MemberInformationBtn() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const customStyles = {
+    overlay: {
+      BackGroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+  };
+
+  return (
+    <div>
+      <button onClick={openModal} className={styles.MemberInformation}>회원 정보 수정</button>
+
+      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+        <div>회원 정보 수정</div>
+        <p>서비스 준비중입니다...</p>
+        <button onClick={closeModal}>닫기</button>
+      </Modal>
+    </div>
+  );
 }
 
 function Notification() {
@@ -115,13 +145,51 @@ function SelectPageBox() {
       <div>
         <WritingPageBox />
         {/* <HelpUserBox /> */}
-        <UserInformationBox />
+        {/* <UserInformationBox /> */}
         {/* <누적벌점 /> */}
-        {/* */}
+        {/* <UserRankBox /> */}
+        {/* <UserEmailBox /> */}
+        <UserATPBox />
       </div>
     }
-    
   </div>
+}
+
+function ModaluserPermissions() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const customStyles = {
+    overlay: {
+      BackGroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    content: {
+      width: "40vw",
+      height: "60vh",
+      margin: "auto",
+      borderRadius: "0.2vw",
+      padding: "4vw",
+    },
+  };
+
+  return (
+    <div>
+      <button onClick={openModal} className={styles.explanationUserAuthority}>⨀ 사용자 권한 더 알아보기</button>
+
+      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+        <h1>사용자 권한</h1>
+        <p>모달 컨텐츠</p>
+        <button onClick={closeModal}>닫기</button>
+      </Modal>
+    </div>
+  );
 }
 
 function WritingPageTitle(props) {
@@ -233,7 +301,7 @@ function UserInformationBox() {
       }
     </div>
     <UserAuthorityBox /> 
-    <div className={styles.explanationUserAuthority}>⨀ 사용자 권한 더 알아보기</div>
+    <ModaluserPermissions />
   </div>
 }
 
@@ -270,6 +338,143 @@ function UserAuthorityBox() {
   </div>
 }
 
+function UserRank(props){
+  return <div>
+    <ModaluserRank />
+    <img src={props.userRankImg} height="150px" width="230px" className={styles.UserInformationImage} />
+    <div className={styles.userRankName}>{props.userRankName}</div>
+  </div>
+}
+
+const _userRank = [
+  { userRankName: "사용자님은 다이아몬드 등급입니다.", userRankImg: "/img/UserRankImg/UserRankDiamond.png"},
+]
+
+function ModaluserRank() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const customStyles = {
+    overlay: {
+      BackGroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+  };
+
+  return (
+    <div>
+      <button onClick={openModal} className={styles.modaluserRank}>⨀ 회원등급 시스템 더 알아보기</button>
+
+      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+        <div>사용자 권한</div>
+        <p>모달 컨텐츠</p>
+        <button onClick={closeModal}>닫기</button>
+      </Modal>
+    </div>
+  );
+}
+
+function UserRankBox() {
+  const [userRank, setuserRank] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setuserRank(_userRank);
+    }, 1000);
+  }, []);
+
+  return <div>
+    <div>
+      {
+        isLoading ? <div>Loading...</div> :
+        userRank.map((userRank, index) => {
+          return <UserRank key={index} userRankName={userRank.userRankName} 
+          userRankImg={userRank.userRankImg}/>
+        })
+      }
+    </div>
+  </div>
+}
+
+function UserEmailBox() {
+  return <div>
+    <div>서비스 준비 중입니다...</div>
+  </div>
+}
+
+function UserATP(props){
+  return <div>
+    <ModaluserATP />
+    <div className={styles.atpGuide}>{props.userATPguide}</div>
+    <div className={styles.atp}>{props.userATP}</div>
+  </div>
+}
+
+const _userATP = [
+  { userATPguide: "나의 ATP", userATP: "100000ATP"},
+]
+
+function ModaluserATP() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const customStyles = {
+    overlay: {
+      BackGroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+  };
+
+  return (
+    <div>
+      <button onClick={openModal} className={styles.modaluserRank}>⨀ ATP 시스템 더 알아보기</button>
+
+      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+        <div>사용자 권한</div>
+        <p>모달 컨텐츠</p>
+        <button onClick={closeModal}>닫기</button>
+      </Modal>
+    </div>
+  );
+}
+
+function UserATPBox() {
+  const [userATP, setuserATP] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setuserATP(_userATP);
+    }, 1000);
+  }, []);
+
+  return <div>
+    <div>
+      {
+        isLoading ? <div>Loading...</div> :
+        userATP.map((userATP, index) => {
+          return <UserATP key={index} userATPguide={userATP.userATPguide} 
+          userATP={userATP.userATP}/>
+        })
+      }
+    </div>
+  </div>
+}
 
 
 function MyPage() {
