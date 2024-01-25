@@ -10,7 +10,7 @@ import FindPw from './routes/signin/findPW';
 import PostList from "./component/PostList/PostList";
 import BigBangBar from "./component/BigBang/BingBang";
 import MainMy from "./component/MainMy/MainMy";
-import PostList from "./routes/PostList";
+// import PostList from "./routes/PostList";
 import MyPage from "./routes/MyPage";
 
 function App() {
