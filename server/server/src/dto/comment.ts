@@ -117,31 +117,24 @@ export class Comment {
         };
     }
 
-    public getJSONString(): string {
-        return JSON.stringify(this.getJSON());
-    }
-
-    public toString(): string {
-        return this.getJSONString();
-    }
-
     public toObject(): any {
         return this.getJSON();
     }
 
-    public static fromJSON(json: any): Comment {
-        return new Comment(json.uid, json.authorId, json.postId, json.author, json.like, json.dislike, json.createdAt, json.target, json.content, json.status);
-    }
-
-    public static fromJSONString(jsonString: string): Comment {
-        return Comment.fromJSON(JSON.parse(jsonString));
-    }
-
     public static fromObject(obj: any): Comment {
-        return Comment.fromJSON(obj);
+        return new Comment(obj.uid, obj.authorId, obj.postId, obj.author, obj.like, obj.dislike, obj.createdAt, obj.target, obj.content, obj.status);
     }
 
     public static fromObjectString(objString: string): Comment {
         return Comment.fromObject(JSON.parse(objString));
+    }
+
+    public static fromObjectList(objList: any[]): Comment[] {
+        let comments: Comment[] = [];
+        if (objList == null) return comments;
+        for (let obj of objList) {
+            comments.push(Comment.fromObject(obj));
+        }
+        return comments;
     }
 }

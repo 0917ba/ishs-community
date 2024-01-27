@@ -1,3 +1,5 @@
+import { Type } from "typescript";
+
 export class QueryChecker {
     
     notNull(...params: any[]) {
@@ -19,6 +21,16 @@ export class QueryChecker {
                 result = true;
             }
         });  
+        return result;
+    }
+
+    typeCheck<Type>(type: Type, ...params: any[]) {
+        let result = true;
+        params.forEach((element: any) => {
+            if (typeof element != type) {
+                result = false;
+            }
+        });
         return result;
     }
 }

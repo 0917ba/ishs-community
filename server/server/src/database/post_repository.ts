@@ -1,5 +1,7 @@
 import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
+import { UUID } from '../util/uuid_generator';
+import { Post } from '../dto/post';
 
 export class PostDatabase {
     mysql = require('mysql');
@@ -18,46 +20,72 @@ export class PostDatabase {
         });
     }
 
-    createPost(uid: string, authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, status: string) {
+    createPost(authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, status: string) {
+        let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
-                `INSERT INTO posts (uid, authorId, author, title, content, like, dislike, view, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                `INSERT INTO post (uid, authorId, author, title, content, \`like\`, dislike, view, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [uid, authorId, author, title, content, like, dislike, view, createdAt, status],
                 (err: any, res: any) => {
                 if (err) {
                     reject(err);
                 }
-                logger.debug(`Created new post of uid ${res.insertId}`);
+                logger.debug(`Created new post of uid ${uid}`);
+                resolve(true);
+            });
+        });
+    }
+
+    updatePost(uid: string, title: string, content: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.db.query(`UPDATE post SET title='${title}', content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                logger.debug(`Updated post of uid ${uid}`);
                 resolve(true);
             });
         });
     }
 
     getPostByUid(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM posts WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<Post>((resolve, reject) => {
+            this.db.query(`SELECT * FROM post WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Post.fromObject(result[0]));
             });
         });
     }
 
     getPostsByAuthorId(authorId: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM posts WHERE authorId='${authorId}'`, (err: any, result: any) => {
+        return new Promise<Post[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM post WHERE authorId='${authorId}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Post.fromObjectList(result));
             });
         });
     }
 
-    setPostStatus(uid: string, status: string) {
+    getPostsInAscendingOrder(start: number, end: number) {
+        return new Promise<Post[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM post ORDER BY createdAt ASC LIMIT ${start}, ${end}`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(Post.fromObjectList(result));
+            });
+        });
+    }
+
+
+
+    setpostStatus(uid: string, status: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE posts SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE post SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -68,7 +96,7 @@ export class PostDatabase {
 
     setPostTitle(uid: string, title: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE posts SET title='${title}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE post SET title='${title}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -79,7 +107,7 @@ export class PostDatabase {
 
     setPostContent(uid: string, content: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE posts SET content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE post SET content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -90,7 +118,7 @@ export class PostDatabase {
 
     setPostLike(uid: string, like: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE posts SET like=${like} WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE post SET \`like\`=${like} WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -101,7 +129,7 @@ export class PostDatabase {
 
     getPostLike(uid: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT like FROM posts WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT like FROM post WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -122,7 +150,7 @@ export class PostDatabase {
 
     setPostDislike(uid: string, dislike: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE posts SET dislike=${dislike} WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE post SET dislike=${dislike} WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -133,7 +161,7 @@ export class PostDatabase {
 
     getPostDislike(uid: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT dislike FROM posts WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT dislike FROM post WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -154,7 +182,7 @@ export class PostDatabase {
 
     setPostView(uid: string, view: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE posts SET view=${view} WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE post SET view=${view} WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -165,7 +193,7 @@ export class PostDatabase {
 
     getPostView(uid: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT view FROM posts WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT view FROM post WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -186,7 +214,7 @@ export class PostDatabase {
 
     deletePost(uid: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`DELETE FROM posts WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`DELETE FROM post WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -201,3 +229,4 @@ export class PostDatabase {
     }
 }
 
+export const postDatabase = new PostDatabase();
