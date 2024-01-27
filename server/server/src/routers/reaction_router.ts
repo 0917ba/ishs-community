@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 import { Type } from "../util/type";
-import { Status } from "../util/status";
+import { ReactionStatus } from "../util/reaction_status";
 
 const reactionRouter = require('express').Router();
 
@@ -10,7 +10,7 @@ reactionRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     let type: Type = req.session.type;
     let userId: string = req.session.userId;
     let targetId: string = req.session.targetId;
-    let status: Status = req.session.status;
+    let status: ReactionStatus = req.session.status;
     let checker = new QueryChecker();
     if (checker.notNull(type, userId)) {
         res.status(200).send(respRest(200, 0));
