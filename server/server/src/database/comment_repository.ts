@@ -1,6 +1,7 @@
 import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
+import { Comment } from '../dto/comment';
 
 export class CommentDatabase {
     mysql = require('mysql');
@@ -23,7 +24,7 @@ export class CommentDatabase {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
-                `INSERT INTO comments (uid, authorId, postId, author, like, dislike, createdAt, target, content, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                `INSERT INTO comment (uid, authorId, postId, author, like, dislike, createdAt, target, content, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [uid, authorId, postId, author, like, dislike, createdAt, target, content, status],
                 (err: any, res: any) => {
                 if (err) {
@@ -36,52 +37,52 @@ export class CommentDatabase {
     }
 
     getCommentByUid(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comments WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<Comment>((resolve, reject) => {
+            this.db.query(`SELECT * FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Comment.fromObject(result[0]));
             });
         });
     }
 
     getCommentsByPostId(postId: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comments WHERE postId='${postId}'`, (err: any, result: any) => {
+        return new Promise<Comment[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM comment WHERE postId='${postId}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Comment.fromObjectList(result));
             });
         });
     }
 
     getCommentsByAuthorId(authorId: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comments WHERE authorId='${authorId}'`, (err: any, result: any) => {
+        return new Promise<Comment[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM comment WHERE authorId='${authorId}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Comment.fromObjectList(result));
             });
         });
     }
 
     getCommentsByTarget(target: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comments WHERE target='${target}'`, (err: any, result: any) => {
+        return new Promise<Comment[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM comment WHERE target='${target}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Comment.fromObjectList(result));
             });
         });
     }
 
     deleteCommentByUid(uid: string) {
         this.db.query(
-            'delete from comments where uid=?',
+            'delete from comment where uid=?',
             [uid],
             (err: any, res: any) => {
                 if(err) {
@@ -94,7 +95,7 @@ export class CommentDatabase {
 
     setContent(uid: string, content: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comments SET content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE comment SET content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -105,7 +106,7 @@ export class CommentDatabase {
 
     setLike(uid: string, like: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comments SET like='${like}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE comment SET like='${like}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -116,7 +117,7 @@ export class CommentDatabase {
 
     getLike(uid: string) {
         return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT like FROM comments WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT like FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -137,7 +138,7 @@ export class CommentDatabase {
 
     setDislike(uid: string, dislike: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comments SET dislike='${dislike}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE comment SET dislike='${dislike}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -148,7 +149,7 @@ export class CommentDatabase {
 
     getDislike(uid: string) {
         return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT dislike FROM comments WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT dislike FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -169,7 +170,7 @@ export class CommentDatabase {
 
     setStatus(uid: string, status: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comments SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE comment SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -177,5 +178,6 @@ export class CommentDatabase {
             });
         });
     }
-
 }
+
+export const commentDatabase = new CommentDatabase();

@@ -22,7 +22,8 @@ export class ReportDatabase {
         });
     }
 
-    createReport(uid: string, type: string, authorId: string, targetId: string, content: string, createdAt: string, status: string) {
+    createReport(type: string, authorId: string, targetId: string, content: string, createdAt: string, status: string) {
+        let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
                 `INSERT INTO reports (uid, type, authorId, targetId, content, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,

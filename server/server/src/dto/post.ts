@@ -1,7 +1,7 @@
 import { ContentStatus } from "../util/content_status";
 
 export class Post {
-    // uid, authorId, author, title, content, like, dislike, view, createdAt, status
+    // uid, authorId, author, title, content, like, dislike, view, createdAt, comments, status
     private readonly uid: string;
     private authorId: string;
     private author: string;
@@ -11,9 +11,10 @@ export class Post {
     private dislike: number;
     private view: number;
     private createdAt: string;
+    private comments: number;
     private status: ContentStatus;
 
-    constructor(uid: string, authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, status: ContentStatus) {
+    constructor(uid: string, authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, comments: number, status: ContentStatus) {
         this.uid = uid;
         this.authorId = authorId;
         this.author = author;
@@ -23,6 +24,7 @@ export class Post {
         this.dislike = dislike;
         this.view = view;
         this.createdAt = createdAt;
+        this.comments = comments;
         this.status = status;
     }
 
@@ -62,6 +64,10 @@ export class Post {
         return this.createdAt;
     }
 
+    public getComments(): number {
+        return this.comments;
+    }
+
     public getStatus(): string {
         return this.status;
     }
@@ -98,31 +104,12 @@ export class Post {
         this.createdAt = createdAt;
     }
 
+    public setComments(comments: number): void {
+        this.comments = comments;
+    }
+
     public setStatus(status: ContentStatus): void {
         this.status = status;
-    }
-
-    public getJSON(): any {
-        return {
-            uid: this.uid,
-            authorId: this.authorId,
-            author: this.author,
-            title: this.title,
-            content: this.content,
-            like: this.like,
-            dislike: this.dislike,
-            view: this.view,
-            createdAt: this.createdAt,
-            status: this.status
-        };
-    }
-
-    public getJSONString(): string {
-        return JSON.stringify(this.getJSON());
-    }
-
-    public toString(): string {
-        return this.getJSONString();
     }
 
     public toObject(): any {
@@ -144,16 +131,19 @@ export class Post {
         return JSON.stringify(this.toObject());
     }
 
-    public static fromJSON(json: any): Post {
-        return new Post(json.uid, json.authorId, json.author, json.title, json.content, json.like, json.dislike, json.view, json.createdAt, json.status);
-    }
-
-    public static fromJSONString(jsonString: string): Post {
-        return this.fromJSON(JSON.parse(jsonString));
-    }
-
     public static fromObject(obj: any): Post {
-        return new Post(obj.uid, obj.authorId, obj.author, obj.title, obj.content, obj.like, obj.dislike, obj.view, obj.createdAt, obj.status);
+        return new Post(obj.uid, obj.authorId, obj.author, obj.title, obj.content, obj.like, obj.dislike, obj.view, obj.createdAt, obj.comments, obj.status);
+    }
+
+    public static fromObjectList(objList: any[]): Post[] {
+        let posts: Post[] = [];
+        if (objList == null) {
+            return posts;
+        }
+        for (let obj of objList) {
+            posts.push(this.fromObject(obj));
+        }
+        return posts;
     }
 
     public static fromObjectString(objString: string): Post {

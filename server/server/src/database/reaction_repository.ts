@@ -22,7 +22,8 @@ export class ReactionDatabase {
         });
     }
 
-    createReaction(uid: string, type: string, userId: string, targetId: string, status: string) {
+    createReaction(type: string, userId: string, targetId: string, status: string) {
+        let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
                 `INSERT INTO reactions (uid, type, userId, targetId, status) VALUES (?, ?, ?, ?, ?)`,

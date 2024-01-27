@@ -1,5 +1,5 @@
 export enum ContentStatus {
-    ACTIVE = "ACTIVE",
+    GOOD = "GOOD",
     REPORTED = "REPORTED",
     DELETED = "DELETED",
 }
