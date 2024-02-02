@@ -3,7 +3,8 @@ import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 import { ContentStatus } from "../util/content_status";
 import { commentDatabase } from "../database/comment_repository";
-import { PostDatabase, postDatabase } from "../database/post_repository";
+import { postDatabase } from "../database/post_repository";
+import { now } from "../util/time_templete";
 
 const postRouter = require('express').Router();
 
@@ -17,10 +18,7 @@ postRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     let checker = new QueryChecker();
 
     if (checker.notNull(authorId, author, title, content)) {
-        let time = new Date();
-        let createdAt = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
-        console.log(createdAt);
-        postDatabase.createPost(authorId, author, title, content, 0, 0, 0, createdAt, ContentStatus.GOOD);
+        postDatabase.createPost(authorId, author, title, content, 0, 0, 0, now(), ContentStatus.GOOD);
         res.status(200).send(respRest(200, 0));
     } else {
         res.status(400).send(respRest(400, 1));

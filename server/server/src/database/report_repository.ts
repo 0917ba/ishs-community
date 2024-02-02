@@ -18,7 +18,7 @@ export class ReportDatabase {
             if (err) {
                 throw err;
             }
-            logger.info('Connected to database(user)');
+            logger.info('Connected to database(report)');
         });
     }
 
@@ -32,7 +32,6 @@ export class ReportDatabase {
                 if (err) {
                     reject(err);
                 }
-                logger.debug(`Created new report of uid ${res.insertId}`);
                 resolve(true);
             });
         });
@@ -126,3 +125,5 @@ export class ReportDatabase {
         });
     }
 }
+
+export const reportDatabase = new ReportDatabase();

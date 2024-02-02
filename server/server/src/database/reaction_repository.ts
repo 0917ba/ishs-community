@@ -1,9 +1,9 @@
 import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
-import { Role } from '../util/role';
-import { PrivilegeEnum } from '../util/user_privilege';
-import { CodeManager, IdentiFier } from '../util/identifier';
+import { Reaction } from '../dto/reaction';
+import { ReactionType } from '../util/reaction_type';
+import { ReactionStatus } from '../util/reaction_status';
 
 export class ReactionDatabase {
     mysql = require('mysql');
@@ -18,7 +18,7 @@ export class ReactionDatabase {
             if (err) {
                 throw err;
             }
-            logger.info('Connected to database(user)');
+            logger.info('Connected to database(reaction)');
         });
     }
 
@@ -26,43 +26,62 @@ export class ReactionDatabase {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
-                `INSERT INTO reactions (uid, type, userId, targetId, status) VALUES (?, ?, ?, ?, ?)`,
+                `INSERT INTO reaction (uid, type, userId, targetId, status) VALUES (?, ?, ?, ?, ?)`,
                 [uid, type, userId, targetId, status],
                 (err: any, res: any) => {
                 if (err) {
                     reject(err);
                 }
-                logger.debug(`Created new reaction of uid ${res.insertId}`);
                 resolve(true);
             });
         });
     }
 
     getReactionByUid(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM reactions WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<Reaction | null>((resolve, reject) => {
+            this.db.query(`SELECT * FROM reaction WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Reaction.fromObject(result[0]));
             });
         });
     }
 
     getReactionsByUserId(userId: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM reactions WHERE userId='${userId}'`, (err: any, result: any) => {
+        return new Promise<Reaction[] | null>((resolve, reject) => {
+            this.db.query(`SELECT * FROM reaction WHERE userId='${userId}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                if (result) {
+                    resolve(Reaction.fromObjectList(result));
+                } else {
+                    resolve(null);
+                }
             });
         });
     }
 
+    findReactionByUserId(target: string, userId: string) {
+        return new Promise<Reaction | null>((resolve, reject) => {
+            this.db.query(`SELECT * FROM reaction WHERE targetId='${target}' AND userId='${userId}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                if (result.length > 0) {
+                    resolve(Reaction.fromObject(result[0]));
+                } else {
+                    resolve(null);
+                }
+            });
+        });
+    }
+
+
     getUserId(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT userId FROM reactions WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<string>((resolve, reject) => {
+            this.db.query(`SELECT userId FROM reaction WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -72,8 +91,8 @@ export class ReactionDatabase {
     }
 
     getTargetId(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT targetId FROM reactions WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<string>((resolve, reject) => {
+            this.db.query(`SELECT targetId FROM reaction WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -83,8 +102,8 @@ export class ReactionDatabase {
     }
 
     getReactionType(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT type FROM reactions WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<ReactionType>((resolve, reject) => {
+            this.db.query(`SELECT type FROM reaction WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -94,8 +113,8 @@ export class ReactionDatabase {
     }
 
     getReactionStatus(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT status FROM reactions WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<ReactionStatus>((resolve, reject) => {
+            this.db.query(`SELECT status FROM reaction WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -106,7 +125,7 @@ export class ReactionDatabase {
 
     setReactionStatus(uid: string, status: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE reactions SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE reaction SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -115,4 +134,18 @@ export class ReactionDatabase {
             });
         });
     }
+
+    deleteReaction(uid: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.db.query(`DELETE FROM reaction WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                logger.debug(`Deleted reaction of uid ${uid}`);
+                resolve(true);
+            });
+        });
+    }
 }
+
+export const reactionDatabase = new ReactionDatabase();

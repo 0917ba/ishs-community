@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { UserDatabase } from "../database/user_repository";
+import { userDatabase } from "../database/user_repository";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 
 const loginRouter: Router = require('express').Router();
-const userDatabase = new UserDatabase();
 loginRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     let id: string = req.body.id;
     let password: string = req.body.password;
