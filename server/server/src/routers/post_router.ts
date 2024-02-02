@@ -5,6 +5,8 @@ import { ContentStatus } from "../util/content_status";
 import { commentDatabase } from "../database/comment_repository";
 import { postDatabase } from "../database/post_repository";
 import { now } from "../util/time_templete";
+import { reportDatabase } from "../database/report_repository";
+import { Comment } from "../dto/comment";
 
 const postRouter = require('express').Router();
 
@@ -49,15 +51,20 @@ postRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     if (checker.notNull(uid)) {
         let post = await postDatabase.getPostByUid(uid);
         if (post.getStatus() == ContentStatus.GOOD) {
-            let comments = await commentDatabase.getCommentsByPostId(uid);
             let result = post.toObject();
+            let comments = await commentDatabase.getCommentsByPostId(uid);
             result.comments = [];
-            comments.forEach((comment) => {
+            for (let comment of comments) {
+                if (comment.getStatus() == ContentStatus.REPORTED) {
+                    let report = await reportDatabase.getReportsByTargetId(comment.getUid());
+                    comment.setContent("신고가 접수되어 삭제된 댓글입니다.\n사유: " + report[0].getContent());
+                }
                 result.comments.push(comment.toObject());
-            });
+            }
+            postDatabase.addPostView(uid);
             res.status(200).send(respRest(200, result));
         } else {
-            res.status(400).send(respRest(400, 1));
+            res.status(403).send(respRest(403, 1));
         }
     } else {
         res.status(400).send(respRest(400, 1));

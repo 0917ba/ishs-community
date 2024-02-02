@@ -4,6 +4,9 @@ import { UUID } from '../util/uuid_generator';
 import { Role } from '../util/role';
 import { PrivilegeEnum } from '../util/user_privilege';
 import { CodeManager, IdentiFier } from '../util/identifier';
+import { Report } from '../dto/report';
+import { ReportType } from '../util/report_type';
+import { ReportStatus } from '../util/report_status';
 
 export class ReportDatabase {
     mysql = require('mysql');
@@ -26,7 +29,7 @@ export class ReportDatabase {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
-                `INSERT INTO reports (uid, type, authorId, targetId, content, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                `INSERT INTO report (uid, type, authorId, targetId, content, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,
                 [uid, type, authorId, targetId, content, createdAt, status],
                 (err: any, res: any) => {
                 if (err) {
@@ -38,41 +41,41 @@ export class ReportDatabase {
     }
 
     getReportByUid(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM reports WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<Report>((resolve, reject) => {
+            this.db.query(`SELECT * FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Report.fromObject(result[0]));
             });
         });
     }
 
     getReportsByAuthorId(authorId: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM reports WHERE authorId='${authorId}'`, (err: any, result: any) => {
+        return new Promise<Report[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM report WHERE authorId='${authorId}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Report.fromObjectList(result));
             });
         });
     }
 
     getReportsByTargetId(targetId: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT * FROM reports WHERE targetId='${targetId}'`, (err: any, result: any) => {
+        return new Promise<Report[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM report WHERE targetId='${targetId}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result);
+                resolve(Report.fromObjectList(result));
             });
         });
     }
 
     getReportType(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT type FROM reports WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<ReportType>((resolve, reject) => {
+            this.db.query(`SELECT type FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -82,8 +85,8 @@ export class ReportDatabase {
     }
 
     getReportAuthorId(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT authorId FROM reports WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<string>((resolve, reject) => {
+            this.db.query(`SELECT authorId FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -93,8 +96,8 @@ export class ReportDatabase {
     }
 
     getReportTargetId(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT targetId FROM reports WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<string>((resolve, reject) => {
+            this.db.query(`SELECT targetId FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -104,8 +107,8 @@ export class ReportDatabase {
     }
 
     getReportContent(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT content FROM reports WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<string>((resolve, reject) => {
+            this.db.query(`SELECT content FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -115,12 +118,45 @@ export class ReportDatabase {
     }
 
     getReportStatus(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT status FROM reports WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<ReportStatus>((resolve, reject) => {
+            this.db.query(`SELECT status FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
                 resolve(result[0].status);
+            });
+        });
+    }
+
+    updateReportStatus(uid: string, status: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.db.query(`UPDATE report SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(true);
+            });
+        });
+    }
+
+    deleteReport(uid: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.db.query(`DELETE FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(true);
+            });
+        });
+    }
+
+    getReportsInAscendingOrder(start: number, end: number) {
+        return new Promise<Report[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM report ORDER BY createdAt ASC LIMIT ${start}, ${end}`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(Report.fromObjectList(result));
             });
         });
     }
