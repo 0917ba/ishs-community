@@ -40,7 +40,7 @@ export class Reaction {
         this.status = status;
     }
 
-    public toJson(): any {
+    public toObject(): any {
         return {
             uid: this.uid,
             type: this.type,
@@ -51,15 +51,24 @@ export class Reaction {
     }
 
     public toString(): string {
-        return JSON.stringify(this.toJson());
+        return JSON.stringify(this.toObject());
     }
 
-    public static fromJSON(json: any): Reaction {
-        return new Reaction(json.uid, json.type, json.userId, json.targetId, json.status);
+    public static fromObject(obj: any): Reaction {
+        return new Reaction(obj.uid, obj.type, obj.userId, obj.targetId, obj.status);
     }
 
-    public static fromJSONString(jsonString: string): Reaction {
-        return Reaction.fromJSON(JSON.parse(jsonString));
+    public static fromObjectString(objString: string): Reaction {
+        return Reaction.fromObject(JSON.parse(objString));
+    }
+
+    public static fromObjectList(objList: any[]): Reaction[] {
+        let reactions: Reaction[] = [];
+        if (objList == null) return reactions;
+        for (let obj of objList) {
+            reactions.push(Reaction.fromObject(obj));
+        }
+        return reactions;
     }
 
     

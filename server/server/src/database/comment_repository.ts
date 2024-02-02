@@ -2,6 +2,7 @@ import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
 import { Comment } from '../dto/comment';
+import { ReactionStatus } from '../util/reaction_status';
 
 export class CommentDatabase {
     mysql = require('mysql');
@@ -16,7 +17,7 @@ export class CommentDatabase {
             if (err) {
                 throw err;
             }
-            logger.info('Connected to database(user)');
+            logger.info('Connected to database(comment)');
         });
     }
 
@@ -24,13 +25,23 @@ export class CommentDatabase {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
-                `INSERT INTO comment (uid, authorId, postId, author, like, dislike, createdAt, target, content, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                `INSERT INTO comment (uid, authorId, postId, author, \`like\`, dislike, createdAt, target, content, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [uid, authorId, postId, author, like, dislike, createdAt, target, content, status],
                 (err: any, res: any) => {
                 if (err) {
                     reject(err);
                 }
-                logger.debug(`Created new comment of uid ${res.insertId}`);
+                resolve(true);
+            });
+        });
+    }
+
+    updateComment(uid: string, content: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.db.query(`UPDATE comment SET content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
                 resolve(true);
             });
         });
@@ -81,16 +92,14 @@ export class CommentDatabase {
     }
 
     deleteCommentByUid(uid: string) {
-        this.db.query(
-            'delete from comment where uid=?',
-            [uid],
-            (err: any, res: any) => {
-                if(err) {
-                    throw err;
+        return new Promise<boolean>((resolve, reject) => {
+            this.db.query(`DELETE FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
                 }
-                logger.debug(`Deleted comment of ${uid}`);
-            }
-        )
+                resolve(true);
+            });
+        });
     }
 
     setContent(uid: string, content: string) {
@@ -106,7 +115,7 @@ export class CommentDatabase {
 
     setLike(uid: string, like: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comment SET like='${like}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`UPDATE comment SET \`like\`='${like}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -117,7 +126,7 @@ export class CommentDatabase {
 
     getLike(uid: string) {
         return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT like FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT \`like\` FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -165,6 +174,50 @@ export class CommentDatabase {
                     resolve(true);
                 });
             });
+        });
+    }
+
+    subLike(uid: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.getLike(uid).then((result: any) => {
+                this.setLike(uid, result - 1).then((result: any) => {
+                    resolve(true);
+                });
+            });
+        });
+    }
+
+    subDislike(uid: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.getDislike(uid).then((result: any) => {
+                this.setDislike(uid, result - 1).then((result: any) => {
+                    resolve(true);
+                });
+            });
+        });
+    }
+
+    updateReaction(uid: string, status: string, previousStatus?: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            if (status == ReactionStatus.LIKE) {
+                this.addLike(uid).then((result: boolean) => {
+                    resolve(result);
+                });
+            } else if (status == ReactionStatus.DISLIKE) {
+                this.addDislike(uid).then((result: boolean) => {
+                    resolve(result);
+                });
+            } else if (status == ReactionStatus.NONE) {
+                if (previousStatus == ReactionStatus.LIKE) {
+                    this.subLike(uid).then((result: boolean) => {
+                        resolve(result);
+                    });
+                } else if (previousStatus == ReactionStatus.DISLIKE) {
+                    this.subDislike(uid).then((result: boolean) => {
+                        resolve(result);
+                    });
+                }
+            }
         });
     }
 

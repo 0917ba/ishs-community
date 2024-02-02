@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
-import { UserDatabase } from "../database/user_repository";
+import { userDatabase } from "../database/user_repository";
 import { Role } from "../util/role";
 
 const userInfoRouter = require('express').Router();
-const userDatabase = new UserDatabase();
 
 userInfoRouter.get('/info', (req: Request, res: Response, next: NextFunction) =>{
     let id: string = req.body.id;

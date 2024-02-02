@@ -177,3 +177,4 @@ export class UserDatabase {
     }
 }
 
+export const userDatabase = new UserDatabase();

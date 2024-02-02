@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { UserDatabase } from "../database/user_repository";
+import { userDatabase } from "../database/user_repository";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 import { PrivilegeEnum } from "../util/user_privilege";
@@ -7,7 +7,6 @@ import { Role } from "../util/role";
 import { logger } from "../logging/central_log";
 
 const signUpRouter: Router = require('express').Router();
-const userDatabase = new UserDatabase();
 
 signUpRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     let key: number = req.body.key;

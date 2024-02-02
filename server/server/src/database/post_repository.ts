@@ -2,6 +2,7 @@ import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
 import { Post } from '../dto/post';
+import { ReactionStatus } from '../util/reaction_status';
 
 export class PostDatabase {
     mysql = require('mysql');
@@ -129,7 +130,7 @@ export class PostDatabase {
 
     getPostLike(uid: string) {
         return new Promise<number>((resolve, reject) => {
-            this.db.query(`SELECT like FROM post WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.query(`SELECT \`like\` FROM post WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -142,6 +143,16 @@ export class PostDatabase {
         return new Promise<boolean>((resolve, reject) => {
             this.getPostLike(uid).then((like: number) => {
                 this.setPostLike(uid, like + 1).then((result: boolean) => {
+                    resolve(result);
+                });
+            });
+        });
+    }
+
+    subPostLike(uid: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.getPostLike(uid).then((like: number) => {
+                this.setPostLike(uid, like - 1).then((result: boolean) => {
                     resolve(result);
                 });
             });
@@ -177,6 +188,40 @@ export class PostDatabase {
                     resolve(result);
                 });
             });
+        });
+    }
+
+    subPostDislike(uid: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            this.getPostDislike(uid).then((dislike: number) => {
+                this.setPostDislike(uid, dislike - 1).then((result: boolean) => {
+                    resolve(result);
+                });
+            });
+        });
+    }
+
+    updateReaction(uid: string, status: string, previousStatus?: string) {
+        return new Promise<boolean>((resolve, reject) => {
+            if (status == ReactionStatus.LIKE) {
+                this.addPostLike(uid).then((result: boolean) => {
+                    resolve(result);
+                });
+            } else if (status == ReactionStatus.DISLIKE) {
+                this.addPostDislike(uid).then((result: boolean) => {
+                    resolve(result);
+                });
+            } else if (status == ReactionStatus.NONE) {
+                if (previousStatus == ReactionStatus.LIKE) {
+                    this.subPostLike(uid).then((result: boolean) => {
+                        resolve(result);
+                    });
+                } else if (previousStatus == ReactionStatus.DISLIKE) {
+                    this.subPostDislike(uid).then((result: boolean) => {
+                        resolve(result);
+                    });
+                }
+            }
         });
     }
 
