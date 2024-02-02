@@ -52,7 +52,7 @@ export class Report {
         this.status = status;
     }
 
-    public toJson(): any {
+    public toObject(): any {
         return {
             uid: this.uid,
             type: this.type,
@@ -65,14 +65,22 @@ export class Report {
     }
 
     public toString(): string {
-        return JSON.stringify(this.toJson());
+        return JSON.stringify(this.toObject());
     }
 
-    public static fromJSON(json: any): Report {
+    public static fromObject(json: any): Report {
         return new Report(json.uid, json.type, json.authorId, json.targetId, json.content, json.createdAt, json.status);
     }
 
-    public static fromJSONString(jsonString: string): Report {
-        return Report.fromJSON(JSON.parse(jsonString));
+    public static fromObjectList(json: any): Report[] {
+        let reports: Report[] = [];
+        for (let i = 0; i < json.length; i++) {
+            reports.push(Report.fromObject(json[i]));
+        }
+        return reports;
+    }
+
+    public static fromObjectString(jsonString: string): Report {
+        return Report.fromObject(JSON.parse(jsonString));
     }
 }

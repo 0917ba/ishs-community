@@ -49,16 +49,12 @@ export class ReactionDatabase {
     }
 
     getReactionsByUserId(userId: string) {
-        return new Promise<Reaction[] | null>((resolve, reject) => {
+        return new Promise<Reaction[]>((resolve, reject) => {
             this.db.query(`SELECT * FROM reaction WHERE userId='${userId}'`, (err: any, result: any) => {
                 if (err) {
                     reject(err);
                 }
-                if (result) {
-                    resolve(Reaction.fromObjectList(result));
-                } else {
-                    resolve(null);
-                }
+                resolve(Reaction.fromObjectList(result));
             });
         });
     }
