@@ -24,10 +24,10 @@ export class QueryChecker {
         return result;
     }
 
-    typeCheck<Type>(type: Type, ...params: any[]) {
+    checkNumber(...params: any[]) {
         let result = true;
         params.forEach((element: any) => {
-            if (typeof element != type) {
+            if (isNaN(element)) {
                 result = false;
             }
         });
