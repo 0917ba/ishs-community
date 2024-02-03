@@ -29,6 +29,9 @@ function MainPageBox() {
       setIsLoading(false);
       setmainpagelist(_mainpagelist);
     }, 1);
+    fetch(`http://app.ishs.co.kr/post/list?start=0&end=3`).then(res => res.json()).then(data => {
+      console.log(data);
+    });
   }, []);
   return <div className={styles.Maincontainer}>
     <img src="/img/log_ishs_image.png" height="60px" width="160px" className={styles.Mainbox}/>

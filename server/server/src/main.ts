@@ -13,7 +13,7 @@ import { Socket } from 'socket.io';
 // create app
 const app = express();
 const server = require('http').createServer(app);
-
+const cors = require('cors');
 // database
 const socket: Socket = require('socket.io')(server);
 import session from 'express-session';
@@ -63,6 +63,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(sessionMiddleware);
+app.use(cors())
 
 // log all requests
 app.use('*', (req: Request, res: Response, next: NextFunction) => {
