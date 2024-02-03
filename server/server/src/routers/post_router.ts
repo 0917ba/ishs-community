@@ -101,4 +101,22 @@ postRouter.get('/list', async (req: Request, res: Response, next: NextFunction) 
     }
 });
 
+postRouter.get('/search', async (req: Request, res: Response, next: NextFunction) => {
+    let keyword = req.query.keyword;
+    let start = req.query.start;
+    let end = req.query.end;
+
+    let checker = new QueryChecker();
+    if (checker.notNull(keyword, start, end)) {
+        let posts = await postDatabase.findPostByTitleAndRange(String(keyword), Number(start), Number(end));
+        let result: any[] = [];
+        posts.forEach((post) => {
+            result.push(post.toObject());
+        });
+        res.status(200).send(respRest(200, result));
+    } else {
+        res.status(400).send(respRest(400, 1));
+    }
+});
+
 module.exports = postRouter;
