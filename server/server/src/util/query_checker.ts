@@ -5,7 +5,7 @@ export class QueryChecker {
     notNull(...params: any[]) {
         let result = true;
         params.forEach((element: any) => {
-            if (element == null) {
+            if (element == null || element == undefined || element == "") {
                 result = false;
             }
             console.log(element);
