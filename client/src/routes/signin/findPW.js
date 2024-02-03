@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function FindPw() {
   useEffect(() => {
@@ -12,7 +13,7 @@ function FindPw() {
         body: JSON.stringify({}),
       };
       const serverUrl = process.env.REACT_APP_SERVER_URL;
-      res = await fetch(`serverUrl` + `/check_session`, formData);
+      // res = await fetch(`serverUrl` + `/check_session`, formData);
     })();
   }, []);
   const navigate = useNavigate();

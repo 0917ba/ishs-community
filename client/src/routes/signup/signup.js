@@ -14,7 +14,7 @@ function Signup() {
         body: JSON.stringify({}),
       };
       const serverUrl = process.env.REACT_APP_SERVER_URL;
-      res = await fetch(`serverUrl` + `/check_session`, formData);
+      // res = await fetch(`serverUrl` + `/check_session`, formData);
     })();
   }, []);
 

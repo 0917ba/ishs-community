@@ -1,5 +1,5 @@
 import styles from './profile.module.css';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function Profile() {
   const [loginState, setLoginState] = useState(false);
@@ -14,14 +14,14 @@ function Profile() {
         body: JSON.stringify({}),
       };
       const serverUrl = process.env.REACT_APP_SERVER_URL;
-      res = await fetch(`serverUrl` + `/checksession`, formData);
+      // res = await fetch(`serverUrl` + `/checksession`, formData);
     })();
-    if (res.status === 200) {
-      setLoginState(true);
-    }
-    if (res.status === 400) {
-      setLoginState(false);
-    }
+    // if (res.status === 200) {
+    //   setLoginState(true);
+    // }
+    // if (res.status === 400) {
+    //   setLoginState(false);
+    // }
   }, []);
 
   if (loginState === false) {
