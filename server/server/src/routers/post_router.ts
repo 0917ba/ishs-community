@@ -93,7 +93,9 @@ postRouter.get('/list', async (req: Request, res: Response, next: NextFunction) 
         let posts = await postDatabase.getPostsInAscendingOrder(Number(start), Number(end))
         let result: any[] = [];
         posts.forEach((post) => {
-            result.push(post.toObject());
+            if (post.getStatus() == ContentStatus.GOOD) {
+                result.push(post.toObject());
+            }
         });
         res.status(200).send(respRest(200, result));
     } else {
