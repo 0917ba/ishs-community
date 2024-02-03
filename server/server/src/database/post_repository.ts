@@ -269,6 +269,17 @@ export class PostDatabase {
         });
     }
 
+    findPostByTitleAndRange(title: string, start: number, end: number) {
+        return new Promise<Post[]>((resolve, reject) => {
+            this.db.query(`SELECT * FROM post WHERE title LIKE '%${title}%' ORDER BY createdAt ASC LIMIT ${start}, ${end}`, (err: any, result: any) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(Post.fromObjectList(result));
+            });
+        });
+    }
+
     close() {
         this.db.end();
     }
