@@ -108,6 +108,7 @@ postRouter.get('/search', async (req: Request, res: Response, next: NextFunction
 
     let checker = new QueryChecker();
     if (checker.notNull(keyword, start, end)) {
+        if (!checker.checkNumber(start, end)) {res.status(400).send(respRest(400, 1)); return;}
         let posts = await postDatabase.findPostByTitleAndRange(String(keyword), Number(start), Number(end));
         let result: any[] = [];
         posts.forEach((post) => {
