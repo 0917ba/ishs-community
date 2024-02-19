@@ -29,9 +29,6 @@ function MainPageBox() {
       setIsLoading(false);
       setmainpagelist(_mainpagelist);
     }, 1);
-    fetch(`http://app.ishs.co.kr/post/list?start=0&end=3`).then(res => res.json()).then(data => {
-      console.log(data);
-    });
   }, []);
   return <div className={styles.Maincontainer}>
     <img src="/img/log_ishs_image.png" height="60px" width="160px" className={styles.Mainbox}/>
@@ -47,18 +44,18 @@ function MainPageBox() {
 
 function MoveMyPage(props){
   return <div>
-    <div onclick={props.moveMyPageSite} className={styles.ButtonMovePageList}>
-      <h4>{props.moveMyPage}</h4>
-    </div>
+    <button onclick={props.moveMyPageSite} className={styles.ButtonMovePageList}>
+      <h7>{props.moveMyPage}</h7>
+    </button>
   </div>
 }
 
 const _pages = [
-  { pageName: '아이디/학번', pageSite:"location.href='address'"},
-  { pageName: '누적 벌점', pageSite:"location.href='address'"},
-  { pageName: '유저 계급', pageSite:"location.href='address'"},
-  { pageName: '이메일', pageSite:"location.href='address'"},
-  { pageName: '보유 ATP', pageSite:"location.href='address'"},
+  { pageName: '아이디/학번', pageSite:"UserInformationBox"},
+  { pageName: '누적 벌점', pageSite:"HelpUserBox"},
+  { pageName: '유저 계급', pageSite:"UserRankBox"},
+  { pageName: '이메일', pageSite:"UserEmailBox"},
+  { pageName: '보유 ATP', pageSite:"UserATPBox"},
 ]
 
 function MovePageBox() {
@@ -72,13 +69,38 @@ function MovePageBox() {
     }, 1000);
   }, []);
 
+  const [content, setContent] = useState();
+
+  const handleClickButton = e => {
+    const { name } = e.target;
+    setContent(name);
+  };
+
+  const selectComponent = {
+    HelpUserBox: <HelpUserBox />,
+    UserInformationBox: <UserInformationBox />,
+    UserRankBox: <UserRankBox />,
+    UserEmailBox: <UserEmailBox />,
+    UserATPBox: <UserATPBox />,
+  };
+
   return <div className={styles.MyMovebox}>
     <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserImage} />
     <div className={styles.MovePageList}>
       {
         isLoading ? <div>Loading...</div> :
         pages.map((pages, index) => {
-          return <MoveMyPage key={index} moveMyPage={pages.pageName} moveMyPageSite={pages.pageSite}/>
+          return (
+            <div>
+              <div>
+                {/* <MoveMyPage key={index} moveMyPage={pages.pageName} moveMyPageSite={pages.pageSite}/> */}
+                <button onClick={handleClickButton} name={pages.pageSite} key={index}>
+                  {pages.pageName}
+                </button>
+              </div>
+              {content && <content>{selectComponent[content]}</content>}
+            </div>
+          );
         })
       }
     </div>
@@ -132,14 +154,32 @@ function Notification() {
   </div>
 }
 
+
 function SelectPageBox() {
+  const [pages, setpages] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
+      setpages(_pages);
     }, 1000);
   }, []);
+
+  const [content, setContent] = useState();
+
+  const handleClickButton = e => {
+    const { name } = e.target;
+    setContent(name);
+  };
+
+  const selectComponent = {
+    HelpUserBox: <HelpUserBox />,
+    UserInformationBox: <UserInformationBox />,
+    UserRankBox: <UserRankBox />,
+    UserEmailBox: <UserEmailBox />,
+    UserATPBox: <UserATPBox />,
+  };
 
   return <div className={styles.MySelectbox}>
     <h1 className={styles.MySelectTitle}>나의 활동</h1>
@@ -147,12 +187,13 @@ function SelectPageBox() {
       isLoading ? <div>Loading...</div> : 
       <div>
         <WritingPageBox />
+        {content && <content>{selectComponent[content]}</content>}
         {/* <HelpUserBox /> */}
         {/* <UserInformationBox /> */}
         {/* <누적벌점 /> */}
         {/* <UserRankBox /> */}
         {/* <UserEmailBox /> */}
-        <UserATPBox />
+        {/* <UserATPBox /> */}
       </div>
     }
   </div>

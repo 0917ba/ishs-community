@@ -1,0 +1,9 @@
+.footer{
+    display: flex;
+}
+
+.exPic{
+    height: 16vh;
+    width: 70vh;
+    margin: auto auto;
+}

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './App.css';
 
 import Main from './routes/main/main';
 import Profile from './routes/profile/profile';
@@ -12,6 +13,11 @@ import BigBangBar from "./component/BigBang/BingBang";
 import MainMy from "./component/MainMy/MainMy";
 // import PostList from "./routes/PostList";
 import MyPage from "./routes/MyPage";
+
+import BoardList from "./routes/BoardList";
+import Home from "./routes/Home";
+import MyList from "./routes/MyList";
+import React from "react";
 
 function App() {
   function user() {
@@ -38,6 +44,9 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/post/bigbang" element={<BigBangBar />} />
         <Route path="/post/mainmy" element={<MainMy />} />
+        <Route path="/Home" element ={<Home />}/>
+        <Route path="/MyList" element={<MyList/>}/>
+        <Route path='/Board' element={<BoardList />}/>
       </Routes>
     </Router>
   );

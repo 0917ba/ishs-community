@@ -1,0 +1,109 @@
+
+.box1{
+    position: relative;
+    padding: 10px;
+}
+
+.search1{
+    padding-right: 2px;
+    position: absolute;
+    right: 10px;
+    border: 1px #797979 solid;
+    border-radius: 8px;
+}
+
+.btnSearch{
+    margin-right: 10px;
+    width: 59px;
+    height: 31px;
+    border: none;
+    border-right: 1px #797979 solid;
+    border-radius: 8px 0 0 8px;
+    background-color: rgb(8, 90, 162);
+    color: rgba(255, 255, 255, 0.877);
+}
+
+.input{
+    width: 170px;
+    height: 24px;
+    border: none;
+}
+
+.input:focus{ outline: none;}
+
+.lists{
+    border: 1px #5e5e5e solid;
+}
+
+.PostList{
+    list-style-type: none;
+    margin: 0;
+    padding: 5vh 2.6vw;
+}
+
+.Post{
+    padding: 0.4vh 2vw;
+    border-bottom: 1px #5e5e5e solid;
+
+}
+
+.PostA{
+    padding: 0 2vw 0vh 2vw;
+    border-bottom: 5px rgba(8, 90, 162, 0.782) solid;
+}
+
+.post1{
+    display: inline-block;
+    margin: 0;
+    height: 7vh;
+    width: 70%;
+    line-height : 7vh;
+}
+
+.post2{
+    display: inline-block;
+    margin: 0;
+    height: 7vh;
+    width: 15%;
+    text-align : center;
+    line-height : 7vh;
+}
+
+.post3{
+    display: inline-block;
+    margin: 0;
+    height: 7vh;
+    width: 15%;
+    text-align : center;
+    line-height : 7vh;
+}
+
+.dot1{
+    display: inline-block;
+    margin: 2vh 0 1vh 2vh;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 100%;
+    background-color:  #103c62 ;
+}
+
+.dot2{
+    display: inline-block;
+    margin: 2vh 0 1vh 3.2vh;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 100%;
+    background-color: #085BA3 ;
+}
+
+.dot3{
+    display: inline-block;
+    margin: 2vh 0 1vh 3.5vh;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 100%;
+    background-color: #1271c5c8 ;
+}
