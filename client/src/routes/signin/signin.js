@@ -66,6 +66,10 @@ function Signin() {
     }
   };
 
+  const onClickForgetPW = () => {
+    navigate('/findpw');
+  };
+
   return (
     <div>
       <div>
@@ -91,7 +95,9 @@ function Signin() {
       </div>
       <div>
         <span>
-          <button type='button'>비밀번호를 잊으셨나요?</button>
+          <button type='button' onClick={onClickForgetPW}>
+            비밀번호를 잊으셨나요?
+          </button>
         </span>
         <span>
           <button type='button' onClick={onClickSignUp}>

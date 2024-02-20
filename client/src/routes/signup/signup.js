@@ -69,7 +69,7 @@ function Signup() {
   };
 
   const onClickSignup = async () => {
-    //console.log('signup');
+    console.log('signup');
 
     const formData = {
       method: 'POST',
