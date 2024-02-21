@@ -19,6 +19,7 @@ export class CommentDatabase {
             }
             logger.info('Connected to database(comment)');
         });
+        this.db.on('error', (err: any) => {});
     }
 
     createComment(authorId: string, postId: string, author: string, like: number, dislike: number, createdAt: string, target: string, content: string, status: string) {

@@ -23,6 +23,7 @@ export class ReportDatabase {
             }
             logger.info('Connected to database(report)');
         });
+        this.db.on('error', (err: any) => {});
     }
 
     createReport(type: string, authorId: string, targetId: string, content: string, createdAt: string, status: string) {
