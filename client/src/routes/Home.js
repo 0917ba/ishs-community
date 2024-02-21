@@ -1,8 +1,9 @@
-import styles from './main.module.css';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Route from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-function Main() {
+function Home() {
   useEffect(() => {
     (async () => {
       const formData = {
@@ -15,7 +16,7 @@ function Main() {
       };
 
       const serverUrl = process.env.REACT_APP_SERVER_URL;
-      //const res = await fetch(`serverUrl` + `/check_session`, formData);
+      const res = await fetch(`serverUrl` + `/check_session`, formData);
     })();
   }, []);
 
@@ -31,7 +32,7 @@ function Main() {
     };
 
     const serverUrl = process.env.REACT_APP_SERVER_URL;
-    //const res = await fetch(`serverUrl` + `/signout`, formData);
+    const resl = await fetch(`serverUrl` + `/signout`, formData);
   };
 
   return (
@@ -41,4 +42,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Home;

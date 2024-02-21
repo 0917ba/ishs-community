@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './App.css';
 
-import Main from './routes/main/main';
-import Profile from './routes/profile/profile';
 import Signup from './routes/signup/signup';
 import Signin from './routes/signin/signin';
 import SignupSuccess from './routes/signup/signupSuccess';
@@ -12,6 +11,11 @@ import BigBangBar from './component/BigBang/BingBang';
 import MainMy from './component/MainMy/MainMy';
 // import PostList from "./routes/PostList";
 import MyPage from './routes/mypage/MyPage';
+
+import BoardList from './routes/Board/BoardList';
+import Home from './routes/Home';
+import MyList from './routes/MyList';
+import React from 'react';
 
 function App() {
   function user() {
@@ -26,7 +30,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/main' element={<Main />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/signup/success' element={<SignupSuccess />} />
         <Route path='/signin' element={<Signin />} />
@@ -35,7 +39,8 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/post/bigbang' element={<BigBangBar />} />
         <Route path='/post/mainmy' element={<MainMy />} />
-        <Route path='/special' element={<Special />} />
+        <Route path='/mylist' element={<MyList />} />
+        <Route path='/board' element={<BoardList />} />
       </Routes>
     </Router>
   );
