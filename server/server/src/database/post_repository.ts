@@ -19,6 +19,7 @@ export class PostDatabase {
             }
             logger.info('Connected to database(board)');
         });
+        this.db.on('error', (err: any) => {});
     }
 
     createPost(authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, status: string) {

@@ -20,6 +20,7 @@ export class ReactionDatabase {
             }
             logger.info('Connected to database(reaction)');
         });
+        this.db.on('error', (err: any) => {});
     }
 
     createReaction(type: string, userId: string, targetId: string, status: string) {

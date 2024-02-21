@@ -18,6 +18,7 @@ export class UserDatabase {
             }
             logger.info('Connected to database(user)');
         });
+        this.db.on('error', (err: any) => {});
     }
 
     signup(id: string, password: string, nickname: string, email: string, studentName: string, generation: number, classNumber: number, studentNumber: number, privilege: number, role: string, penalty: number): Promise<boolean> {
