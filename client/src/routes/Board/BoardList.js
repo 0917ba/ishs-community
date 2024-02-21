@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import TitleBigBang from '../../layout/titleBigBang';
 import TextSearch from '../../layout/TextSearch';
+import { useNavigate } from 'react-router-dom';
 import './BoardList.css';
 
 const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
+  const [uidList, setUidList] = useState([]);
   const [sResult, setsResult] = useState([]);
   const [content, setContent] = useState('');
+  const navigate = useNavigate();
 
   const getBoardList = async (start, end) => {
     const resp = await fetch(
@@ -15,6 +18,7 @@ const BoardList = () => {
     let json = await resp.json();
     console.log(json.content);
     setBoardList(json.content);
+    setUidList(json.content.map((board) => board.uid));
   };
 
   const search = (keyword, start, end) => {
@@ -33,6 +37,10 @@ const BoardList = () => {
   }, []);
 
   let [count, setCount] = useState(1);
+
+  const onChangeUid = (uid) => {
+    navigate(`/board/detail/${uid}`, { state: uid });
+  };
 
   return (
     <>
@@ -73,8 +81,12 @@ const BoardList = () => {
             {boardList.map((board) => (
               <div className='Post'>
                 <div className='post1'>
-                  {' '}
-                  <li> {board.title} </li>
+                  <li
+                    className='pointer'
+                    onClick={() => onChangeUid(board.uid)}
+                  >
+                    {board.title}
+                  </li>
                 </div>
                 <div className='post2'>
                   {' '}

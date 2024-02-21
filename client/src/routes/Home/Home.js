@@ -8,11 +8,6 @@ function Home() {
     (async () => {
       const formData = {
         mgitethod: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        },
-        body: JSON.stringify({}),
       };
 
       const serverUrl = process.env.REACT_APP_SERVER_URL;

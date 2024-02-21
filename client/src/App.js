@@ -13,9 +13,10 @@ import MainMy from './component/MainMy/MainMy';
 import MyPage from './routes/mypage/MyPage';
 
 import BoardList from './routes/Board/BoardList';
-import Home from './routes/Home';
+import Home from './routes/Home/Home';
 import MyList from './routes/MyList';
 import React from 'react';
+import BoardDetail from './routes/Board/BoardDetail';
 
 function App() {
   function user() {
@@ -41,6 +42,7 @@ function App() {
         <Route path='/post/mainmy' element={<MainMy />} />
         <Route path='/mylist' element={<MyList />} />
         <Route path='/board' element={<BoardList />} />
+        <Route path='/board/detail/:uid' element={<BoardDetail />} />
       </Routes>
     </Router>
   );
