@@ -6,8 +6,8 @@ import { Role } from "../util/role";
 
 const userInfoRouter = require('express').Router();
 
-userInfoRouter.get('/info', (req: Request, res: Response, next: NextFunction) =>{
-    let id: string = req.body.id;
+userInfoRouter.get('/info/:id', (req: Request, res: Response, next: NextFunction) =>{
+    let id: string = req.params.id;
     let requestUserId: string = req.session.uid;
     let checker = new QueryChecker();
     if (checker.notNull(id, requestUserId)) {

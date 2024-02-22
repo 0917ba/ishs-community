@@ -18,6 +18,7 @@ import BoardList from "./routes/BoardList";
 import Home from "./routes/Home";
 import MyList from "./routes/MyList";
 import React from "react";
+import PostPage from './routes/PostPage';
 
 function App() {
   function user() {
@@ -47,6 +48,7 @@ function App() {
         <Route path="/Home" element ={<Home />}/>
         <Route path="/MyList" element={<MyList/>}/>
         <Route path='/Board' element={<BoardList />}/>
+        <Route path='/PostTest' element={<PostPage />}/>
       </Routes>
     </Router>
   );
