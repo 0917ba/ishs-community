@@ -19,7 +19,21 @@ export class CommentDatabase {
             }
             logger.info('Connected to database(comment)');
         });
-        this.db.on('error', (err: any) => {});
+        this.db.on('error', (err: any) => {
+            this.db.end();
+            this.db = this.mysql.createConnection({
+                host: cf.database.host,
+                user: cf.database.user,
+                password: cf.database.password,
+                database: cf.database.database.post
+            });
+            this.db.connect((err: any) => {
+                if (err) {
+                    throw err;
+                }
+                logger.info('Connected to database(board)');
+            });
+        });
     }
 
     createComment(authorId: string, postId: string, author: string, like: number, dislike: number, createdAt: string, target: string, content: string, status: string) {
