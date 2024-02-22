@@ -16,7 +16,7 @@ const BoardList = () => {
   }
 
   const search = (keyword, start, end) => {
-    fetch(`http://app.ishs.co.kr/post/search?keyword=${keyword}&start=${start}&end=${end}`).then(res => {
+    fetch(`http://app.ishs.co.kr/post/search/keyword?keyword=${keyword}&start=${start}&end=${end}`).then(res => {
       res.json().then(data => {
         setsResult(data.content)
         console.log(data.content)
