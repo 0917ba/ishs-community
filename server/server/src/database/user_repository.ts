@@ -18,7 +18,21 @@ export class UserDatabase {
             }
             logger.info('Connected to database(user)');
         });
-        this.db.on('error', (err: any) => {});
+        this.db.on('error', (err: any) => {
+            this.db.end();
+            this.db = this.mysql.createConnection({
+                host: cf.database.host,
+                user: cf.database.user,
+                password: cf.database.password,
+                database: cf.database.database.post
+            });
+            this.db.connect((err: any) => {
+                if (err) {
+                    throw err;
+                }
+                logger.info('Connected to database(board)');
+            });
+        });
     }
 
     signup(id: string, password: string, nickname: string, email: string, studentName: string, generation: number, classNumber: number, studentNumber: number, privilege: number, role: string, penalty: number): Promise<boolean> {
