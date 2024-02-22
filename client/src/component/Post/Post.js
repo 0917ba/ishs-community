@@ -5,14 +5,11 @@ const Post = (props) => {
     const [post, setPost] = useState();
 
     const getPost = async () => {
-        const resp = await fetch(`http://app.ishs.co.kr/post/`, {
+        const resp = await fetch(`http://app.ishs.co.kr/post/${props.uid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                uid: props.uid
-            })
+            }
         })
         let json = await resp.json()
         setPost(json.content);
@@ -26,7 +23,7 @@ const Post = (props) => {
         <div>
         <h1>Post Page</h1>
         <div>
-            {post}
+            {JSON.stringify(post)}
         </div>
         </div>
     );
