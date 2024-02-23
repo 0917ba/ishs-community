@@ -12,7 +12,9 @@ export class PostDatabase {
         password: cf.database.password,
         database: cf.database.database.post
     });   
-    constructor() {}
+    constructor() {
+        this.db.end();
+    }
 
     connect() {
         this.db.connect((err: any) => {
