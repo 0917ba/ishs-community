@@ -16,32 +16,20 @@ export class ReportDatabase {
         password: cf.database.password,
         database: cf.database.database.report
     });   
-    constructor() {
+    constructor() {}
+
+    connect() {
         this.db.connect((err: any) => {
             if (err) {
                 throw err;
             }
             logger.info('Connected to database(report)');
         });
-        this.db.on('error', (err: any) => {
-            this.db.end();
-            this.db = this.mysql.createConnection({
-                host: cf.database.host,
-                user: cf.database.user,
-                password: cf.database.password,
-                database: cf.database.database.post
-            });
-            this.db.connect((err: any) => {
-                if (err) {
-                    throw err;
-                }
-                logger.info('Connected to database(board)');
-            });
-        });
     }
 
     createReport(type: string, authorId: string, targetId: string, content: string, createdAt: string, status: string) {
         let uid = new UUID().generateUUID();
+        this.connect();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(
                 `INSERT INTO report (uid, type, authorId, targetId, content, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -52,10 +40,14 @@ export class ReportDatabase {
                 }
                 resolve(true);
             });
+        }).then((result: boolean) => {
+            this.close();
+            return result;
         });
     }
 
     getReportByUid(uid: string) {
+        this.connect();
         return new Promise<Report>((resolve, reject) => {
             this.db.query(`SELECT * FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -63,10 +55,14 @@ export class ReportDatabase {
                 }
                 resolve(Report.fromObject(result[0]));
             });
+        }).then((result: Report) => {
+            this.close();
+            return result;
         });
     }
 
     getReportsByAuthorId(authorId: string) {
+        this.connect();
         return new Promise<Report[]>((resolve, reject) => {
             this.db.query(`SELECT * FROM report WHERE authorId='${authorId}'`, (err: any, result: any) => {
                 if (err) {
@@ -74,10 +70,14 @@ export class ReportDatabase {
                 }
                 resolve(Report.fromObjectList(result));
             });
+        }).then((result: Report[]) => {
+            this.close();
+            return result;
         });
     }
 
     getReportsByTargetId(targetId: string) {
+        this.connect();
         return new Promise<Report[]>((resolve, reject) => {
             this.db.query(`SELECT * FROM report WHERE targetId='${targetId}'`, (err: any, result: any) => {
                 if (err) {
@@ -85,10 +85,14 @@ export class ReportDatabase {
                 }
                 resolve(Report.fromObjectList(result));
             });
+        }).then((result: Report[]) => {
+            this.close();
+            return result;
         });
     }
 
     getReportType(uid: string) {
+        this.connect();
         return new Promise<ReportType>((resolve, reject) => {
             this.db.query(`SELECT type FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -96,10 +100,14 @@ export class ReportDatabase {
                 }
                 resolve(result[0].type);
             });
+        }).then((result: ReportType) => {
+            this.close();
+            return result;
         });
     }
 
     getReportAuthorId(uid: string) {
+        this.connect();
         return new Promise<string>((resolve, reject) => {
             this.db.query(`SELECT authorId FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -107,10 +115,14 @@ export class ReportDatabase {
                 }
                 resolve(result[0].authorId);
             });
+        }).then((result: string) => {
+            this.close();
+            return result;
         });
     }
 
     getReportTargetId(uid: string) {
+        this.connect();
         return new Promise<string>((resolve, reject) => {
             this.db.query(`SELECT targetId FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -118,10 +130,14 @@ export class ReportDatabase {
                 }
                 resolve(result[0].targetId);
             });
+        }).then((result: string) => {
+            this.close();
+            return result;
         });
     }
 
     getReportContent(uid: string) {
+        this.connect();
         return new Promise<string>((resolve, reject) => {
             this.db.query(`SELECT content FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -129,10 +145,14 @@ export class ReportDatabase {
                 }
                 resolve(result[0].content);
             });
+        }).then((result: string) => {
+            this.close();
+            return result;
         });
     }
 
     getReportStatus(uid: string) {
+        this.connect();
         return new Promise<ReportStatus>((resolve, reject) => {
             this.db.query(`SELECT status FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -140,10 +160,14 @@ export class ReportDatabase {
                 }
                 resolve(result[0].status);
             });
+        }).then((result: ReportStatus) => {
+            this.close();
+            return result;
         });
     }
 
     updateReportStatus(uid: string, status: string) {
+        this.connect();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(`UPDATE report SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -151,10 +175,14 @@ export class ReportDatabase {
                 }
                 resolve(true);
             });
+        }).then((result: boolean) => {
+            this.close();
+            return result;
         });
     }
 
     deleteReport(uid: string) {
+        this.connect();
         return new Promise<boolean>((resolve, reject) => {
             this.db.query(`DELETE FROM report WHERE uid='${uid}'`, (err: any, result: any) => {
                 if (err) {
@@ -162,10 +190,14 @@ export class ReportDatabase {
                 }
                 resolve(true);
             });
+        }).then((result: boolean) => {
+            this.close();
+            return result;
         });
     }
 
     getReportsInAscendingOrder(start: number, end: number) {
+        this.connect();
         return new Promise<Report[]>((resolve, reject) => {
             this.db.query(`SELECT * FROM report ORDER BY createdAt ASC LIMIT ${start}, ${end}`, (err: any, result: any) => {
                 if (err) {
@@ -173,7 +205,14 @@ export class ReportDatabase {
                 }
                 resolve(Report.fromObjectList(result));
             });
+        }).then((result: Report[]) => {
+            this.close();
+            return result;
         });
+    }
+
+    close() {
+        this.db.end();
     }
 }
 
