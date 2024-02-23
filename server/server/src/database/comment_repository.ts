@@ -3,7 +3,7 @@ import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
 import { Comment } from '../dto/comment';
 import { ReactionStatus } from '../util/reaction_status';
-import { resolve } from 'styled-jsx/css';
+
 
 export class CommentDatabase {
     mysql = require('mysql');
