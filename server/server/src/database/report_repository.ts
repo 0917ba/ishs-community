@@ -16,7 +16,9 @@ export class ReportDatabase {
         password: cf.database.password,
         database: cf.database.database.report
     });   
-    constructor() {}
+    constructor() {
+        this.db.end();
+    }
 
     connect() {
         this.db.connect((err: any) => {

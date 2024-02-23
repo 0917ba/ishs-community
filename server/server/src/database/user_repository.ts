@@ -11,7 +11,9 @@ export class UserDatabase {
         password: cf.database.password,
         database: cf.database.database.user
     });   
-    constructor() {}
+    constructor() {
+        this.db.end();
+    }
 
     connect() {
         this.db.connect((err: any) => {

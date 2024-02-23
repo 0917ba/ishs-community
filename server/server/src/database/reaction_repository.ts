@@ -14,6 +14,7 @@ export class ReactionDatabase {
         database: cf.database.database.reaction
     });   
     constructor() {
+        this.db.end();
     }
 
     connect() {

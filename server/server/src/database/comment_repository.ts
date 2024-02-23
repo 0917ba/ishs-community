@@ -13,7 +13,9 @@ export class CommentDatabase {
         password: cf.database.password,
         database: cf.database.database.comment
     });   
-    constructor() {}
+    constructor() {
+        this.db.end();
+    }
 
     connect() {
         this.db.connect((err: any) => {
