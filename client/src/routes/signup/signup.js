@@ -70,6 +70,21 @@ function Signup() {
 
   const onClickSignup = async () => {
     console.log('signup');
+    console.log(
+      inputKey,
+      inputId,
+      inputPassword,
+      inputIdentify_code,
+      inputEmail,
+      inputName,
+      inputNickname,
+      inputBirthday
+    );
+    console.log(typeof inputKey);
+    let ninputKey = parseInt(inputKey);
+    console.log(typeof ninputKey);
+    let dinputBirthday = new Date(inputBirthday);
+    console.log(typeof dinputBirthday);
 
     const formData = {
       method: 'POST',
@@ -77,32 +92,34 @@ function Signup() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        key: inputKey,
+        key: ninputKey,
         id: inputId,
         password: inputPassword,
         identify_code: inputIdentify_code,
         email: inputEmail,
         name: inputName,
         nickname: inputNickname,
-        birthday: inputBirthday,
       }),
     };
 
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const res = await fetch(`serverUrl` + `/signup`, formData);
+    //const serverUrl = process.env.REACT_APP_SERVER_URL;
+    const serverUrl = 'http://app.ishs.co.kr';
+    const res = await fetch(serverUrl + '/signup', formData);
+    //const data = await res.json();
     const status = res.status;
+    console.log(status);
     const getMessage = res.message;
+    console.log(getMessage);
 
     if (status === 200) {
       navigate('/signup/success');
     }
     if (status === 400) {
-      setMessage(getMessage);
+      setMessage(getMessage + '회원가입에 실패하였습니다.');
     }
     if (status === 500) {
       navigate('/developer/special');
     }
-    //const data = await res.json();
   };
 
   const DataCheck = () => {
@@ -226,6 +243,7 @@ function Signup() {
           onChange={onChangeBirthday}
         />
       </div>
+      <div></div>
       <div>
         <button type='button' onClick={onClickSignup} disabled={DataCheck()}>
           회원가입하기

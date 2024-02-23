@@ -5,16 +5,9 @@ import styles from './signin.module.css';
 function Signin() {
   useEffect(() => {
     (async () => {
-      const formData = {
-        mgitethod: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        },
-        body: JSON.stringify({}),
-      };
       const serverUrl = process.env.REACT_APP_SERVER_URL;
-      // res = await fetch(`serverUrl` + `/check_session`, formData);
+      const res = await fetch(serverUrl + `/check_session?`);
+      console.log(res);
     })();
   }, []);
 

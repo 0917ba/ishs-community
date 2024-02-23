@@ -6,19 +6,21 @@ function BoardDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   const [content, setContent] = useState('');
-
-  console.log(location);
-  console.log(typeof location.state);
-
+  console.log(location.state);
   useEffect(() => {
     (async () => {
-      const res = await fetch(
-        `http://app.ishs.co.kr/post?uid=${location.state}`
-      );
-
-      console.log(res);
+      const formData = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          withCredentials: true,
+        },
+        body: JSON.stringify({ uid: location.state }),
+      };
       //const serverUrl = process.env.REACT_APP_SERVER_URL;
-      //const res = await fetch(`serverUrl` + `/post?` + `uid=${location.uid}`);
+      const serverUrl = 'http://app.ishs.co.kr';
+      const res = await fetch(serverUrl + `/post`, formData);
+      console.log(res);
     })();
   }, []);
 
