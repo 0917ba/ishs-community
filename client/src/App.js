@@ -1,22 +1,21 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import React from 'react';
 
+import Home from './routes/Home/Home';
 import Signup from './routes/signup/signup';
-import Signin from './routes/signin/signin';
 import SignupSuccess from './routes/signup/signupSuccess';
-import Special from './routes/signup/special';
+import Signin from './routes/signin/signin';
 import FindPw from './routes/signin/findPW';
 import PostList from './component/PostList/PostList';
+import MyPage from './routes/mypage/MyPage';
 import BigBangBar from './component/BigBang/BingBang';
 import MainMy from './component/MainMy/MainMy';
-// import PostList from "./routes/PostList";
-import MyPage from './routes/mypage/MyPage';
-
+import MyList from './routes/mylist/MyList';
 import BoardList from './routes/Board/BoardList';
-import Home from './routes/Home/Home';
-import MyList from './routes/MyList';
-import React from 'react';
 import BoardDetail from './routes/Board/BoardDetail';
+import PostPage from './routes/PostPage';
+import Special from './routes/signup/special';
 
 function App() {
   function user() {
@@ -43,6 +42,8 @@ function App() {
         <Route path='/mylist' element={<MyList />} />
         <Route path='/board' element={<BoardList />} />
         <Route path='/board/detail/:uid' element={<BoardDetail />} />
+        <Route path='/post/list' element={<PostList />} />
+        <Route path='/PostTest' element={<PostPage />} />
       </Routes>
     </Router>
   );

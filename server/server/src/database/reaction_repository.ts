@@ -20,6 +20,21 @@ export class ReactionDatabase {
             }
             logger.info('Connected to database(reaction)');
         });
+        this.db.on('error', (err: any) => {
+            this.db.end();
+            this.db = this.mysql.createConnection({
+                host: cf.database.host,
+                user: cf.database.user,
+                password: cf.database.password,
+                database: cf.database.database.post
+            });
+            this.db.connect((err: any) => {
+                if (err) {
+                    throw err;
+                }
+                logger.info('Connected to database(board)');
+            });
+        });
     }
 
     createReaction(type: string, userId: string, targetId: string, status: string) {

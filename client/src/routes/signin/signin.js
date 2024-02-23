@@ -44,8 +44,8 @@ function Signin() {
     };
 
     const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const res = await fetch(`serverUrl` + `/signin`, formData);
-    const status = res.status;
+    const resl = await fetch(`serverUrl` + `/signin`, formData);
+    const status = resl.status;
     //const data = await res.json();
 
     if (status === 200) {

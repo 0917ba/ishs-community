@@ -95,10 +95,11 @@ function Signup() {
         key: ninputKey,
         id: inputId,
         password: inputPassword,
-        identify_code: inputIdentify_code,
+        identifycode: inputIdentify_code,
         email: inputEmail,
-        name: inputName,
+        studentname: inputName,
         nickname: inputNickname,
+        birthday: dinputBirthday,
       }),
     };
 

@@ -46,8 +46,8 @@ reportRouter.post('/execute', async (req: Request, res: Response, next: NextFunc
     }
 });
 
-reportRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    let uid = req.body.uid;
+reportRouter.get('/:uid', async (req: Request, res: Response, next: NextFunction) => {
+    let uid = req.params.uid;
     let checker = new QueryChecker();
     if (checker.notNull(uid)) {
         let report = await reportDatabase.getReportByUid(uid);
