@@ -38,10 +38,10 @@ reactionRouter.post('/',  async (req: Request, res: Response, next: NextFunction
     }
 });
 
-reactionRouter.get('/:userId/:type/:targetId', async (req: Request, res: Response, next: NextFunction) => {
-    let userId = req.params.userId;
-    let type = req.params.type;
-    let targetId = req.params.targetId;
+reactionRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    let userId = String(req.query.userId);
+    let type = String(req.query.type);
+    let targetId = String(req.query.targetId);
     let checker = new QueryChecker();
     if (checker.notNull(userId, type, targetId)) {
         let reaction = await reactionDatabase.findReactionByUserId(targetId, userId);
