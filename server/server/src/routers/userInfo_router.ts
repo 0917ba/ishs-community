@@ -24,7 +24,8 @@ userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =
                     let result = {
                         nickname: resUser.nickname,
                         profileImage: resUser.profileImage,
-                        penalty: resUser.penalty
+                        penalty: resUser.penalty,
+                        atp: resUser.atp
                     }
                     res.status(200).send(respRest(200, result));
                 }).catch((err: any) => {
