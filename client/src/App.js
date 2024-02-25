@@ -17,6 +17,8 @@ import BoardDetail from './routes/Board/BoardDetail';
 import PostPage from './routes/PostPage';
 import Special from './routes/signup/special';
 
+import CheckSessionTest from './routes/CheckSessionTest';
+
 function App() {
   function user() {
     //const params = useParams();
@@ -44,6 +46,7 @@ function App() {
         <Route path='/board/detail/:uid' element={<BoardDetail />} />
         <Route path='/post/list' element={<PostList />} />
         <Route path='/PostTest' element={<PostPage />} />
+        <Route path='/checksessiontest' element={<CheckSessionTest />} />
       </Routes>
     </Router>
   );

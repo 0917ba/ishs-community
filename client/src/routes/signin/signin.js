@@ -48,10 +48,15 @@ function Signin() {
     const serverUrl = 'http://app.ishs.co.kr';
     const resl = await fetch(serverUrl + `/signin`, formData);
     const status = resl.status;
-    //const data = await res.json();
+
+    const res = await fetch('http://app.ishs.co.kr/check_session', {
+      method: 'GET',
+    });
+    const data = await res.json();
+    console.log(data);
 
     if (status === 200) {
-      navigate('/home');
+      //navigate('/home');
     }
     if (status === 400) {
       setMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
