@@ -6,8 +6,8 @@ import { Role } from "../util/role";
 
 const userInfoRouter = require('express').Router();
 
-userInfoRouter.get('/info/:id', (req: Request, res: Response, next: NextFunction) =>{
-    let id: string = req.params.id;
+userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =>{
+    let id: string = String(req.query.id);
     let requestUserId: string = req.session.uid;
     let checker = new QueryChecker();
     if (checker.notNull(id, requestUserId)) {
@@ -24,7 +24,8 @@ userInfoRouter.get('/info/:id', (req: Request, res: Response, next: NextFunction
                     let result = {
                         nickname: resUser.nickname,
                         profileImage: resUser.profileImage,
-                        penalty: resUser.penalty
+                        penalty: resUser.penalty,
+                        atp: resUser.atp
                     }
                     res.status(200).send(respRest(200, result));
                 }).catch((err: any) => {
