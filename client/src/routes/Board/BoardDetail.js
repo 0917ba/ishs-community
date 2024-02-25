@@ -15,7 +15,9 @@ function BoardDetail() {
     (async () => {
       console.log(location.state);
 
-      const resp = await fetch(`http://app.ishs.co.kr/post?${location.state}`);
+      const resp = await fetch(
+        `http://app.ishs.co.kr/post/:uid?uid=${location.state}`
+      );
       const data = await resp.json();
       setPost(data);
     })();

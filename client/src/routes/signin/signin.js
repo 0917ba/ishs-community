@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './signin.module.css';
 
 function Signin() {
+  /*
   useEffect(() => {
     (async () => {
       const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -10,6 +11,7 @@ function Signin() {
       console.log(res);
     })();
   }, []);
+  */
 
   const navigate = useNavigate();
   const [inputId, setInputId] = useState('');
@@ -33,7 +35,7 @@ function Signin() {
     //console.log(inputId, inputPw);
     console.log('signin');
     const formData = {
-      mgitethod: 'POST',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -43,13 +45,13 @@ function Signin() {
       }),
     };
 
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const resl = await fetch(`serverUrl` + `/signin`, formData);
+    const serverUrl = 'http://app.ishs.co.kr';
+    const resl = await fetch(serverUrl + `/signin`, formData);
     const status = resl.status;
     //const data = await res.json();
 
     if (status === 200) {
-      navigate('/main');
+      navigate('/home');
     }
     if (status === 400) {
       setMessage('아이디 또는 비밀번호가 일치하지 않습니다.');
