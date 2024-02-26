@@ -79,15 +79,6 @@ function MovePageBox() {
     setContent(name);
   };
 
-  const selectComponent = {
-    HelpUserBox: <HelpUserBox />,
-    UserInformationBox: <UserInformationBox />,
-    UserRankBox: <UserRankBox />,
-    UserEmailBox: <UserEmailBox />,
-    UserATPBox: <UserATPBox />,
-    UserDemeritBox: <UserDemeritBox />,
-  };
-
   return <div className={styles.MyMovebox}>
     <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserImage} />
     <div className={styles.MovePageList}>
@@ -175,6 +166,8 @@ function SelectPageBox(props) {
 
   const [content, setContent] = useState();
 
+  let Content;
+
   const handleClickButton = e => {
     const { name } = e.target;
     setContent(name);
@@ -187,6 +180,7 @@ function SelectPageBox(props) {
     UserEmailBox: <UserEmailBox />,
     UserATPBox: <UserATPBox />,
     UserDemeritBox: <UserDemeritBox />,
+    PostList: <PostList />,
   };
 
   return <div className={styles.MySelectbox}>
@@ -251,9 +245,9 @@ function WritingPageTitle(props) {
 }
 
 const _Writingpagelist = [
-  { writingpageName: '내 커뮤니티 글', writingpageSite: "location.href='address'"},
-  { writingpageName: '내가 작성한 댓글', writingpageSite: "location.href='address'"},
-  { writingpageName: '내가 추천한 글', writingpageSite: "location.href='address'"},
+  { writingpageName: '내 커뮤니티 글', writingpageSite: "PostList"},
+  { writingpageName: '내가 작성한 댓글', writingpageSite: "PostList"},
+  { writingpageName: '내가 추천한 글', writingpageSite: "PostList"},
 ]
 
 function WritingPageBox() {
@@ -267,11 +261,31 @@ function WritingPageBox() {
     }, 1000);
   }, []);
 
+  const [content, setContent] = useState();
+
+  const handleClickButton = e => {
+    const { name } = e.target;
+    setContent(name);
+    SelectPageBox.Content = content;
+  };
+
+  console.log('Change: '+content);
+  console.log('Chage2: '+SelectPageBox.Content);
   return <div className={styles.writingboxcontainer}>
     {
       isLoading ? <div>Loading...</div> :
       Writingpagelist.map((Writingpagelist, index) => {
-        return <WritingPageTitle key={index} writing={Writingpagelist.writingpageName} moveMyPageSite={Writingpagelist.writingpageSite}/>
+        return (
+          // <WritingPageTitle key={index} writing={Writingpagelist.writingpageName} moveMyPageSite={Writingpagelist.writingpageSite}/>
+          <>
+            <button className='writingbox' onClick={handleClickButton} name={Writingpagelist.writingpageSite} key={index}>
+                    {Writingpagelist.writingpageName}
+            </button>
+            <div>
+              {SelectPageBox.Content = content}
+            </div>
+          </>
+        );
       })
     }
   </div>
