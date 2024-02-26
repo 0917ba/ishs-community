@@ -70,14 +70,14 @@ function MovePageBox() {
     }, 1000);
   }, []);
 
-  let [content, setContent] = useState();
+  const [content, setContent] = useState();
 
-  let handleClickButton = e => {
-    let { name } = e.target;
+  const handleClickButton = e => {
+    const { name } = e.target;
     setContent(name);
   };
 
-  let selectComponent = {
+  const selectComponent = {
     HelpUserBox: <HelpUserBox />,
     UserInformationBox: <UserInformationBox />,
     UserRankBox: <UserRankBox />,
