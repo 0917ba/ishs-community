@@ -301,3 +301,18 @@ body{
     top: 6vh;
     left: 15vw;
 }
+
+.modaluserDemerit{
+    position: relative;
+    left: 45vw;
+    top: 45vh;
+}
+
+.DemeritGuide{
+    position: relative;
+    font-size: 2vmin;
+    left: 2vw;
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+	text-decoration-color: rgb(114, 165, 204);
+}
