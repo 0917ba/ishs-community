@@ -1,6 +1,8 @@
 import styles from './MyPage.module.css';
 import { useEffect, useState } from "react";
 import Modal from "react-modal"
+import DemeritList from './Demerit.';
+import PostList from "../component/PostList/PostList";
 
 
 function MainPageTitle(props) {
@@ -52,7 +54,7 @@ function MoveMyPage(props){
 
 const _pages = [
   { pageName: '아이디/학번', pageSite:"UserInformationBox"},
-  { pageName: '누적 벌점', pageSite:"HelpUserBox"},
+  { pageName: '누적 벌점', pageSite:"UserDemeritBox"},
   { pageName: '유저 계급', pageSite:"UserRankBox"},
   { pageName: '이메일', pageSite:"UserEmailBox"},
   { pageName: '보유 ATP', pageSite:"UserATPBox"},
@@ -83,6 +85,7 @@ function MovePageBox() {
     UserRankBox: <UserRankBox />,
     UserEmailBox: <UserEmailBox />,
     UserATPBox: <UserATPBox />,
+    UserDemeritBox: <UserDemeritBox />,
   };
 
   return <div className={styles.MyMovebox}>
@@ -183,6 +186,7 @@ function SelectPageBox(props) {
     UserRankBox: <UserRankBox />,
     UserEmailBox: <UserEmailBox />,
     UserATPBox: <UserATPBox />,
+    UserDemeritBox: <UserDemeritBox />,
   };
 
   return <div className={styles.MySelectbox}>
@@ -524,6 +528,75 @@ function UserATPBox() {
   </div>
 }
 
+function UserDemerit(props){
+  return <div>
+    <ModaluserDemerit />
+    <div className={styles.atpGuide}>{props.userATPguide}</div>
+    <div className={styles.atp}>{props.userATP}</div>
+  </div>
+}
+
+const _userDemerit = [
+  { Demerit: "100점"},
+]
+
+function ModaluserDemerit() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const customStyles = {
+    overlay: {
+      BackGroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+  };
+
+  return (
+    <div>
+      <button onClick={openModal} className={styles.modaluserDemerit}>⨀ 벌점 시스템 더 알아보기</button>
+
+      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+        <div>사용자 권한</div>
+        <p>모달 컨텐츠</p>
+        <button onClick={closeModal}>닫기</button>
+      </Modal>
+    </div>
+  );
+}
+
+function UserDemeritBox() {
+  const [userDemerit, setuserDemerit] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setuserDemerit(_userDemerit);
+    }, 1000);
+  }, []);
+
+  return <div>
+    <div>
+      {
+        isLoading ? <div>Loading...</div> :
+        userDemerit.map((userDemerit, index) => {
+          return( 
+          <div>
+            <UserDemerit key={index} userDemerit={userDemerit.Demerit}/>
+            <DemeritList />
+          </div>
+          );
+        })
+      }
+    </div>
+  </div>
+}
 
 function MyPage() {
   return (
