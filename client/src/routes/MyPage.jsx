@@ -531,13 +531,12 @@ function UserATPBox() {
 function UserDemerit(props){
   return <div>
     <ModaluserDemerit />
-    <div className={styles.atpGuide}>{props.userATPguide}</div>
-    <div className={styles.atp}>{props.userATP}</div>
+    <u2 className={styles.DemeritGuide}>현재 누적 벌점은 {props.userDemerit}점</u2>
   </div>
 }
 
 const _userDemerit = [
-  { Demerit: "100점"},
+  { Demerit: "100"},
 ]
 
 function ModaluserDemerit() {
