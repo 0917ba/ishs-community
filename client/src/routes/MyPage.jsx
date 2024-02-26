@@ -56,6 +56,7 @@ const _pages = [
   { pageName: '유저 계급', pageSite:"UserRankBox"},
   { pageName: '이메일', pageSite:"UserEmailBox"},
   { pageName: '보유 ATP', pageSite:"UserATPBox"},
+  { pageName: '도움말', pageSite:"HelpUserBox"},
 ]
 
 function MovePageBox() {
@@ -69,14 +70,14 @@ function MovePageBox() {
     }, 1000);
   }, []);
 
-  const [content, setContent] = useState();
+  let [content, setContent] = useState();
 
-  const handleClickButton = e => {
-    const { name } = e.target;
+  let handleClickButton = e => {
+    let { name } = e.target;
     setContent(name);
   };
 
-  const selectComponent = {
+  let selectComponent = {
     HelpUserBox: <HelpUserBox />,
     UserInformationBox: <UserInformationBox />,
     UserRankBox: <UserRankBox />,
@@ -98,7 +99,7 @@ function MovePageBox() {
                   {pages.pageName}
                 </button>
               </div>
-              {content && <content>{selectComponent[content]}</content>}
+              {/* {content && <content>{selectComponent[content]}</content>} */}
             </div>
           );
         })
@@ -106,6 +107,7 @@ function MovePageBox() {
     </div>
     <MemberInformationBtn />
     <button onclick="location.href='address'" className={styles.logout}>로그아웃</button>
+    <SelectPageBox Content={content}/>
   </div>
 }
 
@@ -132,7 +134,9 @@ function MemberInformationBtn() {
 
       <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
         <div>회원 정보 수정</div>
-        <p>서비스 준비중입니다...</p>
+        <p>비빌번호를 입력해주세요</p>
+        <input type="text" placeholder="Password" />
+        <button onClick={closeModal}>확인</button>
         <button onClick={closeModal}>닫기</button>
       </Modal>
     </div>
@@ -155,7 +159,7 @@ function Notification() {
 }
 
 
-function SelectPageBox() {
+function SelectPageBox(props) {
   const [pages, setpages] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -187,7 +191,7 @@ function SelectPageBox() {
       isLoading ? <div>Loading...</div> : 
       <div>
         <WritingPageBox />
-        {content && <content>{selectComponent[content]}</content>}
+        {props.Content && <props.Content>{selectComponent[props.Content]}</props.Content>}
         {/* <HelpUserBox /> */}
         {/* <UserInformationBox /> */}
         {/* <누적벌점 /> */}

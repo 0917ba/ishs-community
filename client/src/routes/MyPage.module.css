@@ -157,7 +157,9 @@ body{
 
 .MySelectbox{
     float: right;
-    position: static;
+    position: relative;
+    left: 65vw;
+    bottom: 30vh;
     display: block;
     width: 62vw;
     height: 100%;
