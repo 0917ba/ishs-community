@@ -8,7 +8,7 @@ const PostPage = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'same-origin',
+            credentials: 'include',
             body: JSON.stringify({id: 'helloworld', password: 'ishs12345!'})
         }).then(res => {
             console.log(res.status)
@@ -21,7 +21,6 @@ const PostPage = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            mode: 'no-cors',
             credentials: 'include'
         }).then(res => {
             console.log(res.status)
