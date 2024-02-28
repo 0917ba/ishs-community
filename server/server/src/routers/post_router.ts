@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, query } from "express";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 import { ContentStatus } from "../util/content_status";
@@ -50,7 +50,11 @@ postRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
     if (checker.notNull(uid)) {
         let post = await postDatabase.getPostByUid(String(uid));
-        if (post.getStatus() == ContentStatus.GOOD) {
+        if (!checker.notNull(post)) {
+            res.status(404).send(respRest(404, 1));
+            return;
+        }
+        if (post && post.getStatus() == ContentStatus.GOOD) {
             let result = post.toObject();
             let comments = await commentDatabase.getCommentsByPostId(String(uid));
             result.comments = [];

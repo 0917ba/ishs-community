@@ -47,7 +47,11 @@ export class ReactionDatabase {
                     if (err) {
                         reject(err);
                     }
-                    resolve(Reaction.fromObject(result[0]));
+                    if (result.length == 0) {
+                        resolve(null);
+                    } else {
+                        resolve(Reaction.fromObject(result[0]));
+                    }
                 });
                 connection.release();
             });

@@ -12,22 +12,36 @@ userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =
     let checker = new QueryChecker();
     if (checker.notNull(id, requestUserId)) {
         userDatabase.getUserByUid(requestUserId).then((user) => {
-            if (user.getId() == id || user.getRole() == Role.DEVELOPER) {
+            if (!checker.notNull(user)) {
+                res.status(404).send(respRest(404, 0));
+                return;
+            }
+            if (user && user.getId() == id || user && user.getRole() == Role.DEVELOPER) {
                 userDatabase.getUserById(String(id)).then((user) => {
-                    res.status(200).send(respRest(200, user.toObject()));
+                    if (!checker.notNull(user)) {
+                        res.status(404).send(respRest(404, 0));
+                        return;
+                    }
+                    if (user) res.status(200).send(respRest(200, user.toObject()));
                 }).catch((err: any) => {
                     res.status(500).send(respRest(500, 2));
                 });
             } else {
                 userDatabase.getUserById(String(id)).then((user) => {
-                    let resUser = user.toObject();
-                    let result = {
-                        nickname: resUser.nickname,
-                        profileImage: resUser.profileImage,
-                        penalty: resUser.penalty,
-                        atp: resUser.atp
+                    if (!checker.notNull(user)) {
+                        res.status(404).send(respRest(404, 0));
+                        return;
                     }
-                    res.status(200).send(respRest(200, result));
+                    if (user) {
+                        let resUser = user.toObject();
+                        let result = {
+                            nickname: resUser.nickname,
+                            profileImage: resUser.profileImage,
+                            penalty: resUser.penalty,
+                            atp: resUser.atp
+                        }
+                        res.status(200).send(respRest(200, result));
+                    }
                 }).catch((err: any) => {
                     res.status(500).send(respRest(500, 2));
                 });
@@ -54,7 +68,11 @@ userInfoRouter.patch('/info', (req: Request, res: Response, next: NextFunction) 
     let checker = new QueryChecker();
     if (checker.notNull(requestUserId)) {
         userDatabase.getUserByUid(requestUserId).then((user) => {
-            if (user.getRole() == Role.DEVELOPER || user.getRole() == Role.ADMIN) {
+            if (!checker.notNull(user)) {
+                res.status(404).send(respRest(404, 0));
+                return;
+            }
+            if (user && user.getRole() == Role.DEVELOPER || user && user.getRole() == Role.ADMIN) {
                 if (checker.notNull(uid)) {
                     if (checker.notNull(password)) {
                         userDatabase.setPassword(uid, password);
