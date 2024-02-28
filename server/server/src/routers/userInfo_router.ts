@@ -7,19 +7,19 @@ import { Role } from "../util/role";
 const userInfoRouter = require('express').Router();
 
 userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =>{
-    let id: string = String(req.query.id);
+    let id = req.query.id;
     let requestUserId: string = req.session.uid;
     let checker = new QueryChecker();
     if (checker.notNull(id, requestUserId)) {
         userDatabase.getUserByUid(requestUserId).then((user) => {
             if (user.getId() == id || user.getRole() == Role.DEVELOPER) {
-                userDatabase.getUserById(id).then((user) => {
+                userDatabase.getUserById(String(id)).then((user) => {
                     res.status(200).send(respRest(200, user.toObject()));
                 }).catch((err: any) => {
                     res.status(500).send(respRest(500, 2));
                 });
             } else {
-                userDatabase.getUserById(id).then((user) => {
+                userDatabase.getUserById(String(id)).then((user) => {
                     let resUser = user.toObject();
                     let result = {
                         nickname: resUser.nickname,
@@ -35,6 +35,8 @@ userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =
         }).catch((err: any) => {
             res.status(500).send(respRest(500, 2));
         });
+    } else {
+        res.status(400).send(respRest(400, 1));
     }
 });
 
