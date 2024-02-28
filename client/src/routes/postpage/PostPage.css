@@ -1,8 +1,14 @@
+h1, p, button, input, a {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-decoration-line: none;
+    color: black;
+}
+
 .header {
     margin: 5%;
     font-size: 20px;
     margin-bottom: 10px;
-    margin-right: 5em;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,6 +24,7 @@
 .post_information {
     margin-left: 10%;
     margin-right: 7%;
+    margin-bottom: 17px;
     display: flex;
     justify-content:space-between;
     align-items: center;
@@ -96,6 +103,7 @@
     margin-right: 3.6%;
     background-color: #0B87DE;
     color: white;
+    font-size: 18px;
 }
 
 .comment_write {
@@ -105,4 +113,44 @@
     display: flex;
     justify-content:space-between;
     align-items: center;
+}
+
+.report {
+    margin-left: 85.5%;
+}
+
+.report_img {
+    margin-right: 2%
+}
+
+.comment_box {
+    margin-left: 10%;
+    display: flex;
+    margin-right: 10%;
+    margin-bottom: -7px;
+    align-items: center;
+}
+
+.comment_author {
+    font-weight: 900;
+    font-size: 17px;
+}
+
+.comment_content {
+    margin-left: 2%;
+    font-size: 17px;
+}
+
+.comment_container {
+    align-items: center;
+    display: flex;
+    
+    width: 90%;
+}
+
+.comment_info {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 18%;
 }
