@@ -33,9 +33,13 @@ reportRouter.post('/execute', async (req: Request, res: Response, next: NextFunc
         reportDatabase.updateReportStatus(uid, status);
         if (status == ReportStatus.ACCEPTED) {
             let report = await reportDatabase.getReportByUid(uid);
-            if (report.getType() == ReportType.POST) {
+            if (!checker.notNull(report)) {
+                res.status(404).send(respRest(404, 2));
+                return;
+            }
+            if (report && report.getType() == ReportType.POST) {
                 postDatabase.setpostStatus(report.getTargetId(), ContentStatus.REPORTED);
-            } else if (report.getType() == ReportType.COMMENT) {
+            } else if (report && report.getType() == ReportType.COMMENT) {
                 commentDatabase.setStatus(report.getTargetId(), ContentStatus.REPORTED);
             }
         }
@@ -51,7 +55,11 @@ reportRouter.get('/', async (req: Request, res: Response, next: NextFunction) =>
     let checker = new QueryChecker();
     if (checker.notNull(uid)) {
         let report = await reportDatabase.getReportByUid(String(uid));
-        res.status(200).send(respRest(200, report.toObject()));
+        if (!checker.notNull(report)) {
+            res.status(404).send(respRest(404, 2));
+            return;
+        }
+        if (report) res.status(200).send(respRest(200, report.toObject()));
     } else {
         res.status(400).send(respRest(400, 1));
     }

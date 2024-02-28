@@ -56,7 +56,7 @@ export class PostDatabase {
     }
 
     getPostByUid(uid: string) {
-        return new Promise<Post>((resolve, reject) => {
+        return new Promise<Post|null>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
@@ -65,7 +65,11 @@ export class PostDatabase {
                     if (err) {
                         reject(err);
                     }
-                    resolve(Post.fromObject(result[0]));
+                    if (result.length > 0) {
+                        resolve(Post.fromObject(result[0]));
+                    } else {
+                        resolve(null);
+                    }
                 });
                 connection.release();
             });

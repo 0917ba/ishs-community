@@ -58,7 +58,7 @@ export class CommentDatabase {
     }
 
     getCommentByUid(uid: string) {
-        return new Promise<Comment>((resolve, reject) => {
+        return new Promise<Comment|null>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
@@ -67,7 +67,11 @@ export class CommentDatabase {
                     if (err) {
                         reject(err);
                     }
-                    resolve(Comment.fromObject(result[0]));
+                    if (result.length == 0) {
+                        resolve(null);
+                    } else {
+                        resolve(Comment.fromObject(result[0]));
+                    }
                 });
                 connection.release();
             });
