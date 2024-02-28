@@ -47,10 +47,10 @@ reportRouter.post('/execute', async (req: Request, res: Response, next: NextFunc
 });
 
 reportRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    let uid = String(req.query.uid);
+    let uid = req.query.uid;
     let checker = new QueryChecker();
     if (checker.notNull(uid)) {
-        let report = await reportDatabase.getReportByUid(uid);
+        let report = await reportDatabase.getReportByUid(String(uid));
         res.status(200).send(respRest(200, report.toObject()));
     } else {
         res.status(400).send(respRest(400, 1));

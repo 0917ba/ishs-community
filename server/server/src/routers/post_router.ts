@@ -44,15 +44,15 @@ postRouter.patch('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 postRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    let uid = String(req.query.uid);
+    let uid = req.query.uid;
 
     let checker = new QueryChecker();
 
     if (checker.notNull(uid)) {
-        let post = await postDatabase.getPostByUid(uid);
+        let post = await postDatabase.getPostByUid(String(uid));
         if (post.getStatus() == ContentStatus.GOOD) {
             let result = post.toObject();
-            let comments = await commentDatabase.getCommentsByPostId(uid);
+            let comments = await commentDatabase.getCommentsByPostId(String(uid));
             result.comments = [];
             for (let comment of comments) {
                 if (comment.getStatus() == ContentStatus.REPORTED) {
@@ -61,7 +61,7 @@ postRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
                 }
                 result.comments.push(comment.toObject());
             }
-            postDatabase.addPostView(uid);
+            postDatabase.addPostView(String(uid));
             res.status(200).send(respRest(200, result));
         } else {
             res.status(403).send(respRest(403, 1));
