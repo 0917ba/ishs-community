@@ -1,6 +1,8 @@
 import styles from './MyPage.module.css';
 import { useEffect, useState } from "react";
 import Modal from "react-modal"
+import DemeritList from './Demerit.';
+import PostList from "../component/PostList/PostList";
 
 
 function MainPageTitle(props) {
@@ -29,9 +31,6 @@ function MainPageBox() {
       setIsLoading(false);
       setmainpagelist(_mainpagelist);
     }, 1);
-    fetch(`http://app.ishs.co.kr/post/list?start=0&end=3`).then(res => res.json()).then(data => {
-      console.log(data);
-    });
   }, []);
   return <div className={styles.Maincontainer}>
     <img src="/img/log_ishs_image.png" height="60px" width="160px" className={styles.Mainbox}/>
@@ -47,18 +46,19 @@ function MainPageBox() {
 
 function MoveMyPage(props){
   return <div>
-    <div onclick={props.moveMyPageSite} className={styles.ButtonMovePageList}>
-      <h4>{props.moveMyPage}</h4>
-    </div>
+    <button onclick={props.moveMyPageSite} className={styles.ButtonMovePageList}>
+      <h7>{props.moveMyPage}</h7>
+    </button>
   </div>
 }
 
 const _pages = [
-  { pageName: '아이디/학번', pageSite:"location.href='address'"},
-  { pageName: '누적 벌점', pageSite:"location.href='address'"},
-  { pageName: '유저 계급', pageSite:"location.href='address'"},
-  { pageName: '이메일', pageSite:"location.href='address'"},
-  { pageName: '보유 ATP', pageSite:"location.href='address'"},
+  { pageName: '아이디/학번', pageSite:"UserInformationBox"},
+  { pageName: '누적 벌점', pageSite:"UserDemeritBox"},
+  { pageName: '유저 계급', pageSite:"UserRankBox"},
+  { pageName: '이메일', pageSite:"UserEmailBox"},
+  { pageName: '보유 ATP', pageSite:"UserATPBox"},
+  { pageName: '도움말', pageSite:"HelpUserBox"},
 ]
 
 function MovePageBox() {
@@ -72,18 +72,36 @@ function MovePageBox() {
     }, 1000);
   }, []);
 
+  const [content, setContent] = useState();
+
+  const handleClickButton = e => {
+    const { name } = e.target;
+    setContent(name);
+  };
+
   return <div className={styles.MyMovebox}>
     <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserImage} />
     <div className={styles.MovePageList}>
       {
         isLoading ? <div>Loading...</div> :
         pages.map((pages, index) => {
-          return <MoveMyPage key={index} moveMyPage={pages.pageName} moveMyPageSite={pages.pageSite}/>
+          return (
+            <div>
+              <div>
+                {/* <MoveMyPage key={index} moveMyPage={pages.pageName} moveMyPageSite={pages.pageSite}/> */}
+                <button onClick={handleClickButton} name={pages.pageSite} key={index}>
+                  {pages.pageName}
+                </button>
+              </div>
+              {/* {content && <content>{selectComponent[content]}</content>} */}
+            </div>
+          );
         })
       }
     </div>
     <MemberInformationBtn />
     <button onclick="location.href='address'" className={styles.logout}>로그아웃</button>
+    <SelectPageBox Content={content}/>
   </div>
 }
 
@@ -110,7 +128,9 @@ function MemberInformationBtn() {
 
       <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
         <div>회원 정보 수정</div>
-        <p>서비스 준비중입니다...</p>
+        <p>비빌번호를 입력해주세요</p>
+        <input type="text" placeholder="Password" />
+        <button onClick={closeModal}>확인</button>
         <button onClick={closeModal}>닫기</button>
       </Modal>
     </div>
@@ -132,14 +152,36 @@ function Notification() {
   </div>
 }
 
-function SelectPageBox() {
+
+function SelectPageBox(props) {
+  const [pages, setpages] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
+      setpages(_pages);
     }, 1000);
   }, []);
+
+  const [content, setContent] = useState();
+
+  let Content;
+
+  const handleClickButton = e => {
+    const { name } = e.target;
+    setContent(name);
+  };
+
+  const selectComponent = {
+    HelpUserBox: <HelpUserBox />,
+    UserInformationBox: <UserInformationBox />,
+    UserRankBox: <UserRankBox />,
+    UserEmailBox: <UserEmailBox />,
+    UserATPBox: <UserATPBox />,
+    UserDemeritBox: <UserDemeritBox />,
+    PostList: <PostList />,
+  };
 
   return <div className={styles.MySelectbox}>
     <h1 className={styles.MySelectTitle}>나의 활동</h1>
@@ -147,12 +189,13 @@ function SelectPageBox() {
       isLoading ? <div>Loading...</div> : 
       <div>
         <WritingPageBox />
+        {props.Content && <props.Content>{selectComponent[props.Content]}</props.Content>}
         {/* <HelpUserBox /> */}
         {/* <UserInformationBox /> */}
         {/* <누적벌점 /> */}
         {/* <UserRankBox /> */}
         {/* <UserEmailBox /> */}
-        <UserATPBox />
+        {/* <UserATPBox /> */}
       </div>
     }
   </div>
@@ -202,9 +245,9 @@ function WritingPageTitle(props) {
 }
 
 const _Writingpagelist = [
-  { writingpageName: '내 커뮤니티 글', writingpageSite: "location.href='address'"},
-  { writingpageName: '내가 작성한 댓글', writingpageSite: "location.href='address'"},
-  { writingpageName: '내가 추천한 글', writingpageSite: "location.href='address'"},
+  { writingpageName: '내 커뮤니티 글', writingpageSite: "PostList"},
+  { writingpageName: '내가 작성한 댓글', writingpageSite: "PostList"},
+  { writingpageName: '내가 추천한 글', writingpageSite: "PostList"},
 ]
 
 function WritingPageBox() {
@@ -218,11 +261,31 @@ function WritingPageBox() {
     }, 1000);
   }, []);
 
+  const [content, setContent] = useState();
+
+  const handleClickButton = e => {
+    const { name } = e.target;
+    setContent(name);
+    SelectPageBox.Content = content;
+  };
+
+  console.log('Change: '+content);
+  console.log('Chage2: '+SelectPageBox.Content);
   return <div className={styles.writingboxcontainer}>
     {
       isLoading ? <div>Loading...</div> :
       Writingpagelist.map((Writingpagelist, index) => {
-        return <WritingPageTitle key={index} writing={Writingpagelist.writingpageName} moveMyPageSite={Writingpagelist.writingpageSite}/>
+        return (
+          // <WritingPageTitle key={index} writing={Writingpagelist.writingpageName} moveMyPageSite={Writingpagelist.writingpageSite}/>
+          <>
+            <button className='writingbox' onClick={handleClickButton} name={Writingpagelist.writingpageSite} key={index}>
+                    {Writingpagelist.writingpageName}
+            </button>
+            <div>
+              {SelectPageBox.Content = content}
+            </div>
+          </>
+        );
       })
     }
   </div>
@@ -479,6 +542,74 @@ function UserATPBox() {
   </div>
 }
 
+function UserDemerit(props){
+  return <div>
+    <ModaluserDemerit />
+    <u2 className={styles.DemeritGuide}>현재 누적 벌점은 {props.userDemerit}점</u2>
+  </div>
+}
+
+const _userDemerit = [
+  { Demerit: "100"},
+]
+
+function ModaluserDemerit() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const customStyles = {
+    overlay: {
+      BackGroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+  };
+
+  return (
+    <div>
+      <button onClick={openModal} className={styles.modaluserDemerit}>⨀ 벌점 시스템 더 알아보기</button>
+
+      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+        <div>사용자 권한</div>
+        <p>모달 컨텐츠</p>
+        <button onClick={closeModal}>닫기</button>
+      </Modal>
+    </div>
+  );
+}
+
+function UserDemeritBox() {
+  const [userDemerit, setuserDemerit] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setuserDemerit(_userDemerit);
+    }, 1000);
+  }, []);
+
+  return <div>
+    <div>
+      {
+        isLoading ? <div>Loading...</div> :
+        userDemerit.map((userDemerit, index) => {
+          return( 
+          <div>
+            <UserDemerit key={index} userDemerit={userDemerit.Demerit}/>
+            <DemeritList />
+          </div>
+          );
+        })
+      }
+    </div>
+  </div>
+}
 
 function MyPage() {
   return (

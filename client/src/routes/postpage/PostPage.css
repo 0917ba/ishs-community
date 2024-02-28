@@ -10,7 +10,7 @@
 
 .title {
     font-size: 45px;
-    margin-bottom: 0%;
+    margin-bottom: -12px;
     margin-right: 5em;
     font-weight: bold;
 }
@@ -69,9 +69,40 @@
     text-align: center;
 }
 
+.like_count, .dislike_count {
+    margin-top: -3%;
+}
+
 .line_comment {
     margin-left: 10%;
     margin-right: 10%;
     height: 1.25px;
     background-color: #7F7F7F;
+}
+
+.comment_input {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+}
+
+.comment_button {
+    width: 10%;
+    height: 105%;
+    margin-left: 0.5%;
+    margin-right: 3.6%;
+    background-color: #0B87DE;
+    color: white;
+}
+
+.comment_write {
+    margin-left: 10%;
+    margin-right: 7%;
+    height: 100px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
 }

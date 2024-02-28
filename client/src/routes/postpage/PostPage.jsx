@@ -5,6 +5,8 @@ import logIshsLogo from "./log_ishs_image.png";
 import apoptosis from "./apoptosis.png";
 import dopamine from "./dopamine.png";
 import "./PostPage.css";
+import BigBangBar from "../../component/BigBang/BingBang";
+import MainMy from "../../component/MainMy/MainMy";
 
 const PostPage = () => {
     const [uuid, setUuid] = useState('');
@@ -16,6 +18,8 @@ const PostPage = () => {
     const [comments, setComments] = useState([]);
     const [title, setTitle] = useState("Title");
     const [content, setContent] = useState("Content");
+    const [admin, setAdmin] = useState(false);
+    // const comment_
 
     const navigate = useNavigate();
     const navigatetoMain = () => {
@@ -31,7 +35,9 @@ const PostPage = () => {
         // if (uid === null) {
         //     navigate("/login");
         // }
-        
+        if(Session.get("role") === "ADMIN") {
+            setAdmin(true);
+        }
     };
 
     const fetchPost = async (uid) => {
@@ -39,14 +45,18 @@ const PostPage = () => {
         // const response = await fetch(`http://app.ishs.co.kr/post/list?start=0&end=10`);
         let data = await response.json();
         // console.log(data);
-        setAuthor(data.author);
-        setLike(data.like);
-        setDislike(data.dislike);
-        setView(data.view);
-        setCreateAt(data.createAt);
-        setComments(data.comments);
-        setTitle(data.title);
-        setContent(data.content);
+        if(data.status === 200) {
+            data = data.content;
+            setAuthor(data.author);
+            setLike(data.like);
+            setDislike(data.dislike);
+            setView(data.view);
+            setCreateAt(data.createAt);
+            setComments(data.comments);
+            setTitle(data.title);
+            setContent(data.content);
+        }
+        
     }
 
     const fetchReaction = async (type, userId, targetId, status) => {
@@ -110,7 +120,7 @@ const PostPage = () => {
                 <p className="title">{title}</p>
                 <div className="post_info">
                     { uuid === author && <p className="edit">수정</p> }
-                    { uuid === author && <p className="edit">삭제</p> }
+                    { uuid === author && admin && <p className="edit">삭제</p> }
                     <p className="post_time">{creatAt}</p>
                 </div>
             </div>
@@ -129,6 +139,10 @@ const PostPage = () => {
                 </div>
             </div>
             <hr className="line_comment"></hr>
+            <div className="comment_write">
+                <input type="text" className="comment_input" placeholder="댓글을 입력하세요."/>
+                <button className="comment_button">등록</button>
+            </div>
         </div>
     );
 }
