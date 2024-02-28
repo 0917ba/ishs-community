@@ -12,6 +12,7 @@ import BigBangBar from "./component/BigBang/BingBang";
 import MainMy from "./component/MainMy/MainMy";
 // import PostList from "./routes/PostList";
 import MyPage from "./routes/MyPage";
+import PostPage from './routes/postpage/PostPage';
 
 function App() {
   function user() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/post/bigbang" element={<BigBangBar />} />
         <Route path="/post/mainmy" element={<MainMy />} />
+        <Route path="/postpage" element={<PostPage />} />
       </Routes>
     </Router>
   );

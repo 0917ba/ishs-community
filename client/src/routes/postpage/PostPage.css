@@ -1,0 +1,77 @@
+.header {
+    margin: 5%;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-right: 5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 45px;
+    margin-bottom: 0%;
+    margin-right: 5em;
+    font-weight: bold;
+}
+
+.post_information {
+    margin-left: 10%;
+    margin-right: 7%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.post_time, .edit, .delete {
+    margin-top: 7%;
+    margin-bottom: 12%;
+}
+
+.post_time {
+    margin-right: 5%;
+}
+
+.post_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    margin-bottom: -7%;
+    margin-right: 3%;
+}
+
+.line {
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 1.75px;
+    background-color: #0B87DE;
+}
+
+.post_content {
+    margin-left: 11%;
+    margin-right: 11%;
+    margin-bottom: 5%;
+    font-size: 20px;
+}
+
+.like_dislike {
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.like, .dislike {
+    align-items: center;
+    text-align: center;
+}
+
+.line_comment {
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 1.25px;
+    background-color: #7F7F7F;
+}
