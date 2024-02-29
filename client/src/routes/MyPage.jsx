@@ -55,10 +55,13 @@ function MoveMyPage(props){
 const _pages = [
   { pageName: '아이디/학번', pageSite:"UserInformationBox"},
   { pageName: '누적 벌점', pageSite:"UserDemeritBox"},
-  { pageName: '유저 계급', pageSite:"UserRankBox"},
+  { pageName: '유저 랭크', pageSite:"UserRankBox"},
   { pageName: '이메일', pageSite:"UserEmailBox"},
   { pageName: '보유 ATP', pageSite:"UserATPBox"},
   { pageName: '도움말', pageSite:"HelpUserBox"},
+  { pageName: '내 커뮤니티 글', pageSite: "PostList"},
+  { pageName: '내가 작성한 댓글', pageSite: "PostList"},
+  { pageName: '내가 추천한 글', pageSite: "PostList"},
 ]
 
 function MovePageBox() {
@@ -107,12 +110,25 @@ function MovePageBox() {
 
 function MemberInformationBtn() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
   };
-
   const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal2 = () => {
+    setIsOpen2(true);
+  };
+  const closeModal2 = () => {
+    setIsOpen2(false);
+    setIsOpen(false);
+  };
+
+  const save = () => {
+    setIsOpen2(false);
     setIsOpen(false);
   };
 
@@ -127,15 +143,37 @@ function MemberInformationBtn() {
       <button onClick={openModal} className={styles.MemberInformation}>회원 정보 수정</button>
 
       <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-        <div>회원 정보 수정</div>
-        <p>비빌번호를 입력해주세요</p>
-        <input type="text" placeholder="Password" />
-        <button onClick={closeModal}>확인</button>
+        <div>회원 인증</div>
+        <form>
+          ID : <input id='userid' type='text'/><br></br>
+          비밀번호 : <input id='pwd' type='password' maxlength='5'/>
+        </form>
+        <button onClick={openModal2}>확인</button>
         <button onClick={closeModal}>닫기</button>
+      </Modal>
+      <Modal isOpen={isOpen2} onRequestClose={closeModal2} style={customStyles}>
+        <div>회원 정보 수정</div>
+        <form>
+            <div><label>비밀번호 : </label></div>
+            <input id="user_pw" type="password" maxlength="10" placeholder="8글자이상" required />
+            <div><label>이메일 : </label></div>
+            <input id="user_email" type="email" required />
+            <div><label>닉네임 : </label></div>
+            <input id="user_nickname" type="text" maxlength="10" required />
+            <div><label for="user_date">생년월일 :</label></div>
+            <input type="date" id="date" max="2077-06-20" min="2005-01-01" value="2006-01-01" required />
+            <hr/>
+            <input type="radio" value="male" name="gender" />남성
+            <input type="radio" value="female" name="gender" />여성
+            <br/>
+        </form>
+        <button onClick={save}>저장</button>
+        <button onClick={closeModal2}>취소</button>
       </Modal>
     </div>
   );
 }
+
 
 function Notification() {
   const [isLoading, setIsLoading] = useState(true)
@@ -183,19 +221,13 @@ function SelectPageBox(props) {
     PostList: <PostList />,
   };
 
+  console.log("Content: "+Content);
+
   return <div className={styles.MySelectbox}>
-    <h1 className={styles.MySelectTitle}>나의 활동</h1>
     {
       isLoading ? <div>Loading...</div> : 
       <div>
-        <WritingPageBox />
         {props.Content && <props.Content>{selectComponent[props.Content]}</props.Content>}
-        {/* <HelpUserBox /> */}
-        {/* <UserInformationBox /> */}
-        {/* <누적벌점 /> */}
-        {/* <UserRankBox /> */}
-        {/* <UserEmailBox /> */}
-        {/* <UserATPBox /> */}
       </div>
     }
   </div>
@@ -238,59 +270,6 @@ function ModaluserPermissions() {
   );
 }
 
-function WritingPageTitle(props) {
-  return <div onclick={props.moveMyPageSite} className={styles.writingbox}>
-    <div>{props.writing}</div>
-  </div>
-}
-
-const _Writingpagelist = [
-  { writingpageName: '내 커뮤니티 글', writingpageSite: "PostList"},
-  { writingpageName: '내가 작성한 댓글', writingpageSite: "PostList"},
-  { writingpageName: '내가 추천한 글', writingpageSite: "PostList"},
-]
-
-function WritingPageBox() {
-  const [Writingpagelist, setwritingpagelist] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-      setwritingpagelist(_Writingpagelist);
-    }, 1000);
-  }, []);
-
-  const [content, setContent] = useState();
-
-  const handleClickButton = e => {
-    const { name } = e.target;
-    setContent(name);
-    SelectPageBox.Content = content;
-  };
-
-  console.log('Change: '+content);
-  console.log('Chage2: '+SelectPageBox.Content);
-  return <div className={styles.writingboxcontainer}>
-    {
-      isLoading ? <div>Loading...</div> :
-      Writingpagelist.map((Writingpagelist, index) => {
-        return (
-          // <WritingPageTitle key={index} writing={Writingpagelist.writingpageName} moveMyPageSite={Writingpagelist.writingpageSite}/>
-          <>
-            <button className='writingbox' onClick={handleClickButton} name={Writingpagelist.writingpageSite} key={index}>
-                    {Writingpagelist.writingpageName}
-            </button>
-            <div>
-              {SelectPageBox.Content = content}
-            </div>
-          </>
-        );
-      })
-    }
-  </div>
-}
-
 function HelpUserPage(props){
   return <div>
     <div onclick={props.HelpPageSite} className={styles.HelpUserBox}>
@@ -319,6 +298,7 @@ function HelpUserBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>도움말</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :
@@ -355,6 +335,7 @@ function UserInformationBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>아이디/학번</h1>
     <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserInformationImage} />
     <div>
       {
@@ -458,6 +439,7 @@ function UserRankBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>유저 랭크</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :
@@ -472,6 +454,7 @@ function UserRankBox() {
 
 function UserEmailBox() {
   return <div>
+    <h1 className={styles.MySelectTitle}>이메일</h1>
     <div>서비스 준비 중입니다...</div>
   </div>
 }
@@ -530,6 +513,7 @@ function UserATPBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>보유 ATP</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :
@@ -546,6 +530,7 @@ function UserDemerit(props){
   return <div>
     <ModaluserDemerit />
     <u2 className={styles.DemeritGuide}>현재 누적 벌점은 {props.userDemerit}점</u2>
+    <h1></h1>
   </div>
 }
 
@@ -595,6 +580,7 @@ function UserDemeritBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>누적 벌점</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :
