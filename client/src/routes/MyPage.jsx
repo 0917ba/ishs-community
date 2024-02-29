@@ -56,12 +56,12 @@ const _pages = [
   { pageName: '아이디/학번', pageSite:"UserInformationBox"},
   { pageName: '누적 벌점', pageSite:"UserDemeritBox"},
   { pageName: '유저 랭크', pageSite:"UserRankBox"},
-  { pageName: '이메일', pageSite:"UserEmailBox"},
+  // { pageName: '이메일', pageSite:"UserEmailBox"},
   { pageName: '보유 ATP', pageSite:"UserATPBox"},
-  { pageName: '도움말', pageSite:"HelpUserBox"},
   { pageName: '내 커뮤니티 글', pageSite: "PostList"},
   { pageName: '내가 작성한 댓글', pageSite: "PostList"},
   { pageName: '내가 추천한 글', pageSite: "PostList"},
+  { pageName: '도움말', pageSite:"HelpUserBox"},
 ]
 
 function MovePageBox() {
@@ -140,35 +140,30 @@ function MemberInformationBtn() {
 
   return (
     <div>
-      <button onClick={openModal} className={styles.MemberInformation}>회원 정보 수정</button>
+      <button onClick={openModal} className={styles.MemberInformation}>회원 정보 변경</button>
 
-      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-        <div>회원 인증</div>
-        <form>
-          ID : <input id='userid' type='text'/><br></br>
-          비밀번호 : <input id='pwd' type='password' maxlength='5'/>
+      <Modal isOpen={isOpen} onRequestClose={closeModal} className={styles.modal}>
+        <div className={styles.modalTitle}>회원 인증</div>
+        <form className={styles.modalAll}>
+          <input placeholder='ID' className={styles.modalIntput} id='userid' type='text'/><br></br>
+          <input placeholder='Password' className={styles.modalIntput} id='pwd' type='password'/>
         </form>
-        <button onClick={openModal2}>확인</button>
-        <button onClick={closeModal}>닫기</button>
+        <button className={styles.modalButton} onClick={openModal2}>확인</button>
+        <button className={styles.modalButton2} onClick={closeModal}>닫기</button>
       </Modal>
-      <Modal isOpen={isOpen2} onRequestClose={closeModal2} style={customStyles}>
-        <div>회원 정보 수정</div>
-        <form>
-            <div><label>비밀번호 : </label></div>
-            <input id="user_pw" type="password" maxlength="10" placeholder="8글자이상" required />
-            <div><label>이메일 : </label></div>
-            <input id="user_email" type="email" required />
-            <div><label>닉네임 : </label></div>
-            <input id="user_nickname" type="text" maxlength="10" required />
-            <div><label for="user_date">생년월일 :</label></div>
-            <input type="date" id="date" max="2077-06-20" min="2005-01-01" value="2006-01-01" required />
-            <hr/>
-            <input type="radio" value="male" name="gender" />남성
-            <input type="radio" value="female" name="gender" />여성
+      
+      <Modal isOpen={isOpen2} onRequestClose={closeModal2} className={styles.modal2}>
+        <div className={styles.modal2Title}>회원 정보 변경</div>
+        <form className={styles.modal2All}>
+        <input className={styles.modal2Intput} placeholder='Password' id="user_pw" type="password" maxlength="10" required />
+            <input className={styles.modal2Intput} placeholder='Email' id="user_email" type="email" required />
+            <input className={styles.modal2Intput} placeholder='Nickname' id="user_nickname" type="text" maxlength="10" required />
+            <div></div>
+            <input className={styles.modal2Intput} placeholder='BrithDay' id="user_date" type="date" max="2077-06-20" min="2005-01-01" value="2006-01-01" required />
             <br/>
         </form>
-        <button onClick={save}>저장</button>
-        <button onClick={closeModal2}>취소</button>
+        <button className={styles.modal2Button} onClick={save}>저장</button>
+        <button className={styles.modal2Button2} onClick={closeModal2}>취소</button>
       </Modal>
     </div>
   );
@@ -316,11 +311,12 @@ function UserInformation(props){
     <div className={styles.HrUserInformation}>사용자 명 : {props.UserName}</div>
     <div className={styles.HrUserInformation}>사용자 ID : {props.UserId}</div>
     <div className={styles.HrUserInformation}>사용자 학번 : {props.UserStudentID}</div>
+    <div className={styles.HrUserInformation}>생 년 월 일 : {props.UserBirthday}</div>
   </div>
 }
 
 const _userInformation = [
-  { userName: '인곽이', userId: 'ISHS2930', userStudentID: "2501"},
+  { userName: '인곽이', userId: 'ISHS2930', userStudentID: "2501", userbirthday: "2024-03-04"},
 ]
 
 function UserInformationBox() {
@@ -343,7 +339,8 @@ function UserInformationBox() {
         userInformation.map((userInformation, index) => {
           return <UserInformation key={index} UserName={userInformation.userName} 
           UserId={userInformation.userId}
-          UserStudentID={userInformation.userStudentID}/>
+          UserStudentID={userInformation.userStudentID}
+          UserBirthday={userInformation.userbirthday}/>
         })
       }
     </div>
@@ -354,6 +351,7 @@ function UserInformationBox() {
 
 function UserAuthority(props){
   return <div>
+    <h1></h1>
     <div className={styles.UserAuthority}>사용자 권한 : {props.UserAuthorityName}</div>
   </div>
 }

@@ -316,3 +316,126 @@ body{
     text-decoration-style: wavy;
 	text-decoration-color: rgb(114, 165, 204);
 }
+
+
+.modal{
+    position: relative;
+    width: 30vw;
+    height: 50vh;
+    left: 35vw;
+    top: 25vh;
+    background-color: rgb(215, 238, 255);
+}
+
+.modalTitle{
+    position: relative;
+    left: 9vw;
+    top: 2vh;
+    font-size: 5vmin;
+}
+
+.modalAll{
+    position: relative;
+    left: 5vw;
+    top: 12vh;
+    font-size: 3vmin;
+}
+
+.modalIntput{
+    position: relative;
+    font-size: 3vmin;
+}
+
+.modalButton{
+    position: relative;
+    top: 25vh;
+    left: 10vw;
+    width: auto;
+    height: auto;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    border-radius: 20vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border: 0.2vmin solid #241c1c;
+    padding-right: 1vw;
+    background: rgb(255, 255, 255);
+}
+.modalButton2{
+    position: relative;
+    top: 25vh;
+    left: 12vw;
+    width: auto;
+    height: auto;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    border-radius: 20vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border: 0.2vmin solid #241c1c;
+    padding-right: 1vw;
+    background: rgb(255, 255, 255);
+}
+
+.modal2{
+    position: relative;
+    width: 30vw;
+    height: 50vh;
+    left: 35vw;
+    top: 25vh;
+    background-color: rgb(215, 238, 255);
+}
+
+.modal2Title{
+    position: relative;
+    left: 6vw;
+    top: 2vh;
+    font-size: 5vmin;
+}
+
+.modal2All{
+    position: relative;
+    left: 5vw;
+    top: 10vh;
+    font-size: 2vmin;
+}
+
+.modal2Intput{
+    position: relative;
+    font-size: 3vmin;
+}
+
+.modal2Button{
+    position: relative;
+    top: 19vh;
+    left: 10vw;
+    width: auto;
+    height: auto;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    border-radius: 20vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border: 0.2vmin solid #241c1c;
+    padding-right: 1vw;
+    background: rgb(255, 255, 255);
+}
+.modal2Button2{
+    position: relative;
+    top: 19vh;
+    left: 12vw;
+    width: auto;
+    height: auto;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    border-radius: 20vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border: 0.2vmin solid #241c1c;
+    padding-right: 1vw;
+    background: rgb(255, 255, 255);
+}
