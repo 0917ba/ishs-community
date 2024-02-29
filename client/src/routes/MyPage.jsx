@@ -92,7 +92,7 @@ function MovePageBox() {
             <div>
               <div>
                 {/* <MoveMyPage key={index} moveMyPage={pages.pageName} moveMyPageSite={pages.pageSite}/> */}
-                <button onClick={handleClickButton} name={pages.pageSite} key={index}>
+                <button className={styles.contentButton} onClick={handleClickButton} name={pages.pageSite} key={index}>
                   {pages.pageName}
                 </button>
               </div>
