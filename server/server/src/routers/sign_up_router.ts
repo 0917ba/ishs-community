@@ -30,6 +30,8 @@ signUpRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
                     logger.error("Sign up failed 0");
                     res.status(400).send(respRest(400, "야이씨 아이디 중복이다!"));
                     resolve(false);
+                } else {
+                    resolve(true);
                 }
                 }).catch((err: any) => {
                     logger.error("Sign up failed 0 ");
