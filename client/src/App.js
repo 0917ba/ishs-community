@@ -19,6 +19,7 @@ import BoardList from "./routes/BoardList";
 import Home from "./routes/Home";
 import MyList from "./routes/MyList";
 import React from "react";
+import PostTest from './routes/PostTest';
 
 function App() {
   function user() {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/MyList" element={<MyList/>}/>
         <Route path='/Board' element={<BoardList />}/>
         <Route path='/postpage' element={<PostPage />}/>
+        <Route path='/PostTest' element={<PostTest />} />
       </Routes>
     </Router>
   );
