@@ -83,7 +83,7 @@ app.use('*', (req: Request, res: Response, next: NextFunction) => {
 app.use('/signup', require('./routers/sign_up_router'));
 app.use('/signin', require('./routers/sign_in_router'));
 app.use('/check_session', require('./routers/check_session_router'));
-app.use('/logout', require('./routers/logout_router'));
+app.use('/signout', require('./routers/logout_router'));
 app.use('/user', require('./routers/userInfo_router'));
 app.use('/post', require('./routers/post_router'));
 app.use('/comment', require('./routers/comment_router'));
