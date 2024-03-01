@@ -47,6 +47,7 @@ const sessionMiddleware = session({
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
         //TODO: add secure option
+        sameSite: 'none',
     }
 });
 
@@ -67,7 +68,7 @@ app.use(sessionMiddleware);
 
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: true,
 }));
 
 // log all requests
