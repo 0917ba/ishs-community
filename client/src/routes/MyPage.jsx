@@ -53,12 +53,15 @@ function MoveMyPage(props){
 }
 
 const _pages = [
-  { pageName: '아이디/학번', pageSite:"UserInformationBox"},
+  { pageName: '회원 정보', pageSite:"UserInformationBox"},
   { pageName: '누적 벌점', pageSite:"UserDemeritBox"},
-  { pageName: '유저 계급', pageSite:"UserRankBox"},
-  { pageName: '이메일', pageSite:"UserEmailBox"},
+  { pageName: '유저 랭크', pageSite:"UserRankBox"},
+  // { pageName: '이메일', pageSite:"UserEmailBox"},
   { pageName: '보유 ATP', pageSite:"UserATPBox"},
-  { pageName: '도움말', pageSite:"HelpUserBox"},
+  { pageName: '내 커뮤니티 글', pageSite: "PostList"},
+  { pageName: '내가 작성한 댓글', pageSite: "PostList"},
+  { pageName: '내가 추천한 글', pageSite: "PostList"},
+  // { pageName: '도움말', pageSite:"HelpUserBox"},
 ]
 
 function MovePageBox() {
@@ -83,13 +86,12 @@ function MovePageBox() {
     <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserImage} />
     <div className={styles.MovePageList}>
       {
-        isLoading ? <div>Loading...</div> :
         pages.map((pages, index) => {
           return (
             <div>
               <div>
                 {/* <MoveMyPage key={index} moveMyPage={pages.pageName} moveMyPageSite={pages.pageSite}/> */}
-                <button onClick={handleClickButton} name={pages.pageSite} key={index}>
+                <button className={styles.contentButton} onClick={handleClickButton} name={pages.pageSite} key={index}>
                   {pages.pageName}
                 </button>
               </div>
@@ -107,12 +109,25 @@ function MovePageBox() {
 
 function MemberInformationBtn() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
   };
-
   const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal2 = () => {
+    setIsOpen2(true);
+  };
+  const closeModal2 = () => {
+    setIsOpen2(false);
+    setIsOpen(false);
+  };
+
+  const save = () => {
+    setIsOpen2(false);
     setIsOpen(false);
   };
 
@@ -124,18 +139,35 @@ function MemberInformationBtn() {
 
   return (
     <div>
-      <button onClick={openModal} className={styles.MemberInformation}>회원 정보 수정</button>
+      <button onClick={openModal} className={styles.MemberInformation}>회원 정보 변경</button>
 
-      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-        <div>회원 정보 수정</div>
-        <p>비빌번호를 입력해주세요</p>
-        <input type="text" placeholder="Password" />
-        <button onClick={closeModal}>확인</button>
-        <button onClick={closeModal}>닫기</button>
+      <Modal isOpen={isOpen} onRequestClose={closeModal} className={styles.modal}>
+        <div className={styles.modalTitle}>회원 인증</div>
+        <form className={styles.modalAll}>
+          <input placeholder='ID' className={styles.modalIntput} id='userid' type='text'/><br></br>
+          <input placeholder='Password' className={styles.modalIntput} id='pwd' type='password'/>
+        </form>
+        <button className={styles.modalButton} onClick={openModal2}>확인</button>
+        <button className={styles.modalButton2} onClick={closeModal}>닫기</button>
+      </Modal>
+      
+      <Modal isOpen={isOpen2} onRequestClose={closeModal2} className={styles.modal2}>
+        <div className={styles.modal2Title}>회원 정보 변경</div>
+        <form className={styles.modal2All}>
+        <input className={styles.modal2Intput} placeholder='Password' id="user_pw" type="password" maxlength="10" required />
+            <input className={styles.modal2Intput} placeholder='Email' id="user_email" type="email" required />
+            <input className={styles.modal2Intput} placeholder='Nickname' id="user_nickname" type="text" maxlength="10" required />
+            <div></div>
+            <input className={styles.modal2Intput} placeholder='BrithDay' id="user_date" type="date" max="3000-12-31" min="1900-01-01" required />
+            <br/>
+        </form>
+        <button className={styles.modal2Button} onClick={save}>저장</button>
+        <button className={styles.modal2Button2} onClick={closeModal2}>취소</button>
       </Modal>
     </div>
   );
 }
+
 
 function Notification() {
   const [isLoading, setIsLoading] = useState(true)
@@ -184,18 +216,9 @@ function SelectPageBox(props) {
   };
 
   return <div className={styles.MySelectbox}>
-    <h1 className={styles.MySelectTitle}>나의 활동</h1>
     {
-      isLoading ? <div>Loading...</div> : 
       <div>
-        <WritingPageBox />
         {props.Content && <props.Content>{selectComponent[props.Content]}</props.Content>}
-        {/* <HelpUserBox /> */}
-        {/* <UserInformationBox /> */}
-        {/* <누적벌점 /> */}
-        {/* <UserRankBox /> */}
-        {/* <UserEmailBox /> */}
-        {/* <UserATPBox /> */}
       </div>
     }
   </div>
@@ -212,83 +235,17 @@ function ModaluserPermissions() {
     setIsOpen(false);
   };
 
-  const customStyles = {
-    overlay: {
-      BackGroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-    content: {
-      width: "40vw",
-      height: "60vh",
-      margin: "auto",
-      borderRadius: "0.2vw",
-      padding: "4vw",
-    },
-  };
-
   return (
     <div>
       <button onClick={openModal} className={styles.explanationUserAuthority}>⨀ 사용자 권한 더 알아보기</button>
 
-      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-        <h1>사용자 권한</h1>
-        <p>모달 컨텐츠</p>
-        <button onClick={closeModal}>닫기</button>
+      <Modal isOpen={isOpen} onRequestClose={closeModal} className={styles.Guidemodal}>
+        <h1 className={styles.GuideText}>관리자/유저 권한</h1>
+        <img src="/img/UserAuthorityImg.png"  className={styles.UserAuthorityImg} />
+        <button className={styles.UserAuthorityButton} onClick={closeModal}>닫기</button>
       </Modal>
     </div>
   );
-}
-
-function WritingPageTitle(props) {
-  return <div onclick={props.moveMyPageSite} className={styles.writingbox}>
-    <div>{props.writing}</div>
-  </div>
-}
-
-const _Writingpagelist = [
-  { writingpageName: '내 커뮤니티 글', writingpageSite: "PostList"},
-  { writingpageName: '내가 작성한 댓글', writingpageSite: "PostList"},
-  { writingpageName: '내가 추천한 글', writingpageSite: "PostList"},
-]
-
-function WritingPageBox() {
-  const [Writingpagelist, setwritingpagelist] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-      setwritingpagelist(_Writingpagelist);
-    }, 1000);
-  }, []);
-
-  const [content, setContent] = useState();
-
-  const handleClickButton = e => {
-    const { name } = e.target;
-    setContent(name);
-    SelectPageBox.Content = content;
-  };
-
-  console.log('Change: '+content);
-  console.log('Chage2: '+SelectPageBox.Content);
-  return <div className={styles.writingboxcontainer}>
-    {
-      isLoading ? <div>Loading...</div> :
-      Writingpagelist.map((Writingpagelist, index) => {
-        return (
-          // <WritingPageTitle key={index} writing={Writingpagelist.writingpageName} moveMyPageSite={Writingpagelist.writingpageSite}/>
-          <>
-            <button className='writingbox' onClick={handleClickButton} name={Writingpagelist.writingpageSite} key={index}>
-                    {Writingpagelist.writingpageName}
-            </button>
-            <div>
-              {SelectPageBox.Content = content}
-            </div>
-          </>
-        );
-      })
-    }
-  </div>
 }
 
 function HelpUserPage(props){
@@ -319,6 +276,7 @@ function HelpUserBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>도움말</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :
@@ -336,11 +294,13 @@ function UserInformation(props){
     <div className={styles.HrUserInformation}>사용자 명 : {props.UserName}</div>
     <div className={styles.HrUserInformation}>사용자 ID : {props.UserId}</div>
     <div className={styles.HrUserInformation}>사용자 학번 : {props.UserStudentID}</div>
+    <div className={styles.HrUserInformation}>생 년 월 일 : {props.UserBirthday}</div>
+    <div className={styles.HrUserInformation}>Email : {props.UserEmail}</div>
   </div>
 }
 
 const _userInformation = [
-  { userName: '인곽이', userId: 'ISHS2930', userStudentID: "2501"},
+  { userName: '인곽이', userId: 'ISHS2930', userStudentID: "2501", userbirthday: "2024-03-04", userEmail: "ishs2930@ishs.com"},
 ]
 
 function UserInformationBox() {
@@ -355,6 +315,7 @@ function UserInformationBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>회원 정보</h1>
     <img src="/img/myIcon.png" height="150px" width="230px" className={styles.UserInformationImage} />
     <div>
       {
@@ -362,7 +323,9 @@ function UserInformationBox() {
         userInformation.map((userInformation, index) => {
           return <UserInformation key={index} UserName={userInformation.userName} 
           UserId={userInformation.userId}
-          UserStudentID={userInformation.userStudentID}/>
+          UserStudentID={userInformation.userStudentID}
+          UserBirthday={userInformation.userbirthday}
+          UserEmail={userInformation.userEmail}/>
         })
       }
     </div>
@@ -373,6 +336,7 @@ function UserInformationBox() {
 
 function UserAuthority(props){
   return <div>
+    <h1></h1>
     <div className={styles.UserAuthority}>사용자 권한 : {props.UserAuthorityName}</div>
   </div>
 }
@@ -427,20 +391,14 @@ function ModaluserRank() {
     setIsOpen(false);
   };
 
-  const customStyles = {
-    overlay: {
-      BackGroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-  };
-
   return (
     <div>
-      <button onClick={openModal} className={styles.modaluserRank}>⨀ 회원등급 시스템 더 알아보기</button>
+      <button onClick={openModal} className={styles.modaluserRank}>⨀ 유저 랭크 시스템 더 알아보기</button>
 
-      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-        <div>사용자 권한</div>
-        <p>모달 컨텐츠</p>
-        <button onClick={closeModal}>닫기</button>
+      <Modal isOpen={isOpen} onRequestClose={closeModal} className={styles.Guidemodal}>
+        <h1 className={styles.GuideText}>유저 랭크</h1>
+        <img src="/img/UserRank.png"  className={styles.UserRankImg} />
+        <button className={styles.UserRankButton} onClick={closeModal}>닫기</button>
       </Modal>
     </div>
   );
@@ -458,6 +416,7 @@ function UserRankBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>유저 랭크</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :
@@ -472,6 +431,7 @@ function UserRankBox() {
 
 function UserEmailBox() {
   return <div>
+    <h1 className={styles.MySelectTitle}>이메일</h1>
     <div>서비스 준비 중입니다...</div>
   </div>
 }
@@ -499,20 +459,14 @@ function ModaluserATP() {
     setIsOpen(false);
   };
 
-  const customStyles = {
-    overlay: {
-      BackGroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-  };
-
   return (
     <div>
-      <button onClick={openModal} className={styles.modaluserRank}>⨀ ATP 시스템 더 알아보기</button>
+      <button onClick={openModal} className={styles.modaluserATP}>⨀ ATP 시스템 더 알아보기</button>
 
-      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-        <div>사용자 권한</div>
-        <p>모달 컨텐츠</p>
-        <button onClick={closeModal}>닫기</button>
+      <Modal isOpen={isOpen} onRequestClose={closeModal} className={styles.Guidemodal}>
+        <h1 className={styles.GuideText}>ATP</h1>
+        <h1 className={styles.ATPtext}>시스템 개발 예정입니다</h1>
+        <button className={styles.UserATPButton} onClick={closeModal}>닫기</button>
       </Modal>
     </div>
   );
@@ -530,6 +484,7 @@ function UserATPBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>보유 ATP</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :
@@ -546,6 +501,7 @@ function UserDemerit(props){
   return <div>
     <ModaluserDemerit />
     <u2 className={styles.DemeritGuide}>현재 누적 벌점은 {props.userDemerit}점</u2>
+    <h1></h1>
   </div>
 }
 
@@ -564,20 +520,78 @@ function ModaluserDemerit() {
     setIsOpen(false);
   };
 
-  const customStyles = {
-    overlay: {
-      BackGroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-  };
-
   return (
     <div>
       <button onClick={openModal} className={styles.modaluserDemerit}>⨀ 벌점 시스템 더 알아보기</button>
 
-      <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-        <div>사용자 권한</div>
-        <p>모달 컨텐츠</p>
-        <button onClick={closeModal}>닫기</button>
+      <Modal isOpen={isOpen} onRequestClose={closeModal} className={styles.Guidemodal}>
+        <h1 className={styles.GuideText}>벌점</h1>
+        <table border ="1" bordercolor="black" cellspacing="4" className={styles.Demerittable}>
+          <caption align="center"><h3>벌점 부여 기준</h3></caption>
+          <tr align="center">
+            <th scope="col">항목</th>
+            <th scope="col">점수</th>
+          </tr>
+          <tr align="center">
+            <td>과도한 욕설</td>
+            <td>1</td>
+          </tr>
+          <tr align="center">
+            <td>성적(性的) 발언</td>
+            <td>1</td>
+          </tr>
+          <tr align="center">
+            <td>성적(成績) 발언</td>
+            <td>1</td>
+          </tr>
+          <tr align="center">
+            <td>혐오 사진</td>
+            <td>1</td>
+          </tr>
+          <tr align="center">
+            <td>도배글</td>
+            <td>3</td>
+          </tr>
+          <tr align="center">
+            <td>허위사실 유포</td>
+            <td>3</td>
+          </tr>
+          <tr align="center">
+            <td>교직원에 대한 비하적 표현</td>
+            <td>5</td>
+          </tr>
+        </table>
+        <table border ="1" bordercolor="black" cellspacing="4" className={styles.Demerittable2}>
+          <caption align="center"><h3>누적 벌점에 따른 처벌</h3></caption>
+          <tr align="center">
+            <th scope="col">점수</th>
+            <th scope="col">처벌</th>
+          </tr>
+          <tr align="center">
+            <td>1 ~ 2</td>
+            <td>12시간 정지</td>
+          </tr>
+          <tr align="center">
+            <td>3 ~ 5</td>
+            <td>하루</td>
+          </tr>
+          <tr align="center">
+            <td>6 ~ 10</td>
+            <td>3일</td>
+          </tr>
+          <tr align="center">
+            <td>10~20</td>
+            <td>일주일</td>
+          </tr>
+          <tr align="center">
+            <td>20 초과</td>
+            <td>영구 정지, 선생님께 보고됨</td>
+          </tr>
+        </table>
+        <div className={styles.DemeritText}>벌점은 1년 단위로 누적되며, 벌점을 받으면 누적 벌점에 해당하는 처벌을 받게 됩니다.</div>
+        <div className={styles.DemeritText}>마이페이지에서 내가 받은 벌점을 알 수 있습니다.</div>
+        <div className={styles.DemeritText}>또한 극도로 유해한 글은 벌점과 무관하게 선생님께 회부될 수 있습니다. 이 점 유의해주세요.</div>
+        <button className={styles.UserDemeritButton} onClick={closeModal}>닫기</button>
       </Modal>
     </div>
   );
@@ -595,6 +609,7 @@ function UserDemeritBox() {
   }, []);
 
   return <div>
+    <h1 className={styles.MySelectTitle}>누적 벌점</h1>
     <div>
       {
         isLoading ? <div>Loading...</div> :

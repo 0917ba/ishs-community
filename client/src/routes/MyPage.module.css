@@ -76,7 +76,7 @@ body{
 
 
 .static {
-    border: 2px solid #B8860B;
+    /* border: 2px solid #B8860B; */
     position: static;
     width: 100vw;
     height: 100vh;
@@ -144,22 +144,43 @@ body{
     left: 4.25vw;
     width: auto;
     height: auto;
+    margin-bottom: 0.2vh;
     font-size: 1.4vmin;
     max-width: 100%;
-    border-radius: 20vw;
     padding-top: 0.5vh;
     padding-bottom: 0.5vh;
     padding-left: 1vw;
-    border: 0.2vmin solid #241c1c;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
     padding-right: 1vw;
-    background: rgb(255, 255, 255);
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.MemberInformation:hover{
+    position: relative;
+    top: 20vh;
+    left: 4.25vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
 }
 
 .MySelectbox{
     float: right;
     position: relative;
     left: 65vw;
-    bottom: 30vh;
+    bottom: 40vh;
     display: block;
     width: 62vw;
     height: 100%;
@@ -170,7 +191,7 @@ body{
     font-size: 3vmin;
     padding-bottom: 0.9vh;
     width: 95%;
-    border-bottom: 0.1vh solid  #c0c0c0;;
+    border-bottom: 0.1vh solid  #c0c0c0;
 }
 
 .writingboxcontainer {
@@ -236,27 +257,125 @@ body{
     left: 19vw;
     width: 55%;
     font-size: 2vmin;
-    border-bottom: 2px solid #000000;
+    border-bottom: 0.2vh solid #000000;
     margin-bottom: 3vh;
 }
 
 .UserAuthority{
     position: relative;
     float: center;
-    top: 13vh;
-    right: 17vw;
+    top: 22vh;
+    right: 22vw;
     width: auto;
     font-size: 3vmin;
 }
 
+.Guidemodal{
+    position: relative;
+    width: 60vw;
+    height: 80vh;
+    left: 20vw;
+    top: 10vh;
+    background-color: rgb(255, 255, 241);
+    width: 60vw;
+    height: 80vh;
+    border: 0.2vh solid #000000;
+    border-radius: 0.2vw;
+    position: fixed;
+}
+
 .explanationUserAuthority{
     position: relative;
-    float: center;
-    color: gray;
     top: 22vh;
     left: 13vw;
     width: auto;
-    font-size: 2vmin;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.explanationUserAuthority:hover{
+    position: relative;
+    top: 22vh;
+    left: 13vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
+}
+
+.GuideText{
+    font-size: 3vmin;
+    position: relative;
+    top: 2vh;
+    left: 3vw;
+    text-decoration-line: underline;
+    text-underline-position: under;
+    text-decoration-style: double;
+}
+
+.UserAuthorityImg{
+    position: relative;
+    top: 8vh;
+    left: 15vw;
+    width: 30vw;
+    height: 47vh;
+}
+
+.UserAuthorityButton{
+    position: relative;
+    top: 20vh;
+    left: 23vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.UserAuthorityButton:hover{
+    position: relative;
+    top: 20vh;
+    left: 23vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
 }
 
 .logout{
@@ -265,28 +384,127 @@ body{
     left: 5vw;
     width: auto;
     height: auto;
+    margin-bottom: 0.2vh;
     font-size: 1.4vmin;
     max-width: 100%;
-    border-radius: 20vw;
     padding-top: 0.5vh;
     padding-bottom: 0.5vh;
     padding-left: 1vw;
-    border: 0.2vmin solid #241c1c;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
     padding-right: 1vw;
-    background: rgb(255, 255, 255);
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.logout:hover{
+    position: relative;
+    top: 21vh;
+    left: 5vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
 }
 
 .userRankName{
     position: relative;
     font-size: 4vmin;
     left: 20vw;
-    bottom: 16vh;
+    bottom: 13vh;
+}
+
+.UserRankImg{
+    position: relative;
+    top: 8vh;
+    left: 5vw;
+    width: 50vw;
+    height: 45vh;
 }
 
 .modaluserRank{
     position: relative;
-    left: 45vw;
     top: 45vh;
+    left: 45vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.modaluserRank:hover{
+    position: relative;
+    top: 45vh;
+    left: 45vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
+}
+
+.UserRankButton{
+    position: relative;
+    top: 20vh;
+    left: 3vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.UserRankButton:hover{
+    position: relative;
+    top: 20vh;
+    left: 3vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
 }
 
 .atpGuide{
@@ -302,10 +520,125 @@ body{
     left: 15vw;
 }
 
+.modaluserATP{
+    position: relative;
+    top: 45vh;
+    left: 45vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.modaluserATP:hover{
+    position: relative;
+    top: 45vh;
+    left: 45vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
+}
+
+.ATPtext{
+    position: relative;
+    top: 25vh;
+    left: 16vw;
+    font-size: 5vmin;
+}
+
+.UserATPButton{
+    position: relative;
+    top: 53vh;
+    left: 53vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.UserATPButton:hover{
+    position: relative;
+    top: 53vh;
+    left: 53vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
+}
+
 .modaluserDemerit{
     position: relative;
-    left: 45vw;
-    top: 45vh;
+    top: 50vh;
+    left: 49vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.modaluserDemerit:hover{
+    position: relative;
+    top: 50vh;
+    left: 49vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
 }
 
 .DemeritGuide{
@@ -314,5 +647,314 @@ body{
     left: 2vw;
     text-decoration-line: underline;
     text-decoration-style: wavy;
+    text-underline-position: under;
 	text-decoration-color: rgb(114, 165, 204);
+}
+
+.Demerittable{
+    position: relative;
+    top: 5vh;
+    left: 3vw;
+    width: 25vw;
+    height: 40vh;
+}
+
+.Demerittable2{
+    position: relative;
+    bottom: 39.8vh;
+    left: 32vw;
+    width: 25vw;
+    height: 40vh;
+}
+
+.DemeritText{
+    position: relative;
+    bottom: 36vh;
+    left: 3vw;
+    width: 55vw;
+    font-size: 2vmin;
+}
+
+.UserDemeritButton{
+    position: relative;
+    bottom: 32vh;
+    left: 53vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(220, 132, 240);
+    padding-right: 1vw;
+    color: rgb(220, 132, 240);
+    background: #ffffff;
+}
+
+.UserDemeritButton:hover{
+    position: relative;
+    bottom: 32vh;
+    left: 53vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(220, 132, 240);
+}
+
+.modal{
+    position: relative;
+    width: 30vw;
+    height: 50vh;
+    left: 35vw;
+    top: 25vh;
+    background-color: rgb(215, 238, 255);
+}
+
+.modalTitle{
+    position: relative;
+    left: 9vw;
+    top: 2vh;
+    font-size: 5vmin;
+    text-decoration-line: underline;
+    text-underline-position: under;
+}
+
+.modalAll{
+    position: relative;
+    left: 5vw;
+    top: 12vh;
+    font-size: 3vmin;
+}
+
+.modalIntput{
+    position: relative;
+    font-size: 3vmin;
+}
+
+.modalButton{
+    position: relative;
+    top: 25vh;
+    left: 10vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
+    padding-right: 1vw;
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.modalButton:hover{
+    position: relative;
+    top: 25vh;
+    left: 10vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
+}
+
+.modalButton2{
+    position: relative;
+    top: 25vh;
+    left: 12vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
+    padding-right: 1vw;
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.modalButton2:hover{
+    position: relative;
+    top: 25vh;
+    left: 12vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
+}
+
+.modal2{
+    position: relative;
+    width: 30vw;
+    height: 50vh;
+    left: 35vw;
+    top: 25vh;
+    background-color: rgb(215, 238, 255);
+}
+
+.modal2Title{
+    position: relative;
+    left: 6vw;
+    top: 2vh;
+    font-size: 5vmin;
+    text-decoration-line: underline;
+    text-underline-position: under;
+}
+
+.modal2All{
+    position: relative;
+    left: 5vw;
+    top: 10vh;
+    font-size: 2vmin;
+}
+
+.modal2Intput{
+    position: relative;
+    font-size: 3vmin;
+}
+
+.modal2Button{
+    position: relative;
+    top: 19vh;
+    left: 10vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
+    padding-right: 1vw;
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.modal2Button:hover{
+    position: relative;
+    top: 19vh;
+    left: 10vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
+}
+
+.modal2Button2{
+    position: relative;
+    top: 19vh;
+    left: 12vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
+    padding-right: 1vw;
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.modal2Button2:hover{
+    position: relative;
+    top: 19vh;
+    left: 12vw;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
+}
+
+.contentButton{
+    position: relative;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(114, 165, 204);
+}
+
+.contentButton:hover{
+    position: relative;
+    width: auto;
+    height: auto;
+    margin-bottom: 0.2vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(114, 165, 204);
+    padding-right: 1vw;
+    color: rgb(114, 165, 204);
+    background: #ffffff;
 }
