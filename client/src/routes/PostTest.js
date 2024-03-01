@@ -3,7 +3,7 @@ import Post from "../component/Post/Post";
 const PostTest = () => {
 
     function signin() {
-        fetch('http://app.ishs.co.kr/signin', {
+        fetch('/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,7 +17,7 @@ const PostTest = () => {
     }
 
     function check_session() {
-        fetch('http://app.ishs.co.kr/check_session', {
+        fetch('/check_session', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
