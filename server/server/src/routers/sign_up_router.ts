@@ -28,7 +28,7 @@ signUpRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
                 userDatabase.getUserById(id).then((user) => {
                 if (user) {
                     logger.error("Sign up failed 0");
-                    res.status(400).send(respRest(400, ""));
+                    res.status(400).send(respRest(400, "이미 있는 아이디인데;; 다른걸로 ㄱㄱ"));
                     resolve(false);
                 }
                 }).catch((err: any) => {
@@ -60,14 +60,14 @@ signUpRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
                     res.status(200).send(respRest(200, 0));
                 } else {
                     logger.error("Sign up failed 1 ");
-                    res.status(400).send(respRest(400, 1));
+                    res.status(400).send(respRest(400, "회원가입 실패!!!! ㅋㅋ 이걸 실패하네"));
                 }
             }
             )
         }
     } else {
         logger.error("Sign up failed 2 ");
-        res.status(400).send(respRest(400, 1));
+        res.status(400).send(respRest(400, "하나 하면 입력값을, 둘 하면 제대로 넣자! 하나! 둘! 하나! 둘!"));
     }
 });
 
