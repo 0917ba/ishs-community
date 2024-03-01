@@ -15,25 +15,25 @@ function Home() {
         credentials: 'include',
       };
       const res = await fetch(`/check_session`, formData);
-
-      console.log(res.status);
-      console.log(res);
+      const data = await res.json();
+      console.log(data);
     })();
   }, []);
 
   const navigate = useNavigate();
 
   const onClickSignOut = async () => {
-    console.log('signin');
+    console.log('signout');
     const formData = {
-      mgitethod: 'POST',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
+      credentials: 'include',
     };
 
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const resl = await fetch(`serverUrl` + `/signout`, formData);
+    const resl = await fetch(`/signout`, formData);
   };
 
   return (

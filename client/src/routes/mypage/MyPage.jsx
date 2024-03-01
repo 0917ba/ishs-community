@@ -880,8 +880,17 @@ function UserDemeritBox() {
 function MyPage() {
   useEffect(() => {
     (async () => {
-      const res = await fetch('/check_session?');
-      console.log(res);
+      const formData = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
+      };
+      const res = await fetch('/check_session', formData);
+      const data = res.json();
+      console.log(data);
     })();
   }, []);
 

@@ -49,10 +49,12 @@ function Signin() {
     };
 
     const resl = await fetch(`/signin`, formData);
+    console.log(resl);
+
     const status = resl.status;
 
     if (status === 200) {
-      //navigate('/home');
+      navigate('/home');
     }
     if (status === 400) {
       setMessage('아이디 또는 비밀번호가 일치하지 않습니다.');

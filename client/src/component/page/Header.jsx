@@ -1,5 +1,7 @@
 import SearchBar from './SearchBar';
 import Ddate from './Dday';
+import mainLogo from '../img/mainLogo.jpg';
+import logISHS from '../img/logISHS.png';
 
 export default function Header() {
   return (
@@ -8,12 +10,12 @@ export default function Header() {
         <div className="basis-1/3 flex justify-center gap-3 ">
           <div className="md:w-[85px] w-[55px]">
             <a href="/main">
-              {/* <Image src={mainLogo} alt="logo" /> */}
+              <img src={mainLogo} alt="logo" />
             </a>
           </div>
           <div className="md:w-[200px] w-[150px]">
             <a href="/main">
-              {/* <Image src={logISHS} alt="logo" /> */}
+              <img src={logISHS} alt="logo" />
             </a>
           </div>
         </div>

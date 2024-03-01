@@ -93,18 +93,19 @@ function Signup() {
     //const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const res = await fetch('/signup', formData);
-    //const data = await res.json();
+    const data = await res.json();
+    console.log(data);
 
-    const status = res.status;
+    const status = data.status;
     console.log(status);
-    const getMessage = res.message;
-    console.log(getMessage);
+
+    const getMessage = data.content;
 
     if (status === 200) {
       navigate('/register/success');
     }
     if (status === 400) {
-      setMessage(getMessage + '회원가입에 실패하였습니다.');
+      setMessage(getMessage);
     }
     if (status === 500) {
       navigate('/developer/special');
@@ -112,16 +113,6 @@ function Signup() {
   };
 
   const DataCheck = () => {
-    if (
-      inputId === '' ||
-      inputPassword === '' ||
-      inputIdentify_code === '' ||
-      inputEmail === '' ||
-      inputName === '' ||
-      inputNickname === ''
-    ) {
-      return true;
-    }
     if (inputPassword !== inputPassword_check) {
       return true;
     }
@@ -147,14 +138,16 @@ function Signup() {
         />
       </div>
       <div>
-        <label>아이디 | </label>
-        <input
-          type='text'
-          name='아이디'
-          placeholder='아이디를 입력해 주세요.'
-          value={inputId}
-          onChange={onChangeId}
-        />
+        <div>
+          <label>아이디 | </label>
+          <input
+            type='text'
+            name='아이디'
+            placeholder='아이디를 입력해 주세요.'
+            value={inputId}
+            onChange={onChangeId}
+          />
+        </div>
       </div>
       <div>
         <label>비밀번호 | </label>
@@ -222,17 +215,7 @@ function Signup() {
           onChange={onChangeNickname}
         />
       </div>
-      <div>
-        <label>생년월일 | </label>
-        <input
-          type='date'
-          name='생년월일'
-          placeholder='생년월일을 입력해 주세요.'
-          value={inputBirthday}
-          onChange={onChangeBirthday}
-        />
-      </div>
-      <div></div>
+
       <div>
         <button type='button' onClick={onClickSignup} disabled={DataCheck()}>
           회원가입하기
