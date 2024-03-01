@@ -9,10 +9,10 @@ const STATUS_CODE = {
     500: 'Internal Server Error'
 }
 
-function respRest(status: number, content: Object) {
+function respRest(status: number, message: string | number,content: Object | null = null) {
     return {
         status: status,
-        message: STATUS_CODE[status as keyof typeof STATUS_CODE],
+        message: (typeof message == "string") ? message : STATUS_CODE[status as keyof typeof STATUS_CODE],
         content: content
     }
 }
