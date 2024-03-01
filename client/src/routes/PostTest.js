@@ -1,13 +1,14 @@
 import Post from "../component/Post/Post";
 
-const PostPage = () => {
+const PostTest = () => {
 
     function signin() {
-        fetch('http://app.ishs.co.kr/signin', {
+        fetch('/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            mode: 'cors',
             credentials: 'include',
             body: JSON.stringify({id: 'helloworld', password: 'ishs12345!'})
         }).then(res => {
@@ -16,11 +17,12 @@ const PostPage = () => {
     }
 
     function check_session() {
-        fetch('http://app.ishs.co.kr/check_session', {
+        fetch('/check_session', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
+            mode: 'cors',
             credentials: 'include'
         }).then(res => {
             console.log(res.status)
@@ -36,4 +38,4 @@ const PostPage = () => {
     );
 };
 
-export default PostPage;
+export default PostTest;

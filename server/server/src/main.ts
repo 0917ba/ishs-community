@@ -66,8 +66,8 @@ app.use(sessionMiddleware);
 // set Access-Control-Allow-Origin header to true
 
 app.use(cors({
-    origin: true,
     credentials: true,
+    origin: true,
 }));
 
 // log all requests
