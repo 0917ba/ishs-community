@@ -76,7 +76,7 @@ body{
 
 
 .static {
-    border: 2px solid #B8860B;
+    /* border: 2px solid #B8860B; */
     position: static;
     width: 100vw;
     height: 100vh;

@@ -158,7 +158,7 @@ function MemberInformationBtn() {
             <input className={styles.modal2Intput} placeholder='Email' id="user_email" type="email" required />
             <input className={styles.modal2Intput} placeholder='Nickname' id="user_nickname" type="text" maxlength="10" required />
             <div></div>
-            <input className={styles.modal2Intput} placeholder='BrithDay' id="user_date" type="date" max="2077-06-20" min="2005-01-01" value="2006-01-01" required />
+            <input className={styles.modal2Intput} placeholder='BrithDay' id="user_date" type="date" max="3000-12-31" min="1900-01-01" required />
             <br/>
         </form>
         <button className={styles.modal2Button} onClick={save}>저장</button>
