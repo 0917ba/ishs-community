@@ -48,6 +48,7 @@ const sessionMiddleware = session({
         httpOnly: true,
         //TODO: add secure option
         sameSite: 'none',
+        secure: true,
     }
 });
 
