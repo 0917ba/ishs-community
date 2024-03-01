@@ -53,7 +53,7 @@ export class UserDatabase {
     }
     
     getUserByUid(uid: string) {
-        return new Promise<User>((resolve, reject) => {
+        return new Promise<User|null>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
@@ -62,8 +62,12 @@ export class UserDatabase {
                     if (err) {
                         reject(err);
                     }
-                    let res = User.fromObject(result[0]);
-                    resolve(res);
+                    if (result.length == 0) {
+                        resolve(null);
+                    } else {
+                        let res = User.fromObject(result[0]);
+                        resolve(res);
+                    }
                 });
                 connection.release();
             });
@@ -71,7 +75,7 @@ export class UserDatabase {
     }
 
     getUserById(id: string) {
-        return new Promise<User>((resolve, reject) => {
+        return new Promise<User|null>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
@@ -80,8 +84,12 @@ export class UserDatabase {
                     if (err) {
                         reject(err);
                     }
-                    let res = User.fromObject(result[0]);
-                    resolve(res);
+                    if (result.length == 0) {
+                        resolve(null);
+                    } else {
+                        let res = User.fromObject(result[0]);
+                        resolve(res);
+                    }
                 });
                 connection.release();
             });

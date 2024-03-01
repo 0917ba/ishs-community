@@ -39,7 +39,7 @@ export class ReportDatabase {
     }
 
     getReportByUid(uid: string) {
-        return new Promise<Report>((resolve, reject) => {
+        return new Promise<Report|null>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
@@ -48,7 +48,11 @@ export class ReportDatabase {
                     if (err) {
                         reject(err);
                     }
-                    resolve(Report.fromObject(result[0]));
+                    if (result.length == 0) {
+                        resolve(null);
+                    } else {
+                        resolve(Report.fromObject(result[0]));
+                    }
                 });
                 connection.release();
             });

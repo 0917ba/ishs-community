@@ -63,7 +63,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(sessionMiddleware);
-app.use(cors())
+// set Access-Control-Allow-Origin header to true
+
+app.use(cors({
+    credentials: true,
+    origin: true,
+}));
 
 // log all requests
 app.use('*', (req: Request, res: Response, next: NextFunction) => {
@@ -90,7 +95,7 @@ app.use('/report', require('./routers/report_router'));
 // index file
 app.get('/', (req: Request, res: Response) => {
     let q = req.query.query;
-    res.sendFile(__dirname + '/client/index.html');
+    res.send(respRest(200, 1));
 });
 
 // 404 handler for GET request
