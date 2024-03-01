@@ -34,26 +34,22 @@ function Signin() {
   const onClickSignin = async () => {
     //console.log(inputId, inputPw);
     console.log('signin');
+
     const formData = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({
         id: inputId,
         password: inputPw,
       }),
     };
 
-    const serverUrl = 'http://app.ishs.co.kr';
-    const resl = await fetch(serverUrl + `/signin`, formData);
+    const resl = await fetch(`/signin`, formData);
     const status = resl.status;
-
-    const res = await fetch('http://app.ishs.co.kr/check_session', {
-      method: 'GET',
-    });
-    const data = await res.json();
-    console.log(data);
 
     if (status === 200) {
       //navigate('/home');

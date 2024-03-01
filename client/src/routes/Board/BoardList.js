@@ -39,7 +39,7 @@ const BoardList = () => {
   let [count, setCount] = useState(1);
 
   const onChangeUid = (uid) => {
-    navigate(`/board/detail/${uid}`, { state: uid });
+    navigate(`/postpage`, { state: uid });
   };
 
   return (

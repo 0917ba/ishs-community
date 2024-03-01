@@ -39,12 +39,11 @@ reactionRouter.post('/',  async (req: Request, res: Response, next: NextFunction
 });
 
 reactionRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    let userId = String(req.query.userId);
-    let type = String(req.query.type);
-    let targetId = String(req.query.targetId);
+    let userId = req.query.userId;
+    let targetId = req.query.targetId;
     let checker = new QueryChecker();
-    if (checker.notNull(userId, type, targetId)) {
-        let reaction = await reactionDatabase.findReactionByUserId(targetId, userId);
+    if (checker.notNull(userId, targetId)) {
+        let reaction = await reactionDatabase.findReactionByUserId(String(targetId), String(userId));
         if (reaction) {
             res.status(200).send(respRest(200, reaction.toObject()));
         } else {

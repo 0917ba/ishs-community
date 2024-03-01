@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react';
-import './PostList.module.css';
+import './Demerit.module.css';
 
-const PostBox = () => {
+const DemeritBox = () => {
   const [postList, setPostList] = useState([]);
   const [sResult, setsResult] = useState([]);
   const [content, setContent] = useState("");
@@ -39,9 +39,9 @@ const PostBox = () => {
         <ul className='PostList'>
           
           <div className='PostA'>
-            <div className='post1'>제목</div>
-            <div className='post2'>추천</div>
-            <div className='post3'>조회</div>
+            <div className='post1'>벌점사항</div>
+            <div className='post2'>날짜</div>
+            <div className='post3'>벌점</div>
           </div>
 
 
@@ -70,12 +70,13 @@ const PostBox = () => {
 
 };
 
-function PostList() {
+function DemeritList() {
   return (
     <div>
-      <PostBox />
+      <DemeritBox />
     </div>
   );
 }
 
-export default PostList;
+export default DemeritList;
+

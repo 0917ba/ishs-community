@@ -1,20 +1,20 @@
-type UserType = {
-    uid: string;
-    id: string;
-    password: string;
-    nickname: string;
-    email: string;
-    profileImage: string;
-    studentName: string;
-    generation: number;
-    classNumber: number;
-    studentNumber: number;
-    birthday: string;
-    privilege: number;
-    role: string;
-    penalty: number;
-    atp: number;
-};
+// type UserType = {
+//     uid: string;
+//     id: string;
+//     password: string;
+//     nickname: string;
+//     email: string;
+//     profileImage: string;
+//     studentName: string;
+//     generation: number;
+//     classNumber: number;
+//     studentNumber: number;
+//     birthday: string;
+//     privilege: number;
+//     role: string;
+//     penalty: number;
+//     atp: number;
+// };
 
 export class User {
     
@@ -164,7 +164,7 @@ export class User {
         this.atp = atp;
     }
 
-    public toObject(): UserType {
+    public toObject(): any {
         return {
             uid: this.uid,
             id: this.id,

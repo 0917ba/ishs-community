@@ -27,8 +27,8 @@ function FindPw() {
 
     const serverUrl = process.env.REACT_APP_SERVER_URL;
     //const res = await fetch(`serverUrl` + `/findpw`, formData);
-    const status = res.status;
-    const getMessage = res.message;
+    //const status = res.status;
+    //const getMessage = res.message;
   };
   return (
     <div>

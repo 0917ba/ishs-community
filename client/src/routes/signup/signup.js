@@ -3,21 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './signup.module.css';
 
 function Signup() {
-  useEffect(() => {
-    (async () => {
-      const formData = {
-        mgitethod: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        },
-        body: JSON.stringify({}),
-      };
-      const serverUrl = process.env.REACT_APP_SERVER_URL;
-      // res = await fetch(`serverUrl` + `/check_session`, formData);
-    })();
-  }, []);
-
   const navigate = useNavigate();
   const [PWmessage, setPWMessage] = useState('');
   const [message, setMessage] = useState('');
@@ -91,6 +76,8 @@ function Signup() {
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({
         key: ninputKey,
         id: inputId,
@@ -104,16 +91,17 @@ function Signup() {
     };
 
     //const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const serverUrl = 'http://app.ishs.co.kr';
-    const res = await fetch(serverUrl + '/signup', formData);
+
+    const res = await fetch('/signup', formData);
     //const data = await res.json();
+
     const status = res.status;
     console.log(status);
     const getMessage = res.message;
     console.log(getMessage);
 
     if (status === 200) {
-      navigate('/signup/success');
+      navigate('/register/success');
     }
     if (status === 400) {
       setMessage(getMessage + '회원가입에 실패하였습니다.');

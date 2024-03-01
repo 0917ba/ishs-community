@@ -7,11 +7,17 @@ function Home() {
   useEffect(() => {
     (async () => {
       const formData = {
-        mgitethod: 'GET',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
       };
+      const res = await fetch(`/check_session`, formData);
 
-      const serverUrl = process.env.REACT_APP_SERVER_URL;
-      const res = await fetch(`serverUrl` + `/check_session`, formData);
+      console.log(res.status);
+      console.log(res);
     })();
   }, []);
 

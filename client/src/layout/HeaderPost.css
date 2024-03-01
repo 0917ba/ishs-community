@@ -1,0 +1,16 @@
+.header {
+    margin-top: 15px;
+    margin-left: 1%;
+    font-size: 20px;
+    margin-bottom: 10px;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_txt {
+    color: black;
+    text-decoration-line: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
