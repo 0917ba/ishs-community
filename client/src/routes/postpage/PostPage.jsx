@@ -8,6 +8,7 @@ import './PostPage.css';
 import HeaderPost from '../../layout/HeaderPost';
 import Footer from '../../layout/Footer';
 import moment from 'moment';
+import Comment from '../../component/Post/Comment';
 import report from '../../component/img/report.svg';
 
 const PostPage = () => {
@@ -55,7 +56,7 @@ const PostPage = () => {
 
   const fetchPost = async (uid) => {
     if (!loaded) {
-      const response = await fetch(`http://app.ishs.co.kr/post?uid=${uid}`);
+      const response = await fetch(`/post?uid=${uid}`);
       // const response = await fetch(`http://app.ishs.co.kr/post/list?start=0&end=10`);
       let data = await response.json();
       // console.log(data);
@@ -74,11 +75,12 @@ const PostPage = () => {
         console.log(comments);
         for (let i = 0; i < comments.length; i++) {
           const temp = (
-            <div className='comment_box'>
-              <p className='comment_author'>{comments[i].author}</p>
-              <p className='comment_content'>{comments[i].content}</p>
-              <img src={report} alt='report' className='report' />
-              <p className='comment_time'>{comments[i].createdAt}</p>
+            <div className='comment_box' key={"comment" + i}>
+              {/* <p className='comment_author' key={"author" + i}>{comments[i].author}</p>
+              <p className='comment_content' key={"content" + i}>{comments[i].content}</p>
+              <img src={report} alt='report' className='report' key={"image" + i}/>
+              <p className='comment_time' key={"createdAt" + i}>{comments[i].createdAt}</p> */}
+              <Comment comments={comments} />
             </div>
           );
           setCommentRender(comment_render.push(temp));
@@ -89,7 +91,7 @@ const PostPage = () => {
   };
 
   const fetchReaction = async (type, userId, targetId, status) => {
-    const response = await fetch(`http://app.ishs.co.kr/reaction`, {
+    const response = await fetch(`/reaction`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -108,7 +110,7 @@ const PostPage = () => {
 
   const checkReaction = async (type, userId, targetId) => {
     const response = await fetch(
-      `http://app.ishs.co.kr/reaction?type=${type}&userId=${userId}&targetId=${targetId}`
+      `/reaction?type=${type}&userId=${userId}&targetId=${targetId}`
     );
     let data = await response.json();
     if (data.status === undefined) {
@@ -196,7 +198,9 @@ const PostPage = () => {
         />
         <button className='comment_button'>등록</button>
       </div>
-      <div className='comment'>{renderComment()}</div>
+      <div className='comment'>
+        <Comment comments={comments} />
+      </div>
       <Footer />
     </div>
   );
