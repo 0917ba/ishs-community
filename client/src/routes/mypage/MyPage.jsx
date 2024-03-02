@@ -899,6 +899,7 @@ function MyPage() {
         await fetch(`/user/info?id=${res.content.id}`, formData)
       ).json();
 
+      console.log(resl);
       data = await resl.content;
       console.log(data);
     })();
