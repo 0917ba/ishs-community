@@ -1,1 +1,200 @@
+.modal{
+    position: absolute;
+    width: 70vw;
+    height: 70vh;
+    left: 10vw;
+    top: 15vh;
+    background-image: url("./ishs.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.5;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans+KR&display=swap');
+
+/* <uniquifier>: Use a unique and descriptive class name
+<weight>: Use a value from 400 to 700 */
+
+.dancing-script-uniquifier {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.input{
+    position: absolute;
+    left: 60vw;
+    bottom: 56vh;
+    width: 17vw;
+    height: 4vh;
+    outline: 0.2vmin black;
+    font-size: 3vmin;
+}
+
+.input:focus{
+    position: absolute;
+    left: 60vw;
+    bottom: 56vh;
+    width: 17vw;
+    height: 4vh;
+    outline: 0.2vmin black;
+    font-size: 3vmin;
+}
+
+.input2{
+    position: absolute;
+    left: 60vw;
+    bottom: 51vh;
+    width: 17vw;
+    height: 4vh;
+    outline: 0.2vmin black;
+    font-size: 3vmin;
+}
+
+.input2:focus{
+    position: absolute;
+    left: 60vw;
+    bottom: 51vh;
+    width: 17vw;
+    height: 4vh;
+    outline: 0.2vmin black;
+    font-size: 3vmin;
+}
+
+.font{
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 10vmin;
     
+    position: absolute;
+    left: 60vw;
+    bottom: 70vh;
+    border-bottom: 0.3vw solid;
+    padding-bottom: 0.2vh;
+}
+
+.signin{
+    position: absolute;
+    width: 10vw;
+    height: 10vh;
+    left: 80vw;
+    bottom: 50.5vh;
+    margin-bottom: 0.2vh;
+    font-size: 3vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(114, 165, 204);
+    padding-right: 1vw;
+    color: rgb(114, 165, 204);
+    background: #ffffff;
+}
+
+.signin:hover{
+    position: absolute;
+    width: 10vw;
+    height: 10vh;
+    left: 80vw;
+    bottom: 50.5vh;
+    margin-bottom: 0.2vh;
+    font-size: 3vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(114, 165, 204);
+}
+
+.signup{
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 72vw;
+    bottom: 44vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
+    padding-right: 1vw;
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.signup:hover{
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 72vw;
+    bottom: 44vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
+}
+
+.forgetpw{
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 60vw;
+    bottom: 44vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid rgb(224, 132, 132);
+    padding-right: 1vw;
+    color: rgb(224, 132, 132);
+    background: #ffffff;
+}
+
+.forgetpw:hover{
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 60vw;
+    bottom: 44vh;
+    font-size: 1.4vmin;
+    max-width: 100%;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    padding-left: 1vw;
+    border-radius: 20vw;
+    border: 0.2vmin solid #ffffff;
+    padding-right: 1vw;
+    color: #ffffff;
+    background: rgb(224, 132, 132);
+}
+
+.all{
+    width: 100%;
+    height: 100%;
+    border:none;
+}
+
+.all:after {
+    content: "";
+    display: block;
+    border:none;
+}
