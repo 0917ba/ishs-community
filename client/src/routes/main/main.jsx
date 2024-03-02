@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import NavBar from '../../component/page/NavBar';
 import Footer from '../../component/page/Footer';
+import "./index.css";
 
 function Main() {
   useEffect(() => {
