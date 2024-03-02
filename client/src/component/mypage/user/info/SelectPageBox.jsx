@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import styles from "./MyPage.module.css";
+import styles from "../../MyPage.module.css";
+import HelpUserBox from "../../help/HelpUserBox";
+import UserRankBox from "../rank/UserRankBox";
+import UserEmailBox from "../email/UserEmailBox";
+import UserATPBox from "../atp/UserATPBox";
+import UserDemeritBox from "../demerit/UserDemeritBox";
+import PostList from "../../../PostList/PostList";
+import UserInformationBox from "../info/UserInformationBox";
 
 export default function SelectPageBox(props) {
     const [pages, setpages] = useState([]);
@@ -8,7 +15,7 @@ export default function SelectPageBox(props) {
     useEffect(() => {
       setTimeout(() => {
         setIsLoading(false);
-        setpages(_pages);
+        setpages(props.pages);
       }, 1000);
     }, []);
   

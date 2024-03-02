@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./MyPage.module.css";
 import MemberInformationBtn from "./MemberInformationBtn";
-import SelectPageBox from "./SelectPageBox";
+import SelectPageBox from "./user/info/SelectPageBox";
+import { useNavigate } from "react-router-dom";
 
 export default function MovePageBox() {
+  const navigate = useNavigate();
     const [pages, setpages] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const _pages = [
@@ -43,7 +45,7 @@ export default function MovePageBox() {
         <div className={styles.MovePageList}>
           {pages.map((pages, index) => {
             return (
-              <div>
+              <div key={index}>
                 <div>
                   {/* <MoveMyPage key={index} moveMyPage={pages.pageName} moveMyPageSite={pages.pageSite}/> */}
                   <button
@@ -61,10 +63,10 @@ export default function MovePageBox() {
           })}
         </div>
         <MemberInformationBtn />
-        <button onclick="location.href='address'" className={styles.logout}>
+        <button className={styles.logout}>
           로그아웃
         </button>
-        <SelectPageBox Content={content} />
+        <SelectPageBox Content={content} pages={pages} />
       </div>
     );
   }

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import styles from "./MyPage.module.css";
+import styles from "../MyPage.module.css";
 import Modal from "react-modal";
 
-export default function ModaluserPermissions() {
+export default function ModaluserRank() {
     const [isOpen, setIsOpen] = useState(false);
   
     const openModal = () => {
@@ -15,8 +15,8 @@ export default function ModaluserPermissions() {
   
     return (
       <div>
-        <button onClick={openModal} className={styles.explanationUserAuthority}>
-          ⨀ 사용자 권한 더 알아보기
+        <button onClick={openModal} className={styles.modaluserRank}>
+          ⨀ 유저 랭크 시스템 더 알아보기
         </button>
   
         <Modal
@@ -24,12 +24,9 @@ export default function ModaluserPermissions() {
           onRequestClose={closeModal}
           className={styles.Guidemodal}
         >
-          <h1 className={styles.GuideText}>관리자/유저 권한</h1>
-          <img
-            src='/img/UserAuthorityImg.png'
-            className={styles.UserAuthorityImg}
-          />
-          <button className={styles.UserAuthorityButton} onClick={closeModal}>
+          <h1 className={styles.GuideText}>유저 랭크</h1>
+          <img src='/img/UserRank.png' className={styles.UserRankImg} />
+          <button className={styles.UserRankButton} onClick={closeModal}>
             닫기
           </button>
         </Modal>
