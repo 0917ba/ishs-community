@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const Post = (props) => {
-
-    const [post, setPost] = useState();
+  const [post, setPost] = useState();
 
     const getPost = async () => {
         const resp = await fetch(`/post?uid=${props.uid}`, {

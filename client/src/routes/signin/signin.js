@@ -3,20 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import styles from './signin.module.css';
 
 function Signin() {
+  /*
   useEffect(() => {
     (async () => {
-      const formData = {
-        mgitethod: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        },
-        body: JSON.stringify({}),
-      };
       const serverUrl = process.env.REACT_APP_SERVER_URL;
-      // res = await fetch(`serverUrl` + `/check_session`, formData);
+      const res = await fetch(serverUrl + `/check_session?`);
+      console.log(res);
     })();
   }, []);
+  */
 
   const navigate = useNavigate();
   const [inputId, setInputId] = useState('');
@@ -39,21 +34,24 @@ function Signin() {
   const onClickSignin = async () => {
     //console.log(inputId, inputPw);
     console.log('signin');
+
     const formData = {
-      mgitethod: 'POST',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({
         id: inputId,
         password: inputPw,
       }),
     };
 
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const res = await fetch(`serverUrl` + `/signin`, formData);
-    const status = res.status;
-    //const data = await res.json();
+    const resl = await fetch(`/signin`, formData);
+    console.log(resl);
+
+    const status = resl.status;
 
     if (status === 200) {
       navigate('/main');
@@ -64,6 +62,10 @@ function Signin() {
     if (status === 500) {
       navigate('/developer/special');
     }
+  };
+
+  const onClickForgetPW = () => {
+    navigate('/findpw');
   };
 
   return (
@@ -91,7 +93,9 @@ function Signin() {
       </div>
       <div>
         <span>
-          <button type='button'>비밀번호를 잊으셨나요?</button>
+          <button type='button' onClick={onClickForgetPW}>
+            비밀번호를 잊으셨나요?
+          </button>
         </span>
         <span>
           <button type='button' onClick={onClickSignUp}>

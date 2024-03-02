@@ -3,21 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './signup.module.css';
 
 function Signup() {
-  useEffect(() => {
-    (async () => {
-      const formData = {
-        mgitethod: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        },
-        body: JSON.stringify({}),
-      };
-      const serverUrl = process.env.REACT_APP_SERVER_URL;
-      // res = await fetch(`serverUrl` + `/check_session`, formData);
-    })();
-  }, []);
-
   const navigate = useNavigate();
   const [PWmessage, setPWMessage] = useState('');
   const [message, setMessage] = useState('');
@@ -69,32 +54,55 @@ function Signup() {
   };
 
   const onClickSignup = async () => {
-    //console.log('signup');
+    console.log('signup');
+    console.log(
+      inputKey,
+      inputId,
+      inputPassword,
+      inputIdentify_code,
+      inputEmail,
+      inputName,
+      inputNickname,
+      inputBirthday
+    );
+    console.log(typeof inputKey);
+    let ninputKey = parseInt(inputKey);
+    console.log(typeof ninputKey);
+    let dinputBirthday = new Date(inputBirthday);
+    console.log(typeof dinputBirthday);
 
     const formData = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({
-        key: inputKey,
+        key: ninputKey,
         id: inputId,
         password: inputPassword,
-        identify_code: inputIdentify_code,
+        identifycode: inputIdentify_code,
         email: inputEmail,
-        name: inputName,
+        studentname: inputName,
         nickname: inputNickname,
-        birthday: inputBirthday,
+        birthday: dinputBirthday,
       }),
     };
 
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const res = await fetch(`serverUrl` + `/signup`, formData);
-    const status = res.status;
-    const getMessage = res.message;
+    //const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const res = await fetch('/signup', formData);
+    const data = await res.json();
+    console.log(data);
+
+    const status = data.status;
+    console.log(status);
+
+    const getMessage = data.content;
 
     if (status === 200) {
-      navigate('/signup/success');
+      navigate('/register/success');
     }
     if (status === 400) {
       setMessage(getMessage);
@@ -102,20 +110,9 @@ function Signup() {
     if (status === 500) {
       navigate('/developer/special');
     }
-    //const data = await res.json();
   };
 
   const DataCheck = () => {
-    if (
-      inputId === '' ||
-      inputPassword === '' ||
-      inputIdentify_code === '' ||
-      inputEmail === '' ||
-      inputName === '' ||
-      inputNickname === ''
-    ) {
-      return true;
-    }
     if (inputPassword !== inputPassword_check) {
       return true;
     }
@@ -141,14 +138,16 @@ function Signup() {
         />
       </div>
       <div>
-        <label>아이디 | </label>
-        <input
-          type='text'
-          name='아이디'
-          placeholder='아이디를 입력해 주세요.'
-          value={inputId}
-          onChange={onChangeId}
-        />
+        <div>
+          <label>아이디 | </label>
+          <input
+            type='text'
+            name='아이디'
+            placeholder='아이디를 입력해 주세요.'
+            value={inputId}
+            onChange={onChangeId}
+          />
+        </div>
       </div>
       <div>
         <label>비밀번호 | </label>
@@ -216,16 +215,7 @@ function Signup() {
           onChange={onChangeNickname}
         />
       </div>
-      <div>
-        <label>생년월일 | </label>
-        <input
-          type='date'
-          name='생년월일'
-          placeholder='생년월일을 입력해 주세요.'
-          value={inputBirthday}
-          onChange={onChangeBirthday}
-        />
-      </div>
+
       <div>
         <button type='button' onClick={onClickSignup} disabled={DataCheck()}>
           회원가입하기

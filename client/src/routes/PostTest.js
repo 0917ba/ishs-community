@@ -1,41 +1,73 @@
-import Post from "../component/Post/Post";
+import Post from '../component/Post/Post';
 
 const PostTest = () => {
+  function signin() {
+    fetch('/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({ id: 'helloworld', password: 'ishs12345!' }),
+    }).then((res) => {
+      console.log(res.status);
+    });
+  }
 
-    function signin() {
-        fetch('/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'cors',
-            credentials: 'include',
-            body: JSON.stringify({id: 'helloworld', password: 'ishs12345!'})
-        }).then(res => {
-            console.log(res.status)
-        })
-    }
+  function check_session() {
+    fetch('/check_session', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+    }).then((res) => {
+      console.log(res.status);
+    });
+  }
 
-    function check_session() {
-        fetch('/check_session', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'cors',
-            credentials: 'include'
-        }).then(res => {
-            console.log(res.status)
-        })
-    }
+  function signup() {
+    fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        key: '1234',
+        id: 'qwer',
+        password: 'asdf',
+        identifycode: 'asdf',
+        email: 'asdf',
+        studentname: '테스트0301',
+        nickname: 'test0301',
+        birthday: '',
+      }),
+    }).then((res) => {
+      console.log(res.status);
+    });
+  }
 
-    return (
-        <div>
-            <Post uid="ba4e61c7-d777-4a82-8f03-c53e77f65525"/>
-            <button onClick={signin}>Signin</button>
-            <button onClick={check_session}>check_session</button>
-        </div>
-    );
+  function userinfo() {
+    (async () => {
+      const res = await fetch('/user/info?id=rlaqhrud0209');
+
+      console.log(res);
+    })();
+  }
+
+  return (
+    <div>
+      <Post uid='ba4e61c7-d777-4a82-8f03-c53e77f65525' />
+      <button onClick={signin}>Signin</button>
+      <button onClick={check_session}>check_session</button>
+      <button onClick={signup}>signup</button>
+      <button onClick={userinfo}>userinfo</button>
+    </div>
+  );
 };
 
 export default PostTest;
