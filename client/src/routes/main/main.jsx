@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './main.module.css';
 import NavBar from '../../component/page/NavBar';
 import Footer from '../../component/page/Footer';
+import "./index.css";
 
 function Main() {
     return (
