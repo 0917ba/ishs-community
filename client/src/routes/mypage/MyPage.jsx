@@ -900,7 +900,7 @@ function MyPage() {
       ).json();
 
       data = await resl.content;
-      //console.log(data);
+      console.log(data);
     })();
   }, []);
 
