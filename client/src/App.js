@@ -1,25 +1,23 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import React from 'react';
 
-import Main from './routes/main/main';
-import Profile from './routes/profile/profile';
+import Home from './routes/Home/Home';
 import Signup from './routes/signup/signup';
-import Signin from './routes/signin/signin';
 import SignupSuccess from './routes/signup/signupSuccess';
-import Special from './routes/signup/special';
+import Signin from './routes/signin/signin';
 import FindPw from './routes/signin/findPW';
-import PostList from "./component/PostList/PostList";
-import BigBangBar from "./component/BigBang/BingBang";
-import MainMy from "./component/MainMy/MainMy";
+import PostList from './component/PostList/PostList';
+import BigBangBar from './component/BigBang/BingBang';
+import MainMy from './component/MainMy/MainMy';
 // import PostList from "./routes/PostList";
-import MyPage from "./routes/MyPage";
+import MyPage from './routes/mypage/MyPage';
 import PostPage from './routes/postpage/PostPage';
 
-import BoardList from "./routes/BoardList";
-import Home from "./routes/Home";
-import MyList from "./routes/MyList";
-import React from "react";
+import BoardList from './routes/Board/BoardList';
+import MyList from './routes/mylist/MyList';
 import PostTest from './routes/PostTest';
+import Main from './routes/main/main.jsx';
 
 function App() {
   function user() {
@@ -34,23 +32,21 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/main' element={<Main />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/signup/success' element={<SignupSuccess />} />
-        <Route path='/signin' element={<Signin />} />
-        <Route path='/post/list' element={<PostList />} />
-        <Route path='/special' element={<Special />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/register' element={<Signup />} />
+        <Route path='/register/success' element={<SignupSuccess />} />
+        <Route path='/login' element={<Signin />} />
         <Route path='/findpw' element={<FindPw />} />
-        <Route path="/post/list" element={<PostList />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/post/bigbang" element={<BigBangBar />} />
-        <Route path="/post/mainmy" element={<MainMy />} />
-        <Route path="/Home" element ={<Home />}/>
-        <Route path="/MyList" element={<MyList/>}/>
-        <Route path='/Board' element={<BoardList />}/>
-        <Route path='/postpage' element={<PostPage />}/>
+        <Route path='/post/list' element={<PostList />} />
+        <Route path='/mypage' element={<MyPage />} />
+        <Route path='/post/bigbang' element={<BigBangBar />} />
+        <Route path='/post/mainmy' element={<MainMy />} />
+        <Route path='/Home' element={<Home />} />
+        <Route path='/MyList' element={<MyList />} />
+        <Route path='/Board' element={<BoardList />} />
+        <Route path='/postpage' element={<PostPage />} />
         <Route path='/PostTest' element={<PostTest />} />
+        <Route path='/main' element={<Main />} />
       </Routes>
     </Router>
   );
