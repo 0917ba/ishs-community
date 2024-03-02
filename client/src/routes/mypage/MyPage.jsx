@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import DemeritList from '../Demerit.';
 import PostList from '../../component/PostList/PostList';
 
+let data = {};
+
 function MainPageTitle(props) {
   return (
     <div onclick={props.moveMyPageSite} className={styles.Mainbox}>
@@ -444,11 +446,11 @@ function UserInformation(props) {
 
 const _userInformation = [
   {
-    userName: '인곽이',
-    userId: 'ISHS2930',
-    userStudentID: '2501',
-    userbirthday: '2024-03-04',
-    userEmail: 'ishs2930@ishs.com',
+    userName: data.studentName,
+    userId: data.id,
+    userStudentID: '2402',
+    userbirthday: data.birthday,
+    userEmail: data.email,
   },
 ];
 
@@ -457,11 +459,14 @@ function UserInformationBox() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log(data);
     setTimeout(() => {
       setIsLoading(false);
       setuserInformation(_userInformation);
     }, 1000);
-  }, []);
+
+    console.log(_userInformation);
+  }, [_userInformation]);
 
   return (
     <div>
@@ -507,7 +512,7 @@ function UserAuthority(props) {
   );
 }
 
-const _userauthority = [{ Userauthority: '사용자 권한' }];
+const _userauthority = [{ Userauthority: data.role }];
 
 function UserAuthorityBox() {
   const [userauthority, setuserauthority] = useState([]);
@@ -646,7 +651,7 @@ function UserATP(props) {
   );
 }
 
-const _userATP = [{ userATPguide: '나의 ATP', userATP: '100000ATP' }];
+const _userATP = [{ userATPguide: '나의 ATP', userATP: data.atp }];
 
 function ModaluserATP() {
   const [isOpen, setIsOpen] = useState(false);
@@ -886,11 +891,16 @@ function MyPage() {
           'Content-Type': 'application/json',
         },
         mode: 'cors',
-        credentials: 'include',
+        crecredentials: 'include',
       };
-      const res = await fetch('/check_session', formData);
-      const data = res.json();
-      console.log(data);
+
+      const res = await (await fetch('/check_session', formData)).json();
+      const resl = await (
+        await fetch(`/user/info?id=${res.content.id}`, formData)
+      ).json();
+
+      data = await resl.content;
+      //console.log(data);
     })();
   }, []);
 

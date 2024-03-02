@@ -54,7 +54,7 @@ function Signin() {
     const status = resl.status;
 
     if (status === 200) {
-      navigate('/home');
+      navigate('/main');
     }
     if (status === 400) {
       setMessage('아이디 또는 비밀번호가 일치하지 않습니다.');

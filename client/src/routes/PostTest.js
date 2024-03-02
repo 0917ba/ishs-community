@@ -51,12 +51,21 @@ const PostTest = () => {
     });
   }
 
+  function userinfo() {
+    (async () => {
+      const res = await fetch('/user/info?id=rlaqhrud0209');
+
+      console.log(res);
+    })();
+  }
+
   return (
     <div>
       <Post uid='ba4e61c7-d777-4a82-8f03-c53e77f65525' />
       <button onClick={signin}>Signin</button>
       <button onClick={check_session}>check_session</button>
       <button onClick={signup}>signup</button>
+      <button onClick={userinfo}>userinfo</button>
     </div>
   );
 };
