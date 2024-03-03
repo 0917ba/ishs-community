@@ -3,6 +3,7 @@ import TitleBigBang from '../../layout/titleBigBang';
 import TextSearch from '../../layout/TextSearch';
 import { useNavigate } from 'react-router-dom';
 import './BoardList.css';
+import Posts from './Posts';
 
 const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
@@ -77,6 +78,7 @@ const BoardList = () => {
               <div className='post2'>추천</div>
               <div className='post3'>조회</div>
             </div>
+            <Posts />
 
             {boardList.map((board) => (
               <div className='Post'>
