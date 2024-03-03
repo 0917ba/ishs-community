@@ -8,8 +8,8 @@ export default function UserATPBox(props) {
   
     useEffect(() => {
       setTimeout(() => {
-        setIsLoading(false);
-        setuserATP(props.userATP);
+        // setIsLoading(false);
+        // setuserATP(props.userATP);
       }, 1000);
     }, []);
   
@@ -18,7 +18,7 @@ export default function UserATPBox(props) {
         <h1 className={styles.MySelectTitle}>보유 ATP</h1>
         <div>
           {isLoading ? (
-            <div>Loading...</div>
+            <div>제작중...</div>
           ) : (
             userATP.map((userATP, index) => {
               return (

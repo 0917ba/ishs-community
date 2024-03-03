@@ -1,38 +1,49 @@
 import React, {useEffect,useState} from 'react';
 import './PostList.module.css';
+import { useNavigate } from 'react-router-dom';
 
-const PostBox = () => {
+const PostlistElement = (props) => {
+
+  const navigate = useNavigate();
+
+  const handleClickButton = (e) => {
+    navigate("/postpage?uid=" + props.post.uid);
+  };
+
+  let board = props.post;
+
+  return (
+    <div key={props.key} className='Post' onClick={handleClickButton}>
+      <div className='post1'> <li> {board.title} </li></div>
+      <div className='post2'> <li> {board.like} </li></div>
+      <div className='post3'> <li> {board.view} </li></div>
+    </div>
+  );
+}
+
+const PostBox = (props) => {
   const [postList, setPostList] = useState([]);
-  const [sResult, setsResult] = useState([]);
-  const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   
-  const getPostList = async (start, end) => {
-    const resp = await fetch(`http://app.ishs.co.kr/post/list?start=${start}&end=${end}`)
+  const getPostList = async (author) => {
+    const resp = await fetch(`/post/search/author?author=${author}`)
     let json = await resp.json()
     console.log(json.content)
     setPostList(json.content);
   }
 
-  const search = (keyword, start, end) => {
-    fetch(`http://app.ishs.co.kr/post/search?keyword=${keyword}&start=${start}&end=${end}`).then(res => {
-      res.json().then(data => {
-        setsResult(data.content)
-        console.log(data.content)
-      })
-    })
-}
+  useEffect(async () => {
+    (async () => {
+      await getPostList(props.authorId);
+      setIsLoading(false);
+    })();
+  }, [props]);
 
-  useEffect( () => {
-    getPostList(0, 20);
-  }, [] );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  let [count, setCount] = useState(1);
- 
- 
- 
-  return (
-    <>
-    
+  return (  
     <div>
       <div className='lists'>
 
@@ -45,35 +56,20 @@ const PostBox = () => {
           </div>
 
 
-        {postList.map((board) => (
-          <div className='Post'>
-            <div className='post1'> <li> {board.title} </li></div>
-            <div className='post2'> <li> {board.like} </li></div>
-            <div className='post3'> <li> {board.view} </li></div>
-          </div>
-
-        ))}
-
-        
-        {sResult.map((result) => (
-          <li>{result.title}</li>
+        {postList.map((board, index) => (
+          <PostlistElement key={index} post={board}></PostlistElement>
         ))}
         </ul>
       </div>
 
     </div>
-    
-    </>
-    
   );
-
-
 };
 
-function PostList() {
+function PostList(props) {
   return (
     <div>
-      <PostBox />
+      <PostBox authorId={props.authorId}/>
     </div>
   );
 }

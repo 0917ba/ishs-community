@@ -5,14 +5,12 @@ import styles from "../../MyPage.module.css";
 import DemeritList from "../../../../routes/Demerit";
 
 export default function UserDemeritBox(props) {
-    const [userDemerit, setuserDemerit] = useState([]);
+    const [userDemerit, setuserDemerit] = useState();
     const [isLoading, setIsLoading] = useState(true);
   
     useEffect(() => {
-      setTimeout(() => {
-        setIsLoading(false);
-        setuserDemerit(props.userDemerit);
-      }, 1000);
+      setIsLoading(false);
+      setuserDemerit(props.userDemerit);
     }, []);
   
     return (
@@ -21,15 +19,11 @@ export default function UserDemeritBox(props) {
         <div>
           {isLoading ? (
             <div>Loading...</div>
-          ) : (
-            userDemerit.map((userDemerit, index) => {
-              return (
-                <div>
-                  <UserDemerit key={index} userDemerit={userDemerit.Demerit} />
-                  <DemeritList />
-                </div>
-              );
-            })
+          ) : (    
+              <div>
+                <UserDemerit userDemerit={userDemerit} />
+                <DemeritList />
+              </div>
           )}
         </div>
       </div>

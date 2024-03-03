@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./MyPage.module.css";
 import MemberInformationBtn from "./MemberInformationBtn";
-import SelectPageBox from "./user/info/SelectPageBox";
+import SelectPageBox from "./SelectPageBox";
 import { useNavigate } from "react-router-dom";
 
-export default function MovePageBox() {
+export default function MovePageBox(props) {
   const navigate = useNavigate();
     const [pages, setpages] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -21,18 +21,22 @@ export default function MovePageBox() {
       ];
   
     useEffect(() => {
-      setTimeout(() => {
-        setIsLoading(false);
-        setpages(_pages);
-      }, 1000);
+      setIsLoading(false);
+      setpages(_pages);
+      console.log(props.data);
     }, []);
   
     const [content, setContent] = useState();
   
     const handleClickButton = (e) => {
       const { name } = e.target;
+      console.log(name);
       setContent(name);
     };
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
   
     return (
       <div className={styles.MyMovebox}>
@@ -66,7 +70,7 @@ export default function MovePageBox() {
         <button className={styles.logout}>
           로그아웃
         </button>
-        <SelectPageBox Content={content} pages={pages} />
+        <SelectPageBox Content={content} pages={pages} data={props.data} />
       </div>
     );
   }

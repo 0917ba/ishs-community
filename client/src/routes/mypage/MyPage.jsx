@@ -5,11 +5,12 @@ import DemeritList from '../Demerit';
 import MainPageBox from '../../component/mypage/MainPageBox';
 import MovePageBox from '../../component/mypage/MovePageBox';
 import Notification from '../../component/mypage/Notification';
-import SelectPageBox from '../../component/mypage/user/info/SelectPageBox';
+import SelectPageBox from '../../component/mypage/SelectPageBox';
 
 function MyPage() {
 
   let [data, setData] = useState({});
+  let [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -30,23 +31,25 @@ function MyPage() {
       console.log(res);
       console.log(res.content);
       setData(res.content);
+      setIsLoading(false);
     })();
   }, []);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <body>
       <div className={styles.static}>
         <MainPageBox />
         <div className={styles.BackGroundColor}></div>
         <Notification />
         <div className={styles.Myboxcontainer}>
           <div className={styles.relative}>
-            <MovePageBox />
-            <SelectPageBox data={data}/>
+            <MovePageBox data={data}/>
           </div>
         </div>
       </div>
-    </body>
   );
 }
 
