@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { useRef } from 'react';
 import Session from 'react-session-api';
 import apoptosis from '../../component/img/apoptosis.png';
 import dopamine from '../../component/img/dopamine.png';
@@ -11,6 +11,10 @@ import moment from 'moment';
 import report from '../../component/img/report.svg';
 
 const PostPage = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const modalBackground = useRef();
+  const [inputReportMean, setInputReportMean] = useState('');
+  const [authorUid, setAuthorUid] = useState('');
   const location = useLocation();
   const [loaded, setLoaded] = useState(false);
   const [uuid, setUuid] = useState('');
@@ -39,8 +43,19 @@ const PostPage = () => {
     </div>,
   ]);
 
-  const params = new URLSearchParams(window.location.search);
-  const uid = params.get('uid');
+  const uid = location.state;
+
+  const onChangeReportMean = (e) => {
+    setInputReportMean(e.target.value);
+    console.log(inputReportMean);
+  };
+
+  const DataCheck = () => {
+    if (inputReportMean === '') {
+      return true;
+    }
+    return false;
+  };
 
   const checkUser = async () => {
     let uuid = await Session.get('uid');
@@ -130,7 +145,40 @@ const PostPage = () => {
     return comment_render;
   };
 
+  const onClickInputReport = async () => {
+    console.log(inputReportMean);
+    const resp = await fetch(`/report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'POST',
+        targetId: uid,
+        authorId: authorUid,
+        content: inputReportMean,
+      }),
+    });
+  };
+
   useEffect(() => {
+    (async () => {
+      const res = await (
+        await fetch(`/check_session`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          mode: 'cors',
+          credentials: 'include',
+        })
+      ).json();
+      console.log(res);
+
+      setAuthorUid(res.content.uid);
+      console.log(authorUid);
+    })();
+
     fetchPost(uid);
   }, []);
 
@@ -183,10 +231,46 @@ const PostPage = () => {
       </div>
       <div className='report'>
         <img src={report} alt='report' className='report_img' />
-        <a href='/' className='report_txt'>
-          신고하기
-        </a>
+        <div className={'btn-wrapper'}>
+          <button onClick={() => setModalOpen(true)}>신고하기</button>
+          {modalOpen && (
+            <div
+              className={'modal-container'}
+              ref={modalBackground}
+              onClick={(e) => {
+                if (e.target === modalBackground.current) {
+                  setModalOpen(false);
+                }
+              }}
+            >
+              <div className={'modal-content'}>
+                <label>신고사유 | </label>
+                <input
+                  type='text'
+                  name='신고사유'
+                  placeholder='신고사유를 작성해주세요.'
+                  value={inputReportMean}
+                  onChange={onChangeReportMean}
+                />
+                <button
+                  type='button'
+                  onClick={onClickInputReport}
+                  disabled={DataCheck()}
+                >
+                  신고하기
+                </button>
+                <button
+                  className={'modal-close-btn'}
+                  onClick={() => setModalOpen(false)}
+                >
+                  닫기
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+
       <hr className='line_comment'></hr>
       <div className='comment_write'>
         <input
