@@ -28,7 +28,7 @@ function Signin() {
   };
 
   const onClickSignUp = () => {
-    navigate('/signup');
+    navigate('/register');
   };
 
   const onClickSignin = async () => {
