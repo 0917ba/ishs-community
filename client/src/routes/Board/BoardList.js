@@ -3,7 +3,9 @@ import TitleBigBang from '../../layout/titleBigBang';
 import TextSearch from '../../layout/TextSearch';
 import { useNavigate } from 'react-router-dom';
 import './BoardList.css';
-import Posts from './Posts';
+// import Posts from './Posts';
+import styled from "styled-components";
+import Pagination from "./Pagination";
 
 const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
@@ -11,6 +13,10 @@ const BoardList = () => {
   const [sResult, setsResult] = useState([]);
   const [content, setContent] = useState('');
   const navigate = useNavigate();
+  const [posts, setPosts] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
 
   const getBoardList = async (start, end) => {
     const resp = await fetch(
@@ -20,6 +26,10 @@ const BoardList = () => {
     console.log(json.content);
     setBoardList(json.content);
     setUidList(json.content.map((board) => board.uid));
+  };
+
+  const onChangeUid = (uid) => {
+    navigate(`/postpage`, { state: uid });
   };
 
   const search = (keyword, start, end) => {
@@ -39,76 +49,107 @@ const BoardList = () => {
 
   let [count, setCount] = useState(1);
 
-  const onChangeUid = (uid) => {
-    navigate(`/postpage`, { state: uid });
-  };
-
   return (
-    <>
-      <TitleBigBang />
+    <Layout>
+      <header>
+        <h1>게시물 목록</h1>
+      </header>
 
-      <div className='box1'>
-        <div className='search1'>
-          <TextSearch />
-          <button
-            className='btnSearch'
-            onClick={() => {
-              if (content.length > 2) search(content, 0, 1);
-            }}
-          >
-            검색
-          </button>
-          <input
-            className='input'
-            onInput={(e) => {
-              if (e.target.value.length > 2) setContent(e.target.value);
-            }}
-          ></input>
-        </div>
+      <label>
+        페이지 당 표시할 게시물 수:&nbsp;
+        <select
+          type="number"
+          value={limit}
+          onChange={({ target: { value } }) => setLimit(Number(value))}
+        >
+          <option value="10">10</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+        </select>
+      </label>
 
-        <div className='empty'></div>
-        <div className='dot1'></div>
-        <div className='dot2'></div>
-        <div className='dot3'></div>
+      <main>
+        <>
+        <TitleBigBang />
 
-        <div className='lists'>
-          <ul className='PostList'>
-            <div className='PostA'>
-              <div className='post1'>제목</div>
-              <div className='post2'>추천</div>
-              <div className='post3'>조회</div>
-            </div>
-            <Posts />
+        <div className='box1'>
+          <div className='search1'>
+            <TextSearch />
+            <button
+              className='btnSearch'
+              onClick={() => {
+                if (content.length > 2) search(content, 0, 1);
+              }}
+            >
+              검색
+            </button>
+            <input
+              className='input'
+              onInput={(e) => {
+                if (e.target.value.length > 2) setContent(e.target.value);
+              }}
+            ></input>
+          </div>
 
-            {boardList.map((board) => (
-              <div className='Post'>
-                <div className='post1'>
-                  <li
-                    className='pointer'
-                    onClick={() => onChangeUid(board.uid)}
-                  >
-                    {board.title}
-                  </li>
-                </div>
-                <div className='post2'>
-                  {' '}
-                  <li> {board.like} </li>
-                </div>
-                <div className='post3'>
-                  {' '}
-                  <li> {board.view} </li>
-                </div>
+          <div className='empty'></div>
+          <div className='dot1'></div>
+          <div className='dot2'></div>
+          <div className='dot3'></div>
+
+          <div className='lists'>
+            <ul className='PostList'>
+              <div className='PostA'>
+                <div className='post1'>제목</div>
+                <div className='post2'>추천</div>
+                <div className='post3'>조회</div>
               </div>
-            ))}
 
-            {sResult.map((result) => (
-              <li>{result.title}</li>
-            ))}
-          </ul>
+              {boardList.map((board) => (
+                <div className='Post'>
+                  <div className='post1'>
+                    <li
+                      className='pointer'
+                      onClick={() => onChangeUid(board.uid)}
+                    >
+                      {board.title}
+                    </li>
+                  </div>
+                  <div className='post2'>
+                    {' '}
+                    <li> {board.like} </li>
+                  </div>
+                  <div className='post3'>
+                    {' '}
+                    <li> {board.view} </li>
+                  </div>
+                </div>
+              ))}
+
+              {sResult.map((result) => (
+                <li>{result.title}</li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    </>
+      </>
+      </main>
+
+      <footer>
+        <Pagination
+          total={posts.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </footer>
+    </Layout>
   );
-};
+}
+
+const Layout = styled.div`
+
+`;
 
 export default BoardList;
