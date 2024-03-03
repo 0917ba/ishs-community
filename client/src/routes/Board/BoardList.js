@@ -6,6 +6,7 @@ import './BoardList.css';
 // import Posts from './Posts';
 import styled from "styled-components";
 import Pagination from "./Pagination";
+import BasicPagination from "./test"
 
 const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
@@ -137,7 +138,7 @@ const BoardList = () => {
       </main>
 
       <footer>
-        <Pagination
+        <BasicPagination 
           total={boardList.length}
           limit={limit}
           page={page}

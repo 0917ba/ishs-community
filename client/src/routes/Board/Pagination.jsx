@@ -39,27 +39,31 @@ const Button = styled.button`
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: black;
-  color: white;
+  background: white;
+  color: black;
   font-size: 1rem;
 
   &:hover {
-    background: tomato;
+    background: #5884FF;
     cursor: pointer;
+    opacity: 0.5;
     transform: translateY(-2px);
+    color: white;
   }
 
   &[disabled] {
     background: grey;
     cursor: revert;
     transform: revert;
+    color: white;
   }
 
   &[aria-current] {
-    background: deeppink;
+    background: #5884FF;
     font-weight: bold;
     cursor: revert;
     transform: revert;
+    color: white;
   }
 `;
 
