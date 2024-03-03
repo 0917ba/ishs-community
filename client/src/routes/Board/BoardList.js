@@ -14,7 +14,7 @@ const BoardList = () => {
   const [content, setContent] = useState('');
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
@@ -62,10 +62,10 @@ const BoardList = () => {
           value={limit}
           onChange={({ target: { value } }) => setLimit(Number(value))}
         >
-          <option value="10">10</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
+          <option value="4">4</option>
           <option value="5">5</option>
         </select>
       </label>
@@ -106,7 +106,7 @@ const BoardList = () => {
                 <div className='post3'>조회</div>
               </div>
 
-              {boardList.map((board) => (
+              {boardList.slice(offset, offset + limit).map((board) => (
                 <div className='Post'>
                   <div className='post1'>
                     <li
@@ -138,7 +138,7 @@ const BoardList = () => {
 
       <footer>
         <Pagination
-          total={posts.length}
+          total={boardList.length}
           limit={limit}
           page={page}
           setPage={setPage}
