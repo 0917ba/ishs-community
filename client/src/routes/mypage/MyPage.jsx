@@ -80,8 +80,8 @@ const _pages = [
   // { pageName: '이메일', pageSite:"UserEmailBox"},
   { pageName: '보유 ATP', pageSite: 'UserATPBox' },
   { pageName: '내 커뮤니티 글', pageSite: 'PostList' },
-  { pageName: '내가 작성한 댓글', pageSite: 'PostList' },
-  { pageName: '내가 추천한 글', pageSite: 'PostList' },
+  // { pageName: '내가 작성한 댓글', pageSite: 'PostList' },
+  // { pageName: '내가 추천한 글', pageSite: 'PostList' },
   // { pageName: '도움말', pageSite:"HelpUserBox"},
 ];
 
@@ -722,9 +722,9 @@ function UserDemerit(props) {
   return (
     <div>
       <ModaluserDemerit />
-      <u2 className={styles.DemeritGuide}>
+      <h1 className={styles.MySelectTitle}>
         현재 누적 벌점은 {props.userDemerit}점
-      </u2>
+      </h1>
       <h1></h1>
     </div>
   );
@@ -863,7 +863,6 @@ function UserDemeritBox() {
 
   return (
     <div>
-      <h1 className={styles.MySelectTitle}>누적 벌점</h1>
       <div>
         {isLoading ? (
           <div>Loading...</div>
