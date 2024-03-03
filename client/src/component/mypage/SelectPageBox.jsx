@@ -17,14 +17,12 @@ export default function SelectPageBox(props) {
       setpages(props.pages);
     }, [props]);
   
-    const [content, setContent] = useState();
+    // const [content, setContent] = useState();
   
-    let Content;
-  
-    const handleClickButton = (e) => {
-      const { name } = e.target;
-      setContent(name);
-    };
+    // const handleClickButton = (e) => {
+    //   const { name } = e.target;
+    //   setContent(name);
+    // };
   
     const selectComponent = {
       HelpUserBox: <HelpUserBox />,

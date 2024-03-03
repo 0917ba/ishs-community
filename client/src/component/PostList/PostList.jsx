@@ -1,25 +1,6 @@
 import React, {useEffect,useState} from 'react';
 import './PostList.module.css';
-import { useNavigate } from 'react-router-dom';
-
-const PostlistElement = (props) => {
-
-  const navigate = useNavigate();
-
-  const handleClickButton = (e) => {
-    navigate("/postpage?uid=" + props.post.uid);
-  };
-
-  let board = props.post;
-
-  return (
-    <div key={props.key} className='Post' onClick={handleClickButton}>
-      <div className='post1'> <li> {board.title} </li></div>
-      <div className='post2'> <li> {board.like} </li></div>
-      <div className='post3'> <li> {board.view} </li></div>
-    </div>
-  );
-}
+import BoardListComponent from '../../routes/Board/BoardListComponent';
 
 const PostBox = (props) => {
   const [postList, setPostList] = useState([]);
@@ -45,23 +26,7 @@ const PostBox = (props) => {
 
   return (  
     <div>
-      <div className='lists'>
-
-        <ul className='PostList'>
-          
-          <div className='PostA'>
-            <div className='post1'>제목</div>
-            <div className='post2'>추천</div>
-            <div className='post3'>조회</div>
-          </div>
-
-
-        {postList.map((board, index) => (
-          <PostlistElement key={index} post={board}></PostlistElement>
-        ))}
-        </ul>
-      </div>
-
+      <BoardListComponent boardList={postList} limit={5} onChangeUid={props.onChangeUid}/>
     </div>
   );
 };

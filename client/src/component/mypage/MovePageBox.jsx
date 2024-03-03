@@ -34,6 +34,21 @@ export default function MovePageBox(props) {
       setContent(name);
     };
 
+    const logout = () => {
+      fetch('/signout', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
+      }).then((res) => {
+        if (res.status === 200) {
+          navigate('/');
+        }
+      });
+    }
+
     if (isLoading) {
       return <div>Loading...</div>;
     }
@@ -67,7 +82,7 @@ export default function MovePageBox(props) {
           })}
         </div>
         <MemberInformationBtn />
-        <button className={styles.logout}>
+        <button className={styles.logout} onClick={logout}>
           로그아웃
         </button>
         <SelectPageBox Content={content} pages={pages} data={props.data} />
