@@ -36,7 +36,7 @@ export default function MovePageBox(props) {
 
     const logout = () => {
       fetch('/signout', {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },

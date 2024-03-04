@@ -1,5 +1,4 @@
 import report from '../../component/img/report.svg';
-import './PostPage.css';
 
 export default function Comment(props) {
     const comments = props.comments;

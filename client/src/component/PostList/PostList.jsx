@@ -14,10 +14,12 @@ const PostBox = (props) => {
   }
 
   useEffect(async () => {
-    (async () => {
-      await getPostList(props.authorId);
-      setIsLoading(false);
-    })();
+    // (async () => {
+      // await getPostList(props.authorId);
+      // setIsLoading(false);
+    // })();
+    setIsLoading(false);
+    getPostList(props.authorId);
   }, [props]);
 
   if (isLoading) {

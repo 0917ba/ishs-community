@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './BoardList.css';
 import styled from "styled-components";
 import BoardListComponent from './BoardListComponent';
+import HeaderPost from '../../layout/HeaderPost';
 
 const BoardList = () => {
   
@@ -42,7 +43,7 @@ const BoardList = () => {
 
   return (
     <Layout>
-      <header>
+      {/* <header>
         <h1>게시물 목록</h1>
       </header>
 
@@ -59,7 +60,9 @@ const BoardList = () => {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-      </label>
+  </label> */}
+
+      <HeaderPost />
 
       <main>
         <>
