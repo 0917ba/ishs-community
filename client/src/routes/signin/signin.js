@@ -69,46 +69,52 @@ function Signin() {
   };
 
   return (
-    <div>
-      <div>
-        <label htmlFor='input_id'>ID | </label>
-        <input
-          type='text'
-          name='input_id'
-          value={inputId}
-          onChange={onChangeId}
-        />
-      </div>
-      <div>
-        <label htmlFor='input_pw'>PW | </label>
-        <input
-          type='password'
-          name='input_pw'
-          value={inputPw}
-          onChange={onChangePw}
-        />
-      </div>
-      <div>
-        <p>{message}</p>
-      </div>
-      <div>
-        <span>
-          <button type='button' onClick={onClickForgetPW}>
-            비밀번호를 잊으셨나요?
-          </button>
-        </span>
-        <span>
-          <button type='button' onClick={onClickSignUp}>
-            회원가입
-          </button>
-        </span>
-      </div>
+    <div className={styles.all}>
+      <div className={styles.modal}></div>
+        <div className={styles.font}>Login</div>
+        <div>
+          {/* <label htmlFor='input_id'>ID | </label> */}
+          <input
+            placeholder='ID'
+            type='text'
+            name='input_id'
+            value={inputId}
+            onChange={onChangeId}
+            className={styles.input}
+          />
+        </div>
+        <div>
+          {/* <label htmlFor='input_pw'>PW | </label> */}
+          <input
+            placeholder='Password'
+            type='password'
+            name='input_pw'
+            value={inputPw}
+            onChange={onChangePw}
+            className={styles.input2}
+          />
+        </div>
+        <div>
+          <p>{message}</p>
+        </div>
+        <div>
+          <span>
+            <button type='button' onClick={onClickForgetPW} className={styles.forgetpw}>
+              비밀번호를 잊으셨나요?
+            </button>
+          </span>
+          <span>
+            <button type='button' onClick={onClickSignUp} className={styles.signup}>
+              회원가입
+            </button>
+          </span>
+        </div>
 
-      <div>
-        <button type='button' onClick={onClickSignin}>
-          Login
-        </button>
-      </div>
+        <div>
+          <button type='button' onClick={onClickSignin} className={styles.signin}>
+            Login
+          </button>
+        </div>
     </div>
   );
 }
