@@ -20,19 +20,10 @@ import PostTest from './routes/PostTest';
 import Main from './routes/main/main.jsx';
 
 function App() {
-  function user() {
-    //const params = useParams();
-    //const userId = params.id;
-  }
-  function post() {
-    //const params = useParams();
-    //const postId = params.id;
-  }
-
+  <Route path='main' element={<Main />} />;
   return (
     <Router>
       <Routes>
-        <Route path='/home' element={<Home />} />
         <Route path='/register' element={<Signup />} />
         <Route path='/register/success' element={<SignupSuccess />} />
         <Route path='/login' element={<Signin />} />
@@ -41,7 +32,6 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/post/bigbang' element={<BigBangBar />} />
         <Route path='/post/mainmy' element={<MainMy />} />
-        <Route path='/Home' element={<Home />} />
         <Route path='/MyList' element={<MyList />} />
         <Route path='/BigBang' element={<BoardList />} />
         <Route path='/postpage' element={<PostPage />} />

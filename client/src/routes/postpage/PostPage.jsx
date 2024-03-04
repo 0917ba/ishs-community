@@ -14,7 +14,8 @@ import report from '../../component/img/report.svg';
 const PostPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const modalBackground = useRef();
-  const [inputReportMean, setInputReportMean] = useState('');
+  const [postReportMean, setPostReportMean] = useState('');
+  const [commentReportMean, setCommentReportMean] = useState('');
   const [authorUid, setAuthorUid] = useState('');
   const location = useLocation();
   const [loaded, setLoaded] = useState(false);
@@ -28,6 +29,38 @@ const PostPage = () => {
   const [title, setTitle] = useState('Title');
   const [content, setContent] = useState('Content');
   const [admin, setAdmin] = useState(false);
+
+  const onChangeCommentReportMean = (e) => {
+    setCommentReportMean(e.target.value);
+    console.log(commentReportMean);
+  };
+
+  const onClickCommentReport = async () => {
+    console.log(commentReportMean);
+    const resp = await fetch(`/report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        type: 'COMMENT',
+        targetId: uid,
+        authorId: authorUid,
+        content: commentReportMean,
+      }),
+    });
+  };
+  const CommentDataCheck = () => {
+    if (commentReportMean === '') {
+      return true;
+    }
+    return false;
+  };
+
+  const uid = location.state;
+
   const [comment_render, setCommentRender] = useState([
     <div>
       <div className='comment_box'>
@@ -37,6 +70,44 @@ const PostPage = () => {
         </div>
         <div className='comment_info'>
           <img src={report} alt='report' className='report_button' />
+          <div className={'btn-wrapper'}>
+            <button onClick={() => setModalOpen(true)}>신고하기</button>
+            {modalOpen && (
+              <div
+                className={'modal-container'}
+                ref={modalBackground}
+                onClick={(e) => {
+                  if (e.target === modalBackground.current) {
+                    setModalOpen(false);
+                  }
+                }}
+              >
+                <div className={'modal-content'}>
+                  <label>신고사유 | </label>
+                  <input
+                    type='text'
+                    name='신고사유'
+                    placeholder='신고사유를 작성해주세요.'
+                    value={commentReportMean}
+                    onChange={onChangeCommentReportMean}
+                  />
+                  <button
+                    type='button'
+                    onClick={onClickCommentReport}
+                    disabled={CommentDataCheck()}
+                  >
+                    신고하기
+                  </button>
+                  <button
+                    className={'modal-close-btn'}
+                    onClick={() => setModalOpen(false)}
+                  >
+                    닫기
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           <p className='comment_time'>2000-01-01 00:00:00</p>
         </div>
       </div>
@@ -44,15 +115,29 @@ const PostPage = () => {
     </div>,
   ]);
 
-  const uid = location.state;
-
-  const onChangeReportMean = (e) => {
-    setInputReportMean(e.target.value);
-    console.log(inputReportMean);
+  const onChangePostReportMean = (e) => {
+    setPostReportMean(e.target.value);
+    console.log(postReportMean);
   };
 
-  const DataCheck = () => {
-    if (inputReportMean === '') {
+  const onClickPostReport = async () => {
+    console.log(postReportMean);
+    const resp = await fetch(`/report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'POST',
+        targetId: uid,
+        authorId: authorUid,
+        content: postReportMean,
+      }),
+    });
+  };
+
+  const PostDataCheck = () => {
+    if (postReportMean === '') {
       return true;
     }
     return false;
@@ -147,22 +232,6 @@ const PostPage = () => {
     return comment_render;
   };
 
-  const onClickInputReport = async () => {
-    console.log(inputReportMean);
-    const resp = await fetch(`/report`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        type: 'POST',
-        targetId: uid,
-        authorId: authorUid,
-        content: inputReportMean,
-      }),
-    });
-  };
-
   useEffect(() => {
     (async () => {
       const res = await (
@@ -251,13 +320,13 @@ const PostPage = () => {
                   type='text'
                   name='신고사유'
                   placeholder='신고사유를 작성해주세요.'
-                  value={inputReportMean}
-                  onChange={onChangeReportMean}
+                  value={postReportMean}
+                  onChange={onChangePostReportMean}
                 />
                 <button
                   type='button'
-                  onClick={onClickInputReport}
-                  disabled={DataCheck()}
+                  onClick={onClickPostReport}
+                  disabled={PostDataCheck()}
                 >
                   신고하기
                 </button>
