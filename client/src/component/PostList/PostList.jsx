@@ -2,7 +2,7 @@ import React, {useEffect,useState} from 'react';
 import './PostList.module.css';
 import BoardListComponent from '../../routes/Board/BoardListComponent';
 
-const PostBox = ({authorId}) => {
+const PostBox = (props) => {
   const [postList, setPostList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -14,13 +14,13 @@ const PostBox = ({authorId}) => {
   }
 
   useEffect(async () => {
-    (async () => {
-      await getPostList(authorId);
-      setIsLoading(false);
-    })();
-    // setIsLoading(false);
-    // getPostList(props.authorId);
-  }, [authorId]);
+    // (async () => {
+      // await getPostList(props.authorId);
+      // setIsLoading(false);
+    // })();
+    setIsLoading(false);
+    getPostList(props.authorId);
+  }, [props]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -28,15 +28,15 @@ const PostBox = ({authorId}) => {
 
   return (  
     <div>
-      <BoardListComponent boardList={postList} limit={5}/>
+      <BoardListComponent boardList={postList} limit={5} onChangeUid={props.onChangeUid}/>
     </div>
   );
 };
 
-function PostList({authorId}) {
+function PostList(props) {
   return (
     <div>
-      <PostBox authorId={authorId}/>
+      <PostBox authorId={props.authorId}/>
     </div>
   );
 }

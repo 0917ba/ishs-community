@@ -12,11 +12,6 @@ export default function BoardListComponent({boardList, limit}) {
         navigate(`/postpage`, { state: uid });
     };
 
-    // sort boardlist by created date
-    boardList.sort((a, b) => {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-    });
-
     return (
         <div>
         <div className='lists'>
