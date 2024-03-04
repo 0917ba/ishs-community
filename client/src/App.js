@@ -43,10 +43,10 @@ function App() {
         <Route path='/post/mainmy' element={<MainMy />} />
         <Route path='/Home' element={<Home />} />
         <Route path='/MyList' element={<MyList />} />
-        <Route path='/Board' element={<BoardList />} />
+        <Route path='/BigBang' element={<BoardList />} />
         <Route path='/postpage' element={<PostPage />} />
         <Route path='/PostTest' element={<PostTest />} />
-        <Route path='/main' element={<Main />} />
+        <Route path='/' element={<Main />} />
       </Routes>
     </Router>
   );
