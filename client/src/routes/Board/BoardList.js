@@ -7,7 +7,9 @@ import './BoardList.css';
 // import Posts from './Posts';
 import styled from "styled-components";
 import Pagination from "./Pagination";
-import BasicPagination from "./test"
+import BasicPagination from "./test";
+import Header from '../../layout/Header';
+import Footer from '../../layout/Footer';
 
 const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
@@ -52,26 +54,12 @@ const BoardList = () => {
   let [count, setCount] = useState(1);
 
   return (
-    <Layout>
-      <header>
-        <h1>게시물 목록</h1>
-      </header>
+    <div>
+      
+    <div className='body'>
+      <Header/>
 
-      <label>
-        페이지 당 표시할 게시물 수:&nbsp;
-        <select
-          type="number"
-          value={limit}
-          onChange={({ target: { value } }) => setLimit(Number(value))}
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </label>
-
+      
       <main>
         <>
         <TitleBigBang />
@@ -99,6 +87,7 @@ const BoardList = () => {
           <div className='dot1'></div>
           <div className='dot2'></div>
           <div className='dot3'></div>
+
 
           <div className='lists'>
             <ul className='PostList'>
@@ -134,9 +123,26 @@ const BoardList = () => {
               ))}
             </ul>
           </div>
+
+          <label className='PostNumber'>
+        페이지 당 표시할 게시물 수 :&nbsp;&nbsp;&nbsp;
+        <select
+          type="number"
+          value={limit}
+          onChange={({ target: { value } }) => setLimit(Number(value))}
+        >
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label>
+
         </div>
       </>
       </main>
+
 
       <footer>
         <BasicPagination 
@@ -146,12 +152,12 @@ const BoardList = () => {
           setPage={setPage}
         />
       </footer>
-    </Layout>
+    </div>
+
+    <Footer/>
+    </div>
   );
 }
 
-const Layout = styled.div`
-
-`;
 
 export default BoardList;
