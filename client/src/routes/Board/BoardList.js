@@ -4,10 +4,8 @@ import TextSearch from '../../layout/TextSearch';
 import { useNavigate } from 'react-router-dom';
 import './BoardList.css';
 import styled from "styled-components";
-import Pagination from "./Pagination";
-import BasicPagination from "./test";
-import Header from '../../layout/Header';
-import Footer from '../../layout/Footer';
+import BoardListComponent from './BoardListComponent';
+import HeaderPost from '../../layout/HeaderPost';
 
 const BoardList = () => {
   
@@ -44,12 +42,28 @@ const BoardList = () => {
   }, []);
 
   return (
-    <div>
-      
-    <div className='body'>
-      <Header/>
+    <Layout>
+      {/* <header>
+        <h1>게시물 목록</h1>
+      </header>
 
-      
+      <label>
+        페이지 당 표시할 게시물 수:&nbsp;
+        <select
+          type="number"
+          value={limit}
+          onChange={({ target: { value } }) => setLimit(Number(value))}
+        >
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+  </label> */}
+
+      <HeaderPost />
+
       <main>
         <>
         <TitleBigBang />
@@ -78,8 +92,9 @@ const BoardList = () => {
           <div className='dot2'></div>
           <div className='dot3'></div>
 
+          <BoardListComponent boardList={boardList} limit={limit}/>
 
-          <div className='lists'>
+          {/* <div className='lists'>
             <ul className='PostList'>
               <div className='PostA'>
                 <div className='post1'>제목</div>
@@ -108,42 +123,25 @@ const BoardList = () => {
                 </div>
               ))}
             </ul>
-          </div>
-
-          <label className='PostNumber'>
-        페이지 당 표시할 게시물 수 :&nbsp;&nbsp;&nbsp;
-        <select
-          type="number"
-          value={limit}
-          onChange={({ target: { value } }) => setLimit(Number(value))}
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </label>
-
+          </div> */}
         </div>
       </>
       </main>
 
-
-      <footer>
+      {/* <footer>
         <BasicPagination 
           total={boardList.length}
           limit={limit}
           page={page}
           setPage={setPage}
         />
-      </footer>
-    </div>
-
-    <Footer/>
-    </div>
+      </footer> */}
+    </Layout>
   );
 }
 
+const Layout = styled.div`
+
+`;
 
 export default BoardList;
