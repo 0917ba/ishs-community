@@ -8,7 +8,7 @@ import { logger } from "../logging/central_log";
 
 const signUpRouter: Router = require('express').Router();
 
-signUpRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
+signUpRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
     let key: number = req.body.key;
     let id: string = req.body.id;
     let password: string = req.body.password;
@@ -24,12 +24,30 @@ signUpRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
             res.status(400).send("Invalid characters in name or password");
         }
         else {
+            let result = await new Promise<boolean>((resolve, reject) => {
+                userDatabase.getUserById(id).then((user) => {
+                if (user) {
+                    logger.error("Sign up failed 0");
+                    res.status(400).send(respRest(400, "야이씨 아이디 중복이다!"));
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+                }).catch((err: any) => {
+                    logger.error("Sign up failed 0 ");
+                    res.status(500).send(respRest(500, 2));
+                    reject(err)
+                });
+            });
+            if (!result) {
+                return;
+            }
             let privilege = PrivilegeEnum.DEFAULT;
             let role = Role.STUDENT;
             let penalty = 0;
             let classNumber = parseInt(key.toString().split("")[1]);
             let studentNumber = parseInt(key.toString().substring(2));      
-            userDatabase.signup(id, password, nickname, email, studentName, 0, classNumber, studentNumber, privilege, role, penalty).then((result: boolean) => {
+            userDatabase.signup(id, password, nickname, email, studentName, 0, classNumber, studentNumber, privilege, role, penalty, 0).then((result: boolean) => {
                 if (result) {
                     req.session.key = key;
                     req.session.userid = id;
@@ -44,14 +62,14 @@ signUpRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
                     res.status(200).send(respRest(200, 0));
                 } else {
                     logger.error("Sign up failed 1 ");
-                    res.status(400).send(respRest(400, 1));
+                    res.status(400).send(respRest(400, "회원가입 실패!!!! ㅋㅋ 이걸 실패하네"));
                 }
             }
             )
         }
     } else {
         logger.error("Sign up failed 2 ");
-        res.status(400).send(respRest(400, 1));
+        res.status(400).send(respRest(400, "아이들! 입력값도 제대로 못넣습니까?"));
     }
 });
 

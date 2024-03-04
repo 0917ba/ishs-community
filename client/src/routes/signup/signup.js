@@ -3,21 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './signup.module.css';
 
 function Signup() {
-  useEffect(() => {
-    (async () => {
-      const formData = {
-        mgitethod: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        },
-        body: JSON.stringify({}),
-      };
-      const serverUrl = process.env.REACT_APP_SERVER_URL;
-      // res = await fetch(`serverUrl` + `/check_session`, formData);
-    })();
-  }, []);
-
   const navigate = useNavigate();
   const [PWmessage, setPWMessage] = useState('');
   const [message, setMessage] = useState('');
@@ -69,32 +54,55 @@ function Signup() {
   };
 
   const onClickSignup = async () => {
-    //console.log('signup');
+    console.log('signup');
+    console.log(
+      inputKey,
+      inputId,
+      inputPassword,
+      inputIdentify_code,
+      inputEmail,
+      inputName,
+      inputNickname,
+      inputBirthday
+    );
+    console.log(typeof inputKey);
+    let ninputKey = parseInt(inputKey);
+    console.log(typeof ninputKey);
+    let dinputBirthday = new Date(inputBirthday);
+    console.log(typeof dinputBirthday);
 
     const formData = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({
-        key: inputKey,
+        key: ninputKey,
         id: inputId,
         password: inputPassword,
-        identify_code: inputIdentify_code,
+        identifycode: inputIdentify_code,
         email: inputEmail,
-        name: inputName,
+        studentname: inputName,
         nickname: inputNickname,
-        birthday: inputBirthday,
+        birthday: dinputBirthday,
       }),
     };
 
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
-    const res = await fetch(`serverUrl` + `/signup`, formData);
-    const status = res.status;
-    const getMessage = res.message;
+    //const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const res = await fetch('/signup', formData);
+    const data = await res.json();
+    console.log(data);
+
+    const status = data.status;
+    console.log(status);
+
+    const getMessage = data.content;
 
     if (status === 200) {
-      navigate('/signup/success');
+      navigate('/register/success');
     }
     if (status === 400) {
       setMessage(getMessage);
@@ -102,20 +110,9 @@ function Signup() {
     if (status === 500) {
       navigate('/developer/special');
     }
-    //const data = await res.json();
   };
 
   const DataCheck = () => {
-    if (
-      inputId === '' ||
-      inputPassword === '' ||
-      inputIdentify_code === '' ||
-      inputEmail === '' ||
-      inputName === '' ||
-      inputNickname === ''
-    ) {
-      return true;
-    }
     if (inputPassword !== inputPassword_check) {
       return true;
     }
@@ -128,9 +125,11 @@ function Signup() {
     } else setPWMessage('비밀번호가 일치합니다.');
   }, [inputPassword, inputPassword_check]);
   return (
-    <div>
-      <div>
-        <label>학번 | </label>
+    <div className={styles.all}>
+      <div className={styles.modal}></div>
+      <div className={styles.font}>Sign Up</div>
+      <div className={styles.StudentID}>
+        <label>학번</label>
         <input
           type='text'
           name='학번'
@@ -138,100 +137,102 @@ function Signup() {
           value={inputKey}
           onChange={onChangeKey}
           pattern='[1-3]{1}[0-9]{3}'
+          className={styles.IntputStudentID}
         />
       </div>
-      <div>
-        <label>아이디 | </label>
-        <input
-          type='text'
-          name='아이디'
-          placeholder='아이디를 입력해 주세요.'
-          value={inputId}
-          onChange={onChangeId}
-        />
+      <div className={styles.ID}>
+        <div>
+          <label>아이디</label>
+          <input
+            type='text'
+            name='아이디'
+            placeholder='아이디를 입력해 주세요.'
+            value={inputId}
+            onChange={onChangeId}
+            className={styles.IntputID}
+          />
+        </div>
       </div>
-      <div>
-        <label>비밀번호 | </label>
+      <div className={styles.Password}>
+        <label>비밀번호</label>
         <input
           type='password'
           name='비밀번호'
           placeholder='비밀번호를 입력해 주세요.'
           value={inputPassword}
           onChange={onChangePassword}
+          className={styles.IntputPassword}
         />
       </div>
-      <div>
+      <div className={styles.checkPassword}>
         <span>
-          <label>비밀번호 확인 | </label>
+          <label>비밀번호 확인</label>
           <input
             type='password'
             name='비밀번호 확인'
             placeholder='비밀번호를 다시 입력해 주세요.'
             value={inputPassword_check}
             onChange={onChangePassword_check}
+            className={styles.checkIntputPassword}
           />
         </span>
       </div>
 
       <span>
-        <p>{PWmessage}</p>
+        <p className={styles.checkMessage}>{PWmessage}</p>
       </span>
-      <div>
-        <label>인증 코드 | </label>
+
+      <div className={styles.code}>
+        <label>인증 코드</label>
         <input
           type='text'
           name='인증 코드'
           placeholder='인증 코드를 입력해 주세요.'
           value={inputIdentify_code}
           onChange={onChangeIdentify_code}
+          className={styles.Intputcode}
         />
       </div>
-      <div>
-        <label>이메일 | </label>
+      <div className={styles.email}>
+        <label>이메일</label>
         <input
           type='text'
           name='이메일'
           placeholder='이메일을 입력해 주세요.'
           value={inputEmail}
           onChange={onChangeEmail}
+          className={styles.Intputemail}
         />
       </div>
-      <div>
-        <label>이름 | </label>
+      <div className={styles.name}>
+        <label>이름</label>
         <input
           type='text'
           name='이름'
           placeholder='이름을 입력해 주세요.'
           value={inputName}
           onChange={onChangeName}
+          className={styles.Intputname}
         />
       </div>
-      <div>
-        <label>닉네임 | </label>
+      <div className={styles.Nickname}>
+        <label>닉네임</label>
         <input
           type='text'
           name='닉네임'
           placeholder='닉네임을 입력해 주세요.'
           value={inputNickname}
           onChange={onChangeNickname}
+          className={styles.IntputNickname}
         />
       </div>
+
       <div>
-        <label>생년월일 | </label>
-        <input
-          type='date'
-          name='생년월일'
-          placeholder='생년월일을 입력해 주세요.'
-          value={inputBirthday}
-          onChange={onChangeBirthday}
-        />
-      </div>
-      <div>
-        <button type='button' onClick={onClickSignup} disabled={DataCheck()}>
+        <button type='button' onClick={onClickSignup} disabled={DataCheck()} className={styles.signup}>
           회원가입하기
         </button>
       </div>
-      <div>
+      <div className={styles.signupMessage}>
         <p>{message}</p>
       </div>
     </div>

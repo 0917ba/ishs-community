@@ -1,57 +1,81 @@
-import styles from './PostList.module.css';
-import { useEffect, useState } from "react";
+import React, {useEffect,useState} from 'react';
+import './PostList.module.css';
 
-function Post(props) {
-  return <div className={styles.Post}>
-    <div style={{ display: 'inline' }}>
-      <div>{props.title}</div>
-      <img src="/viewer_icon.png" alt="wait plz" />
-      {/* <div>{props.viewer}</div>
-      <img src="/coment_icon.png" alt="wait plz" />
-      <div>{props.coment}</div>
-      <div>{props.end}</div>
-      <div>{props.apo}</div>
-      <div>{props.time}</div> */}
+const PostBox = () => {
+  const [postList, setPostList] = useState([]);
+  const [sResult, setsResult] = useState([]);
+  const [content, setContent] = useState("");
+  
+  const getPostList = async (start, end) => {
+    const resp = await fetch(`http://app.ishs.co.kr/post/list?start=${start}&end=${end}`)
+    let json = await resp.json()
+    console.log(json.content)
+    setPostList(json.content);
+  }
+
+  const search = (keyword, start, end) => {
+    fetch(`http://app.ishs.co.kr/post/search?keyword=${keyword}&start=${start}&end=${end}`).then(res => {
+      res.json().then(data => {
+        setsResult(data.content)
+        console.log(data.content)
+      })
+    })
+}
+
+  useEffect( () => {
+    getPostList(0, 20);
+  }, [] );
+
+  let [count, setCount] = useState(1);
+ 
+ 
+ 
+  return (
+    <>
+    
+    <div>
+      <div className='lists'>
+
+        <ul className='PostList'>
+          
+          <div className='PostA'>
+            <div className='post1'>제목</div>
+            <div className='post2'>추천</div>
+            <div className='post3'>조회</div>
+          </div>
+
+
+        {postList.map((board) => (
+          <div className='Post'>
+            <div className='post1'> <li> {board.title} </li></div>
+            <div className='post2'> <li> {board.like} </li></div>
+            <div className='post3'> <li> {board.view} </li></div>
+          </div>
+
+        ))}
+
+        
+        {sResult.map((result) => (
+          <li>{result.title}</li>
+        ))}
+        </ul>
+      </div>
+
     </div>
+    
+    </>
+    
+  );
 
-  </div>
-}
 
-const _posts = [
-  { title: 'hello', viewer: '13', coment: '2', end: '4', apo: '2', time: '5시간 전' },
-  { title: 'ishs', viewer: '452', coment: '49', end: '4', apo: '2', time: '5시간 전' },
-]
-function PostBox() {
-  const [posts, setPosts] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-      setPosts(_posts);
-    }, 1000);
-  }, []);
-
-  return <div className={styles.PostBox}>
-    {
-      isLoading ? <div>Loading...</div> :
-        posts.map((post, index) => {
-          return <Post key={index} title={post.title} viewer={post.viewer} content={post.content} end={post.end} apo={post.apo} time={post.time} />
-        })
-    }
-  </div>
-}
+};
 
 function PostList() {
   return (
     <div>
-      <div className={styles.Container}>
-        <PostBox />
-      </div>
+      <PostBox />
     </div>
   );
 }
 
 export default PostList;
-export { PostBox };
-

@@ -4,7 +4,7 @@ function SignupSuccess() {
   const navigate = useNavigate();
 
   const onClickSignup = () => {
-    navigate('/signin');
+    navigate('/login');
   };
   return (
     <div>

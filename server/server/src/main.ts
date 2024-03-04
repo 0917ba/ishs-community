@@ -63,7 +63,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(sessionMiddleware);
-app.use(cors())
+// set Access-Control-Allow-Origin header to true
+
+app.use(cors({
+    credentials: true,
+    origin: true,
+}));
 
 // log all requests
 app.use('*', (req: Request, res: Response, next: NextFunction) => {
@@ -78,7 +83,7 @@ app.use('*', (req: Request, res: Response, next: NextFunction) => {
 app.use('/signup', require('./routers/sign_up_router'));
 app.use('/signin', require('./routers/sign_in_router'));
 app.use('/check_session', require('./routers/check_session_router'));
-app.use('/logout', require('./routers/logout_router'));
+app.use('/signout', require('./routers/logout_router'));
 app.use('/user', require('./routers/userInfo_router'));
 app.use('/post', require('./routers/post_router'));
 app.use('/comment', require('./routers/comment_router'));
@@ -90,7 +95,7 @@ app.use('/report', require('./routers/report_router'));
 // index file
 app.get('/', (req: Request, res: Response) => {
     let q = req.query.query;
-    res.sendFile(__dirname + '/client/index.html');
+    res.send(respRest(200, 1));
 });
 
 // 404 handler for GET request

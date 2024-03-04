@@ -4,133 +4,195 @@ import { UUID } from '../util/uuid_generator';
 import { Comment } from '../dto/comment';
 import { ReactionStatus } from '../util/reaction_status';
 
+
 export class CommentDatabase {
     mysql = require('mysql');
-    db = this.mysql.createConnection({
+    db = this.mysql.createPool({
         host: cf.database.host,
         user: cf.database.user,
         password: cf.database.password,
         database: cf.database.database.comment
     });   
     constructor() {
-        this.db.connect((err: any) => {
-            if (err) {
-                throw err;
-            }
-            logger.info('Connected to database(comment)');
-        });
     }
 
     createComment(authorId: string, postId: string, author: string, like: number, dislike: number, createdAt: string, target: string, content: string, status: string) {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(
-                `INSERT INTO comment (uid, authorId, postId, author, \`like\`, dislike, createdAt, target, content, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [uid, authorId, postId, author, like, dislike, createdAt, target, content, status],
-                (err: any, res: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(true);
+                connection.query(
+                    `INSERT INTO comment (uid, authorId, postId, author, \`like\`, dislike, createdAt, target, content, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [uid, authorId, postId, author, like, dislike, createdAt, target, content, status],
+                    (err: any, res: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(true);
+                });
+                connection.release();
             });
         });
     }
 
     updateComment(uid: string, content: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comment SET content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(true);
+                connection.query(
+                    `UPDATE comment SET content=? WHERE uid=?`,
+                    [content, uid],
+                    (err: any, res: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(true);
+                });
+                connection.release();
             });
         });
     }
 
     getCommentByUid(uid: string) {
-        return new Promise<Comment>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<Comment|null>((resolve, reject) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(Comment.fromObject(result[0]));
+                connection.query(`SELECT * FROM comment WHERE uid=?`, [uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    if (result.length == 0) {
+                        resolve(null);
+                    } else {
+                        resolve(Comment.fromObject(result[0]));
+                    }
+                });
+                connection.release();
             });
         });
     }
 
     getCommentsByPostId(postId: string) {
         return new Promise<Comment[]>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comment WHERE postId='${postId}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(Comment.fromObjectList(result));
+                connection.query(`SELECT * FROM comment WHERE postId=?`, [postId], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(Comment.fromObjectList(result));
+                });
+                connection.release();
             });
         });
     }
 
     getCommentsByAuthorId(authorId: string) {
         return new Promise<Comment[]>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comment WHERE authorId='${authorId}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(Comment.fromObjectList(result));
+                connection.query(`SELECT * FROM comment WHERE authorId=?`, [authorId], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(Comment.fromObjectList(result));
+                });
+                connection.release();
             });
         });
     }
 
     getCommentsByTarget(target: string) {
         return new Promise<Comment[]>((resolve, reject) => {
-            this.db.query(`SELECT * FROM comment WHERE target='${target}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(Comment.fromObjectList(result));
+                connection.query(`SELECT * FROM comment WHERE target=?`, [target], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(Comment.fromObjectList(result));
+                });
+                connection.release();
             });
         });
     }
 
     deleteCommentByUid(uid: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`DELETE FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(true);
+                connection.query(`DELETE FROM comment WHERE uid=?`, [uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(true);
+                });
+                connection.release();
             });
         });
     }
 
     setContent(uid: string, content: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comment SET content='${content}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(true);
+                connection.query(`UPDATE comment SET content=? WHERE uid=?`, [content, uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(true);
+                });
+                connection.release();
             });
         });
     }
 
     setLike(uid: string, like: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comment SET \`like\`='${like}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(true);
+                connection.query(`UPDATE comment SET \`like\`=? WHERE uid=?`, [like, uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(true);
+                });
+                connection.release();
             });
         });
     }
 
     getLike(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT \`like\` FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<number>((resolve, reject) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result[0].like);
+                connection.query(`SELECT \`like\` FROM comment WHERE uid=?`, [uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(result[0].like);
+                });
+                connection.release();
             });
         });
     }
@@ -147,22 +209,34 @@ export class CommentDatabase {
 
     setDislike(uid: string, dislike: number) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comment SET dislike='${dislike}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(true);
+                connection.query(`UPDATE comment SET dislike=? WHERE uid=?`, [dislike, uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(true);
+                });
+                connection.release();
             });
         });
     }
 
     getDislike(uid: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.db.query(`SELECT dislike FROM comment WHERE uid='${uid}'`, (err: any, result: any) => {
+        return new Promise<number>((resolve, reject) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(result[0].dislike);
+                connection.query(`SELECT dislike FROM comment WHERE uid=?`, [uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(result[0].dislike);
+                });
+                connection.release();
             });
         });
     }
@@ -223,11 +297,17 @@ export class CommentDatabase {
 
     setStatus(uid: string, status: string) {
         return new Promise<boolean>((resolve, reject) => {
-            this.db.query(`UPDATE comment SET status='${status}' WHERE uid='${uid}'`, (err: any, result: any) => {
+            this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(true);
+                connection.query(`UPDATE comment SET status=? WHERE uid=?`, [status, uid], (err: any, result: any) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(true);
+                });
+                connection.release();
             });
         });
     }

@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap');
+
+.titleBox{
+    padding: 20px 0 20px 30px;
+    margin: 10px;
+    border: 1px #5e5e5e solid;
+    font-size:  62px;
+    font-family: "Libre Bodoni", serif;
+}
+
+.empty{
+    height: 30px;
+    margin: 0;
+    padding: 0;
+}
