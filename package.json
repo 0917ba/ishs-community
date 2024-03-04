@@ -1,0 +1,8 @@
+{
+  "name": "yarn'",
+  "version": "yarn",
+  "main": "index.js",
+  "repository": "https://github.com/vvemma/ishs-community.git",
+  "author": "Jeongmin <vvemma@naver.com>",
+  "license": "MIT"
+}
