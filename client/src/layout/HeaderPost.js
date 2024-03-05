@@ -11,7 +11,7 @@ const HeaderPost = () => {
     // FIXME: 링크 연결 필요함.
     return (
     <header>
-        <div className="header">
+        <div className="Postheader">
             <img src={logIshsLogo} alt="log_ishs" onClick={navigatetoMain} className="header_img"/>
                 <a href="/" className="header_txt">학교 소개</a>
                 <a href="/" className="header_txt">지식 in곽</a>

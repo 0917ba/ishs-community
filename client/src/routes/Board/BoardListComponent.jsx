@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import BasicPagination from "./test";
 import { useNavigate } from "react-router-dom";
 
-export default function BoardListComponent({boardList, limit}) {
+export default function BoardListComponent({boardList, limit, offset}) {
 
     const navigate = useNavigate();
-    const [page, setPage] = useState(1);
-    const offset = (page - 1) * limit;
 
     const onChangeUid = (uid) => {
         navigate(`/postpage`, { state: uid });
@@ -50,14 +48,7 @@ export default function BoardListComponent({boardList, limit}) {
             </ul>
           </div>
 
-        <footer>
-        <BasicPagination 
-          total={boardList.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-        />
-      </footer>
+         
       </div>
     )
 }
