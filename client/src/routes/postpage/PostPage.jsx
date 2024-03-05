@@ -181,7 +181,7 @@ const PostPage = () => {
 
     fetchPost(uid);
   }, []);
-
+  console.log("uuid: " + uuid);
   return (
     <div>
       <HeaderPost />
