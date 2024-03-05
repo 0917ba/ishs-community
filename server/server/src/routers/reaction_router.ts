@@ -20,9 +20,16 @@ reactionRouter.post('/',  async (req: Request, res: Response, next: NextFunction
         if (reaction) {
             reactionDatabase.deleteReaction(reaction.getUid());
             if (type == ReactionType.POST) {
-                postDatabase.updateReaction(targetId, (reaction.getStatus() == status) ? ReactionStatus.NONE : status, reaction.getStatus());
+                postDatabase.updateReaction(targetId, ReactionStatus.NONE, reaction.getStatus());
             } else if (type == ReactionType.COMMENT) {
-                commentDatabase.updateReaction(targetId, (reaction.getStatus() == status) ? ReactionStatus.NONE : status, reaction.getStatus());
+                commentDatabase.updateReaction(targetId, ReactionStatus.NONE, reaction.getStatus());
+            }
+            if (reaction.getStatus() == status) {
+                if (type == ReactionType.POST) {
+                    postDatabase.updateReaction(targetId, status, reaction.getStatus());
+                } else if (type == ReactionType.COMMENT) {
+                    commentDatabase.updateReaction(targetId, status, reaction.getStatus());
+                }
             }
         } else {
             reactionDatabase.createReaction(type, userId, targetId, status);
