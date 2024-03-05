@@ -19,6 +19,8 @@ const BoardList = () => {
   let [count, setCount] = useState(1);
   const [boardList, setBoardList] = useState([]);
   const [uidList, setUidList] = useState([]);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
 
   const getBoardList = async (start, end) => {
     const resp = await fetch(
@@ -79,11 +81,11 @@ const BoardList = () => {
           <div className='dot2'></div>
           <div className='dot3'></div>
 
-          <BoardListComponent boardList={boardList} limit={limit}/>
+          <BoardListComponent boardList={boardList} limit={limit} offset={offset}/>
 
           <label className='PostNumber'>
-        페이지 당 표시할 게시물 수 :&nbsp;&nbsp;&nbsp;
-        <select
+            페이지 당 표시할 게시물 수 :&nbsp;&nbsp;&nbsp;
+            <select
           type="number"
           value={limit}
           onChange={({ target: { value } }) => setLimit(Number(value))}
@@ -94,11 +96,22 @@ const BoardList = () => {
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-      </label>
+        </label>
 
         </div>
       </>
       </main>
+
+      <footer>
+        <BasicPagination 
+        
+        total={boardList.length}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+        />
+      </footer>
+
     </div>
 
     <Footer/>

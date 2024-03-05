@@ -1,4 +1,4 @@
-.header {
+.Postheader {
     margin-left: 1%;
     font-size: 20px;
     margin-bottom: 10px;
@@ -9,7 +9,7 @@
 }
 
 .header_txt {
-    color: black;
     text-decoration-line: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: medium;
+    color: #5c5959;
 }

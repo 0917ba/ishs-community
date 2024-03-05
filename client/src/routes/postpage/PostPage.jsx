@@ -253,9 +253,14 @@ const PostPage = () => {
     fetchPost(uid);
   }, []);
 
+
+
   return (
-    <div>
-      <HeaderPost />
+    <>
+    <HeaderPost/>
+
+    <div className='body'>
+      
       <div className='post_information'>
         <p className='title'>{title}</p>
         <div className='post_info'>
@@ -271,8 +276,10 @@ const PostPage = () => {
           )}
           <p className='post_time'>{createdAt}</p>
         </div>
+        
       </div>
-      <hr className='line'></hr>
+
+
       <div className='post_content'>
         <p className='content'>{content}</p>
       </div>
@@ -286,7 +293,7 @@ const PostPage = () => {
               clickReactionButton('POST', uuid, uid, 'LIKE');
             }}
           />
-          <p className='like_count'>{like}</p>
+          <p className='like_count'>{like} Dopamine</p>
         </div>
         <div className='dislike'>
           <img
@@ -297,13 +304,12 @@ const PostPage = () => {
               clickReactionButton('POST', uuid, uid, 'DISLIKE');
             }}
           />
-          <p className='dislike_count'>{dislike}</p>
+          <p className='dislike_count'>{dislike} Apoptosis</p>
         </div>
       </div>
       <div className='report'>
-        <img src={report} alt='report' className='report_img' />
         <div className={'btn-wrapper'}>
-          <button onClick={() => setModalOpen(true)}>신고하기</button>
+          <button onClick={() => setModalOpen(true)} className='singobtn'>신고하기</button>
           {modalOpen && (
             <div
               className={'modal-container'}
@@ -315,18 +321,20 @@ const PostPage = () => {
               }}
             >
               <div className={'modal-content'}>
-                <label>신고사유 | </label>
+                <p className='singosingo'>신고 사유</p>
                 <input
                   type='text'
                   name='신고사유'
-                  placeholder='신고사유를 작성해주세요.'
+                  placeholder=' 신고사유를 작성해주세요.'
                   value={postReportMean}
                   onChange={onChangePostReportMean}
+                  className='singoSaU'
                 />
                 <button
                   type='button'
                   onClick={onClickPostReport}
                   disabled={PostDataCheck()}
+                  className='singobtn2'
                 >
                   신고하기
                 </button>
@@ -342,7 +350,9 @@ const PostPage = () => {
         </div>
       </div>
 
-      <hr className='line_comment'></hr>
+      <hr></hr>
+
+
       <div className='comment_write'>
         <input
           type='text'
@@ -354,8 +364,11 @@ const PostPage = () => {
       <div className='comment'>
         <Comment comments={comments} />
       </div>
-      <Footer />
+
     </div>
+    
+    <Footer />
+    </>
   );
 };
 
