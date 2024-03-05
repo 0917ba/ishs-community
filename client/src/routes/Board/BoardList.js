@@ -3,8 +3,6 @@ import TitleBigBang from '../../layout/titleBigBang';
 import TextSearch from '../../layout/TextSearch';
 import { useNavigate } from 'react-router-dom';
 import './BoardList.css';
-import styled from "styled-components";
-import Pagination from "./Pagination";
 import BasicPagination from "./test";
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';

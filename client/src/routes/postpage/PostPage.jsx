@@ -191,7 +191,7 @@ const PostPage = () => {
   };
 
   const fetchReaction = async (type, userId, targetId, status) => {
-    const response = await fetch(`/reaction`, {
+    await fetch(`/reaction`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -202,30 +202,13 @@ const PostPage = () => {
         targetId: targetId,
         status: status,
       }),
+    }).then(() => {
+      fetchPost(uid);
     });
-    let data = await response.json();
-    setLike(data.like);
-    setDislike(data.dislike);
-  };
-
-  const checkReaction = async (type, userId, targetId) => {
-    const response = await fetch(
-      `/reaction?type=${type}&userId=${userId}&targetId=${targetId}`
-    );
-    let data = await response.json();
-    if (data.status === undefined) {
-      return 'Error';
-    }
-    return data.status;
   };
 
   const clickReactionButton = async (type, userId, targetId, status) => {
-    let status_already = await checkReaction(type, userId, targetId);
-    if (status_already === 'NONE') {
-      fetchReaction(type, userId, targetId, status);
-    } else {
-      fetchReaction(type, userId, targetId, 'NONE');
-    }
+    fetchReaction(type, userId, targetId, status);
   };
 
   const renderComment = () => {
@@ -246,7 +229,7 @@ const PostPage = () => {
       ).json();
       console.log(res);
 
-      setAuthorUid(res.content.uid);
+      setUuid(res.content.uid);
       console.log(authorUid);
     })();
 
