@@ -7,6 +7,7 @@ import { postDatabase } from "../database/post_repository";
 import { now } from "../util/time_templete";
 import { reportDatabase } from "../database/report_repository";
 import { Comment } from "../dto/comment";
+import { Role } from "../util/role";
 
 const postRouter = require('express').Router();
 
@@ -27,17 +28,34 @@ postRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-postRouter.patch('/', (req: Request, res: Response, next: NextFunction) => {
+postRouter.patch('/', async (req: Request, res: Response, next: NextFunction) => {
     // FIXME: use necessary session variables only
     let uid: string = req.body.uid;
     let title: string = req.body.title;
     let content: string = req.body.content;
+    let userUid: string = req.session.uid;
+    let role: Role = req.session.role;
 
     let checker = new QueryChecker();
 
     if (checker.notNull(uid, title, content)) {
-        postDatabase.updatePost(uid, title, content);
-        res.status(200).send(respRest(200, 0));
+        let post = await postDatabase.getPostByUid(uid);
+        if (!checker.notNull(post)) {
+            if (role != Role.ADMIN) {
+                if (post?.getAuthorId() != userUid) {
+                    res.status(403).send(respRest(403, 1));
+                    return;
+                } else {
+                    postDatabase.updatePost(uid, title, content);
+                    res.status(200).send(respRest(200, 0));
+                }
+            } else if (role == Role.ADMIN || role == Role.DEVELOPER) {
+                postDatabase.updatePost(uid, title, content);
+                res.status(200).send(respRest(200, 0));
+            } else {
+                res.status(403).send(respRest(403, 1));
+            }
+        }
     } else {
         res.status(400).send(respRest(400, 1));
     }
@@ -75,14 +93,29 @@ postRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-postRouter.delete('/', (req: Request, res: Response, next: NextFunction) => {
+postRouter.delete('/', async (req: Request, res: Response, next: NextFunction) => {
     let uid: string = req.body.uid;
+    let userUid: string = req.session.uid;
+    let role: Role = req.session.role;
 
     let checker = new QueryChecker();
 
-    if (checker.notNull(uid)) {
-        postDatabase.deletePost(uid);
-        res.status(200).send(respRest(200, 0));
+    if (checker.notNull(uid, userUid, role)) {
+        let post = await postDatabase.getPostByUid(uid);
+        if (role != Role.ADMIN) {
+            if (post?.getAuthorId() != userUid) {
+                res.status(403).send(respRest(403, 1));
+                return;
+            } else {
+                postDatabase.deletePost(uid);
+                res.status(200).send(respRest(200, 0));
+            }
+        } else if (role == Role.ADMIN || role == Role.DEVELOPER) {
+            postDatabase.deletePost(uid);
+            res.status(200).send(respRest(200, 0));
+        } else {
+            res.status(403).send(respRest(403, 1));
+        }
     } else {
         res.status(400).send(respRest(400, 1));
     }
