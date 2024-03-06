@@ -3,20 +3,23 @@ import Pagination from '@mui/material/Pagination';
 import styled from "styled-components";
 import Stack from '@mui/material/Stack';
 
-export default function BasicPagination({ total, limit, setPage }) {
+export default function BasicPagination({ total, limit, page, setPage }) {
     const numPages = Math.ceil(total / limit);
-    const handlePage = (event, page) => {
-      setPage(page);
+    const handlePage = (event) => {
+        const nowPageInt = Number(event.target.outerText);
+        console.log('nowPageInt : ' + nowPageInt)
+        setPage(nowPageInt);
     }
 
   return (
     <Nav>
         <Stack spacing={2}>
             <Pagination color="primary" 
+                page={page}
                 count={numPages}
                 defaultPage={1}
                 boundaryCount={2}
-                onChange={(e, p) => handlePage(e, p)}
+                onChange={(e) => handlePage(e)}
                 size = "large"
             />
         </Stack>

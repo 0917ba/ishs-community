@@ -24,13 +24,6 @@ reactionRouter.post('/',  async (req: Request, res: Response, next: NextFunction
             } else if (type == ReactionType.COMMENT) {
                 commentDatabase.updateReaction(targetId, ReactionStatus.NONE, reaction.getStatus());
             }
-            if (reaction.getStatus() != status) {
-                if (type == ReactionType.POST) {
-                    postDatabase.updateReaction(targetId, status, reaction.getStatus());
-                } else if (type == ReactionType.COMMENT) {
-                    commentDatabase.updateReaction(targetId, status, reaction.getStatus());
-                }
-            }
         } else {
             reactionDatabase.createReaction(type, userId, targetId, status);
             if (type == ReactionType.POST) {
