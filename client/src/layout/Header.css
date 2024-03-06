@@ -1,4 +1,6 @@
 .header{
+    display: block;
+    font-size: medium;
     padding: 8px 0 0 20px;
     margin: 0;
     color: #5c5959;

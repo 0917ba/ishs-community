@@ -8,12 +8,14 @@ import './PostPage.css';
 import HeaderPost from '../../layout/HeaderPost';
 import Footer from '../../layout/Footer';
 import moment from 'moment';
+import Comment from '../../component/Post/Comment';
 import report from '../../component/img/report.svg';
 
 const PostPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const modalBackground = useRef();
-  const [inputReportMean, setInputReportMean] = useState('');
+  const [postReportMean, setPostReportMean] = useState('');
+  const [commentReportMean, setCommentReportMean] = useState('');
   const [authorUid, setAuthorUid] = useState('');
   const location = useLocation();
   const [loaded, setLoaded] = useState(false);
@@ -27,6 +29,38 @@ const PostPage = () => {
   const [title, setTitle] = useState('Title');
   const [content, setContent] = useState('Content');
   const [admin, setAdmin] = useState(false);
+
+  const onChangeCommentReportMean = (e) => {
+    setCommentReportMean(e.target.value);
+    console.log(commentReportMean);
+  };
+
+  const onClickCommentReport = async () => {
+    console.log(commentReportMean);
+    const resp = await fetch(`/report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        type: 'COMMENT',
+        targetId: uid,
+        authorId: authorUid,
+        content: commentReportMean,
+      }),
+    });
+  };
+  const CommentDataCheck = () => {
+    if (commentReportMean === '') {
+      return true;
+    }
+    return false;
+  };
+
+  const uid = location.state;
+
   const [comment_render, setCommentRender] = useState([
     <div>
       <div className='comment_box'>
@@ -36,6 +70,44 @@ const PostPage = () => {
         </div>
         <div className='comment_info'>
           <img src={report} alt='report' className='report_button' />
+          <div className={'btn-wrapper'}>
+            <button onClick={() => setModalOpen(true)}>신고하기</button>
+            {modalOpen && (
+              <div
+                className={'modal-container'}
+                ref={modalBackground}
+                onClick={(e) => {
+                  if (e.target === modalBackground.current) {
+                    setModalOpen(false);
+                  }
+                }}
+              >
+                <div className={'modal-content'}>
+                  <label>신고사유 | </label>
+                  <input
+                    type='text'
+                    name='신고사유'
+                    placeholder='신고사유를 작성해주세요.'
+                    value={commentReportMean}
+                    onChange={onChangeCommentReportMean}
+                  />
+                  <button
+                    type='button'
+                    onClick={onClickCommentReport}
+                    disabled={CommentDataCheck()}
+                  >
+                    신고하기
+                  </button>
+                  <button
+                    className={'modal-close-btn'}
+                    onClick={() => setModalOpen(false)}
+                  >
+                    닫기
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           <p className='comment_time'>2000-01-01 00:00:00</p>
         </div>
       </div>
@@ -43,15 +115,29 @@ const PostPage = () => {
     </div>,
   ]);
 
-  const uid = location.state;
-
-  const onChangeReportMean = (e) => {
-    setInputReportMean(e.target.value);
-    console.log(inputReportMean);
+  const onChangePostReportMean = (e) => {
+    setPostReportMean(e.target.value);
+    console.log(postReportMean);
   };
 
-  const DataCheck = () => {
-    if (inputReportMean === '') {
+  const onClickPostReport = async () => {
+    console.log(postReportMean);
+    const resp = await fetch(`/report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'POST',
+        targetId: uid,
+        authorId: authorUid,
+        content: postReportMean,
+      }),
+    });
+  };
+
+  const PostDataCheck = () => {
+    if (postReportMean === '') {
       return true;
     }
     return false;
@@ -70,7 +156,7 @@ const PostPage = () => {
 
   const fetchPost = async (uid) => {
     if (!loaded) {
-      const response = await fetch(`http://app.ishs.co.kr/post?uid=${uid}`);
+      const response = await fetch(`/post?uid=${uid}`);
       // const response = await fetch(`http://app.ishs.co.kr/post/list?start=0&end=10`);
       let data = await response.json();
       // console.log(data);
@@ -89,11 +175,12 @@ const PostPage = () => {
         console.log(comments);
         for (let i = 0; i < comments.length; i++) {
           const temp = (
-            <div className='comment_box'>
-              <p className='comment_author'>{comments[i].author}</p>
-              <p className='comment_content'>{comments[i].content}</p>
-              <img src={report} alt='report' className='report' />
-              <p className='comment_time'>{comments[i].createdAt}</p>
+            <div className='comment_box' key={"comment" + i}>
+              {/* <p className='comment_author' key={"author" + i}>{comments[i].author}</p>
+              <p className='comment_content' key={"content" + i}>{comments[i].content}</p>
+              <img src={report} alt='report' className='report' key={"image" + i}/>
+              <p className='comment_time' key={"createdAt" + i}>{comments[i].createdAt}</p> */}
+              <Comment comments={comments} />
             </div>
           );
           setCommentRender(comment_render.push(temp));
@@ -104,7 +191,7 @@ const PostPage = () => {
   };
 
   const fetchReaction = async (type, userId, targetId, status) => {
-    const response = await fetch(`http://app.ishs.co.kr/reaction`, {
+    await fetch(`/reaction`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -115,50 +202,17 @@ const PostPage = () => {
         targetId: targetId,
         status: status,
       }),
+    }).then(() => {
+      fetchPost(uid);
     });
-    let data = await response.json();
-    setLike(data.like);
-    setDislike(data.dislike);
-  };
-
-  const checkReaction = async (type, userId, targetId) => {
-    const response = await fetch(
-      `http://app.ishs.co.kr/reaction?type=${type}&userId=${userId}&targetId=${targetId}`
-    );
-    let data = await response.json();
-    if (data.status === undefined) {
-      return 'Error';
-    }
-    return data.status;
   };
 
   const clickReactionButton = async (type, userId, targetId, status) => {
-    let status_already = await checkReaction(type, userId, targetId);
-    if (status_already === 'NONE') {
-      fetchReaction(type, userId, targetId, status);
-    } else {
-      fetchReaction(type, userId, targetId, 'NONE');
-    }
+    fetchReaction(type, userId, targetId, status);
   };
 
   const renderComment = () => {
     return comment_render;
-  };
-
-  const onClickInputReport = async () => {
-    console.log(inputReportMean);
-    const resp = await fetch(`/report`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        type: 'POST',
-        targetId: uid,
-        authorId: authorUid,
-        content: inputReportMean,
-      }),
-    });
   };
 
   useEffect(() => {
@@ -175,16 +229,21 @@ const PostPage = () => {
       ).json();
       console.log(res);
 
-      setAuthorUid(res.content.uid);
+      setUuid(res.content.uid);
       console.log(authorUid);
     })();
 
     fetchPost(uid);
   }, []);
-  console.log("uuid: " + uuid);
+
+
+
   return (
-    <div>
-      <HeaderPost />
+    <>
+    <HeaderPost/>
+
+    <div className='body'>
+      
       <div className='post_information'>
         <p className='title'>{title}</p>
         <div className='post_info'>
@@ -200,8 +259,10 @@ const PostPage = () => {
           )}
           <p className='post_time'>{createdAt}</p>
         </div>
+        
       </div>
-      <hr className='line'></hr>
+
+
       <div className='post_content'>
         <p className='content'>{content}</p>
       </div>
@@ -215,7 +276,7 @@ const PostPage = () => {
               clickReactionButton('POST', uuid, uid, 'LIKE');
             }}
           />
-          <p className='like_count'>{like}</p>
+          <p className='like_count'>{like} Dopamine</p>
         </div>
         <div className='dislike'>
           <img
@@ -226,13 +287,12 @@ const PostPage = () => {
               clickReactionButton('POST', uuid, uid, 'DISLIKE');
             }}
           />
-          <p className='dislike_count'>{dislike}</p>
+          <p className='dislike_count'>{dislike} Apoptosis</p>
         </div>
       </div>
       <div className='report'>
-        <img src={report} alt='report' className='report_img' />
         <div className={'btn-wrapper'}>
-          <button onClick={() => setModalOpen(true)}>신고하기</button>
+          <button onClick={() => setModalOpen(true)} className='singobtn'>신고하기</button>
           {modalOpen && (
             <div
               className={'modal-container'}
@@ -244,18 +304,20 @@ const PostPage = () => {
               }}
             >
               <div className={'modal-content'}>
-                <label>신고사유 | </label>
+                <p className='singosingo'>신고 사유</p>
                 <input
                   type='text'
                   name='신고사유'
-                  placeholder='신고사유를 작성해주세요.'
-                  value={inputReportMean}
-                  onChange={onChangeReportMean}
+                  placeholder=' 신고사유를 작성해주세요.'
+                  value={postReportMean}
+                  onChange={onChangePostReportMean}
+                  className='singoSaU'
                 />
                 <button
                   type='button'
-                  onClick={onClickInputReport}
-                  disabled={DataCheck()}
+                  onClick={onClickPostReport}
+                  disabled={PostDataCheck()}
+                  className='singobtn2'
                 >
                   신고하기
                 </button>
@@ -271,7 +333,9 @@ const PostPage = () => {
         </div>
       </div>
 
-      <hr className='line_comment'></hr>
+      <hr></hr>
+
+
       <div className='comment_write'>
         <input
           type='text'
@@ -280,9 +344,14 @@ const PostPage = () => {
         />
         <button className='comment_button'>등록</button>
       </div>
-      <div className='comment'>{renderComment()}</div>
-      <Footer />
+      <div className='comment'>
+        <Comment comments={comments} />
+      </div>
+
     </div>
+    
+    <Footer />
+    </>
   );
 };
 
