@@ -28,6 +28,8 @@ const PostPage = () => {
   const [title, setTitle] = useState('Title');
   const [content, setContent] = useState('Content');
   const [admin, setAdmin] = useState(false);
+  const [authorNickname, setAuthorNickname] = useState('ㅇㅇ');
+  const [inputComment, setInputComment] = useState('');
 
   const onChangeCommentReportMean = (e) => {
     setCommentReportMean(e.target.value);
@@ -188,8 +190,48 @@ const PostPage = () => {
     }
   };
 
+  const onClickLIKE = async () => {
+    console.log('LIKE');
+    const formData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        type: 'POST',
+        userId: authorUid,
+        targetId: uid,
+        status: 'LIKE',
+      }),
+    };
+
+    const res = await fetch(`/reaction`, formData);
+  };
+
+  const onClickDISLIKE = async () => {
+    console.log('DISLIKE');
+    const formData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        type: 'POST',
+        userId: authorUid,
+        targetId: uid,
+        status: 'DISLIKE',
+      }),
+    };
+
+    const res = await fetch(`/reaction`, formData);
+  };
+
   const fetchReaction = async (type, userId, targetId, status) => {
-    const response = await fetch(`http://app.ishs.co.kr/reaction`, {
+    const response = await fetch(`/reaction`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -206,24 +248,29 @@ const PostPage = () => {
     setDislike(data.dislike);
   };
 
-  const checkReaction = async (type, userId, targetId) => {
-    const response = await fetch(
-      `http://app.ishs.co.kr/reaction?type=${type}&userId=${userId}&targetId=${targetId}`
-    );
-    let data = await response.json();
-    if (data.status === undefined) {
-      return 'Error';
-    }
-    return data.status;
+  const onChangeinputComment = (e) => {
+    setInputComment(e.target.value);
   };
 
-  const clickReactionButton = async (type, userId, targetId, status) => {
-    let status_already = await checkReaction(type, userId, targetId);
-    if (status_already === 'NONE') {
-      fetchReaction(type, userId, targetId, status);
-    } else {
-      fetchReaction(type, userId, targetId, 'NONE');
-    }
+  const onClickinputComment = async () => {
+    const formData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        authorId: authorUid,
+        author: authorNickname,
+        postId: uid,
+        target: null,
+        content: inputComment,
+      }),
+    };
+
+    const resc = await fetch(`/comment`, formData);
+    setInputComment('');
   };
 
   const renderComment = () => {
@@ -245,6 +292,7 @@ const PostPage = () => {
       console.log(res);
 
       setAuthorUid(res.content.uid);
+      setAuthorNickname(res.content.nickname);
       console.log(authorUid);
     })();
 
@@ -280,9 +328,7 @@ const PostPage = () => {
             src={dopamine}
             alt='dopamine'
             className='dopamine'
-            onClick={() => {
-              clickReactionButton('POST', uuid, uid, 'LIKE');
-            }}
+            onClick={onClickLIKE}
           />
           <p className='like_count'>{like}</p>
         </div>
@@ -291,9 +337,7 @@ const PostPage = () => {
             src={apoptosis}
             alt='apoptosis'
             className='apoptosis'
-            onClick={() => {
-              clickReactionButton('POST', uuid, uid, 'DISLIKE');
-            }}
+            onClick={onClickDISLIKE}
           />
           <p className='dislike_count'>{dislike}</p>
         </div>
@@ -346,8 +390,12 @@ const PostPage = () => {
           type='text'
           className='comment_input'
           placeholder='댓글을 입력하세요.'
+          value={inputComment}
+          onChange={onChangeinputComment}
         />
-        <button className='comment_button'>등록</button>
+        <button className='comment_button' onClick={onClickinputComment}>
+          등록
+        </button>
       </div>
       <div className='comment'>{renderComment()}</div>
       <Footer />
