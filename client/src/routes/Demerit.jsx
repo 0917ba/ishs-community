@@ -41,7 +41,7 @@ const DemeritList = () => {
 }
 
   useEffect( () => {
-    getPostList(0, 20);
+    // getPostList(0, 20);
   }, [] );
 
   let [count, setCount] = useState(1);

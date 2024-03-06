@@ -3,7 +3,7 @@ import Ddate from './Dday';
 import mainLogo from '../img/mainLogo.jpg';
 import logISHS from '../img/logISHS.png';
 
-export default function Header() {
+export default function Header({isLogin}) {
   return (
     <div className='flex flex-col md:basis-[7.5rem] basis-24 justify-center'>
       <div className='flex'>
@@ -29,9 +29,14 @@ export default function Header() {
         </div>
       </div>
       <div className='absolute flex gap-1 top-2 right-2'>
-        <a href='/login'>로그인</a>
-        <span>/</span>
-        <a href='/register'>회원가입</a>
+        {
+          (isLogin) ? <a href='/mypage'>마이페이지</a>
+           : 
+           <div><a href='/login'>로그인</a>
+           <span>/</span>
+           <a href='/register'>회원가입</a>
+          </div>
+        }
       </div>
     </div>
   );
