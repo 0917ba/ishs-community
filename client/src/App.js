@@ -18,6 +18,7 @@ import BoardList from './routes/Board/BoardList';
 import MyList from './routes/mylist/MyList';
 import PostTest from './routes/PostTest';
 import Main from './routes/main/main.jsx';
+import Write from './routes/Write/Write'
 
 function App() {
   <Route path='main' element={<Main />} />;
@@ -37,6 +38,7 @@ function App() {
         <Route path='/postpage' element={<PostPage />} />
         <Route path='/PostTest' element={<PostTest />} />
         <Route path='/' element={<Main />} />
+        <Route path='/Write' element={<Write />} />
       </Routes>
     </Router>
   );
