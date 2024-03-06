@@ -203,7 +203,9 @@ const PostPage = () => {
         status: status,
       }),
     }).then(() => {
-      fetchPost(uid);
+      setTimeout(() => {
+        fetchPost(uid);
+      }, 100);
     });
   };
 
