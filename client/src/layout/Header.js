@@ -7,7 +7,7 @@ const Header = () => {
     <>
     
     <header className='header'>
-      <a href="/" style={{ color:'#797979' , textDecoration:'none' }} >메인페이지 이동</a>
+      <a href="/Home" style={{ color:'#797979' , textDecoration:'none' }} >메인페이지 이동</a>
       &nbsp;&nbsp;<>|</>&nbsp;&nbsp;
       <a href="/MyList" style={{ color:'#797979' , textDecoration:'none' }}>내 글 목록</a>
     </header>

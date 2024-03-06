@@ -2,44 +2,131 @@ import React, { useEffect, useState } from 'react';
 import TextSearch from '../../layout/TextSearch';
 import { useNavigate } from 'react-router-dom';
 import './PostList.module.css';
-import BoardListComponent from '../../routes/Board/BoardListComponent';
+// import Posts from './Posts';
+import styled from "styled-components";
+import BasicPagination from "../../routes/Board/test"
 
-const PostBox = ({authorId}) => {
-  const [postList, setPostList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  
-  const getPostList = async (author) => {
-    const resp = await fetch(`/post/search/author?author=${author}`)
-    let json = await resp.json()
-    console.log(json.content)
-    setPostList(json.content);
-  }
+const BoardList = () => {
+  const [boardList, setBoardList] = useState([]);
+  const [uidList, setUidList] = useState([]);
+  const [sResult, setsResult] = useState([]);
+  const [content, setContent] = useState('');
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState([]);
+  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
 
-  useEffect(async () => {
-    (async () => {
-      await getPostList(authorId);
-      setIsLoading(false);
-    })();
-    // setIsLoading(false);
-    // getPostList(props.authorId);
-  }, [authorId]);
+  const getBoardList = async (start, end) => {
+    const resp = await fetch(
+      `http://app.ishs.co.kr/post/list?start=${start}&end=${end}`
+    );
+    let json = await resp.json();
+    console.log(json.content);
+    setBoardList(json.content);
+    setUidList(json.content.map((board) => board.uid));
+  };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const onChangeUid = (uid) => {
+    navigate(`/postpage`, { state: uid });
+  };
 
-  return (  
-    <div>
-      <BoardListComponent boardList={postList} limit={5}/>
-    </div>
-  );
-};
+  const search = (keyword, start, end) => {
+    fetch(
+      `http://app.ishs.co.kr/post/search?keyword=${keyword}&start=${start}&end=${end}`
+    ).then((res) => {
+      res.json().then((data) => {
+        setsResult(data.content);
+        console.log(data.content);
+      });
+    });
+  };
 
-function PostList({authorId}) {
+  useEffect(() => {
+    getBoardList(0, 20);
+  }, []);
+
+  let [count, setCount] = useState(1);
+
   return (
-    <div>
-      <PostBox authorId={authorId}/>
-    </div>
+    <Layout>
+      <header>
+        <h1>내 커뮤니티 글</h1>
+      </header>
+
+      <main>
+        <>
+        <div className='box1'>
+          <div className='search1'>
+            <TextSearch />
+            <button
+              className='btnSearch'
+              onClick={() => {
+                if (content.length > 2) search(content, 0, 1);
+              }}
+            >
+              검색
+            </button>
+            <input
+              className='input'
+              onInput={(e) => {
+                if (e.target.value.length > 2) setContent(e.target.value);
+              }}
+            ></input>
+          </div>
+
+          <div className='empty'></div>
+          <div className='dot1'></div>
+          <div className='dot2'></div>
+          <div className='dot3'></div>
+
+          <div className='lists'>
+            <ul className='PostList'>
+              <div className='PostA'>
+                <div className='post1'>제목</div>
+                <div className='post2'>추천</div>
+                <div className='post3'>조회</div>
+              </div>
+
+              {boardList.slice(offset, offset + limit).map((board) => (
+                <div className='Post'>
+                  <div className='post1'>
+                    <li
+                      className='pointer'
+                      onClick={() => onChangeUid(board.uid)}
+                    >
+                      {board.title}
+                    </li>
+                  </div>
+                  <div className='post2'>
+                    {' '}
+                    <li> {board.like} </li>
+                  </div>
+                  <div className='post3'>
+                    {' '}
+                    <li> {board.view} </li>
+                  </div>
+                </div>
+              ))}
+
+              {sResult.map((result) => (
+                <li>{result.title}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </>
+      </main>
+
+      <footer>
+        <BasicPagination 
+          total={boardList.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </footer>
+    </Layout>
   );
 }
 

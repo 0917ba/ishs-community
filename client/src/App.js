@@ -21,10 +21,19 @@ import Main from './routes/main/main.jsx';
 import Write from './routes/Write/Write'
 
 function App() {
-  <Route path='main' element={<Main />} />;
+  function user() {
+    //const params = useParams();
+    //const userId = params.id;
+  }
+  function post() {
+    //const params = useParams();
+    //const postId = params.id;
+  }
+
   return (
     <Router>
       <Routes>
+        <Route path='/home' element={<Home />} />
         <Route path='/register' element={<Signup />} />
         <Route path='/register/success' element={<SignupSuccess />} />
         <Route path='/login' element={<Signin />} />
@@ -33,11 +42,12 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/post/bigbang' element={<BigBangBar />} />
         <Route path='/post/mainmy' element={<MainMy />} />
+        <Route path='/Home' element={<Home />} />
         <Route path='/MyList' element={<MyList />} />
-        <Route path='/BigBang' element={<BoardList />} />
+        <Route path='/Board' element={<BoardList />} />
         <Route path='/postpage' element={<PostPage />} />
         <Route path='/PostTest' element={<PostTest />} />
-        <Route path='/' element={<Main />} />
+        <Route path='/main' element={<Main />} />
         <Route path='/Write' element={<Write />} />
       </Routes>
     </Router>
