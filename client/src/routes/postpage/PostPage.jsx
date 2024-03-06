@@ -115,21 +115,11 @@ const PostPage = () => {
         targetId: targetId,
         status: status,
       }),
+    }).then(() => {
+      setTimeout(() => {
+        fetchPost(uid);
+      }, 100);
     });
-    let data = await response.json();
-    setLike(data.like);
-    setDislike(data.dislike);
-  };
-
-  const checkReaction = async (type, userId, targetId) => {
-    const response = await fetch(
-      `http://app.ishs.co.kr/reaction?type=${type}&userId=${userId}&targetId=${targetId}`
-    );
-    let data = await response.json();
-    if (data.status === undefined) {
-      return 'Error';
-    }
-    return data.status;
   };
 
   const clickReactionButton = async (type, userId, targetId, status) => {
