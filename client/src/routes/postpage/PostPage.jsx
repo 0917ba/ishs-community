@@ -237,7 +237,9 @@ const PostPage = () => {
 
     fetchPost(uid);
   }, []);
-  
+
+
+
   return (
     <>
     <HeaderPost/>

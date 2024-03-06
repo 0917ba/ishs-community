@@ -180,7 +180,7 @@ body{
     float: right;
     position: relative;
     left: 65vw;
-    bottom: 34vh;
+    bottom: 40vh;
     display: block;
     width: 62vw;
     height: 100%;
@@ -191,7 +191,6 @@ body{
     font-size: 3vmin;
     padding-bottom: 0.9vh;
     width: 95%;
-    bottom: 3vh;
     border-bottom: 0.1vh solid  #c0c0c0;
 }
 
@@ -606,7 +605,7 @@ body{
 
 .modaluserDemerit{
     position: relative;
-    top: 60vh;
+    top: 50vh;
     left: 49vw;
     width: auto;
     height: auto;
@@ -625,7 +624,7 @@ body{
 
 .modaluserDemerit:hover{
     position: relative;
-    top: 60vh;
+    top: 50vh;
     left: 49vw;
     width: auto;
     height: auto;
