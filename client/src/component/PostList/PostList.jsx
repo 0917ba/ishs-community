@@ -1,4 +1,6 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import TextSearch from '../../layout/TextSearch';
+import { useNavigate } from 'react-router-dom';
 import './PostList.module.css';
 import BoardListComponent from '../../routes/Board/BoardListComponent';
 
@@ -41,4 +43,9 @@ function PostList({authorId}) {
   );
 }
 
-export default PostList;
+const Layout = styled.div`
+  position: relative;
+  right: 1vw;
+`;
+
+export default BoardList;
