@@ -26,6 +26,12 @@ export default function MemberInformationBtn() {
     setIsOpen(false);
   };
 
+  const handleOnKeyPress = e => {
+    if (e.key === 'Enter') {
+      openModal2();
+    }
+  };
+
   const customStyles = {
     overlay: {
       BackGroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -44,7 +50,7 @@ export default function MemberInformationBtn() {
         className={styles.modal}
       >
         <div className={styles.modalTitle}>회원 인증</div>
-        <form className={styles.modalAll}>
+        <form className={styles.modalAll} onKeyPress={handleOnKeyPress}>
           <input
             placeholder='ID'
             className={styles.modalIntput}
