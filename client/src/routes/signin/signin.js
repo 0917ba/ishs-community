@@ -68,8 +68,9 @@ function Signin() {
     navigate('/findpw');
   };
 
-  const handleOnKeyPress = e => {
+  const onKeyDownSignin = (e) => {
     if (e.key === 'Enter') {
+      console.log('enter');
       onClickSignin();
     }
   };
@@ -77,52 +78,59 @@ function Signin() {
   return (
     <div className={styles.all}>
       <div className={styles.modal}></div>
-        <div className={styles.font}>Login</div>
-        <form onKeyPress={handleOnKeyPress}>
-          <div>
-            {/* <label htmlFor='input_id'>ID | </label> */}
-            <input
-              placeholder='ID'
-              type='text'
-              name='input_id'
-              value={inputId}
-              onChange={onChangeId}
-              className={styles.input}
-            />
-          </div>
-          <div>
-            {/* <label htmlFor='input_pw'>PW | </label> */}
-            <input
-              placeholder='Password'
-              type='password'
-              name='input_pw'
-              value={inputPw}
-              onChange={onChangePw}
-              className={styles.input2}
-            />
-          </div>
-        </form>
-        <div>
-          <p>{message}</p>
-        </div>
-        <div>
-          <span>
-            <button type='button' onClick={onClickForgetPW} className={styles.forgetpw}>
-              비밀번호를 잊으셨나요?
-            </button>
-          </span>
-          <span>
-            <button type='button' onClick={onClickSignUp} className={styles.signup}>
-              회원가입
-            </button>
-          </span>
-        </div>
-
-        <div>
-          <button type='button' onClick={onClickSignin} className={styles.signin}>
-            Login
+      <div className={styles.font}>Login</div>
+      <div>
+        {/* <label htmlFor='input_id'>ID | </label> */}
+        <input
+          placeholder='ID'
+          type='text'
+          name='input_id'
+          value={inputId}
+          onChange={onChangeId}
+          className={styles.input}
+        />
+      </div>
+      <div>
+        {/* <label htmlFor='input_pw'>PW | </label> */}
+        <input
+          placeholder='Password'
+          type='password'
+          name='input_pw'
+          value={inputPw}
+          onChange={onChangePw}
+          className={styles.input2}
+          onKeyDown={onKeyDownSignin}
+        />
+      </div>
+      <div>
+        <p>{message}</p>
+      </div>
+      <div>
+        <span>
+          <button
+            type='button'
+            onClick={onClickForgetPW}
+            className={styles.forgetpw}
+          >
+            비밀번호를 잊으셨나요?
           </button>
-        </div>
+        </span>
+        <span>
+          <button
+            type='button'
+            onClick={onClickSignUp}
+            className={styles.signup}
+          >
+            회원가입
+          </button>
+        </span>
+      </div>
+
+      <div>
+        <button type='button' onClick={onClickSignin} className={styles.signin}>
+          Login
+        </button>
+      </div>
     </div>
   );
 }
