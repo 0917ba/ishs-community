@@ -136,6 +136,9 @@ const PostPage = () => {
         content: postReportMean,
       }),
     });
+
+    setModalOpen(false);
+    setCommentReportMean('');
   };
 
   const PostDataCheck = () => {
@@ -330,7 +333,10 @@ const PostPage = () => {
                 삭제
               </a>
             )}
-            <p className='post_time'>{createdAt}</p>
+
+            <p className='post_time'>
+              {author}/{createdAt}
+            </p>
           </div>
         </div>
 
