@@ -149,7 +149,7 @@ const PostPage = () => {
 
   const checkUser = async () => {
     let uuid = await Session.get('uid');
-    setUuid(uuid);
+    setUuid(uuid);      
     // if (uid === null) {
     //     navigate("/login");
     // }
