@@ -10,8 +10,10 @@ module.exports = function (app) {
       '/user',
       '/post',
       '/report',
+      '/comment',
       '/reaction',
-      '/signout'
+
+      '/signout',
     ],
     createProxyMiddleware({
       target: 'http://app.ishs.co.kr', // 가장 베이스가 되는 것, 배열 맨 앞 api의 주소
