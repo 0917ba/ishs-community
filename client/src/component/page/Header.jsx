@@ -3,7 +3,20 @@ import Ddate from './Dday';
 import mainLogo from '../img/mainLogo.jpg';
 import logISHS from '../img/logISHS.png';
 
-export default function Header({isLogin}) {
+export default function Header({ isLogin }) {
+  const onClickLogout = async () => {
+    const formData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+    };
+    await fetch('/signout', formData);
+    window.location.reload();
+  };
+
   return (
     <div className='flex flex-col md:basis-[7.5rem] basis-24 justify-center'>
       <div className='flex'>
@@ -14,7 +27,7 @@ export default function Header({isLogin}) {
             </a>
           </div>
           <div className='md:w-[200px] w-[150px]'>
-            <a href='/main'>
+            <a href='/'>
               <img src={logISHS} alt='logo' />
             </a>
           </div>
@@ -29,14 +42,19 @@ export default function Header({isLogin}) {
         </div>
       </div>
       <div className='absolute flex gap-1 top-2 right-2'>
-        {
-          (isLogin) ? <a href='/mypage'>마이페이지</a>
-           : 
-           <div><a href='/login'>로그인</a>
-           <span>/</span>
-           <a href='/register'>회원가입</a>
+        {isLogin ? (
+          <div>
+            <a href='/mypage'>마이페이지</a>
+            <span>/</span>
+            <button onClick={onClickLogout}>로그아웃</button>
           </div>
-        }
+        ) : (
+          <div>
+            <a href='/login'>로그인</a>
+            <span>/</span>
+            <a href='/register'>회원가입</a>
+          </div>
+        )}
       </div>
     </div>
   );

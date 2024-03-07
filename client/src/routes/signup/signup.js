@@ -107,6 +107,15 @@ function Signup() {
 
     const getMessage = data.content;
 
+    setInputKey('');
+    setInputId('');
+    setInputPassword('');
+    setInputPassword_check('');
+    setInputIdentify_code('');
+    setInputEmail('');
+    setName('');
+    setInputNickname('');
+
     if (status === 200) {
       navigate('/register/success');
     }
@@ -126,9 +135,13 @@ function Signup() {
   };
 
   useEffect(() => {
-    if (inputPassword_check !== inputPassword) {
-      setPWMessage('비밀번호가 일치하지 않습니다.');
-    } else setPWMessage('비밀번호가 일치합니다.');
+    if (inputPassword_check === '') {
+      setPWMessage('');
+    } else {
+      if (inputPassword_check !== inputPassword) {
+        setPWMessage('비밀번호가 일치하지 않습니다.');
+      } else setPWMessage('비밀번호가 일치합니다.');
+    }
   }, [inputPassword, inputPassword_check]);
   return (
     <div className={styles.all}>
@@ -236,7 +249,12 @@ function Signup() {
       </form>
 
       <div>
-        <button type='button' onClick={onClickSignup} disabled={DataCheck()} className={styles.signup}>
+        <button
+          type='button'
+          onClick={onClickSignup}
+          disabled={DataCheck()}
+          className={styles.signup}
+        >
           회원가입하기
         </button>
       </div>

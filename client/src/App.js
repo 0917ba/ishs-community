@@ -19,6 +19,8 @@ import BigBangBar from './component/BigBang/BingBang';
 import PostTest from './routes/PostTest';
 import Write from './routes/Write/Write';
 
+import Preparing from './routes/preparing/preparing.jsx';
+
 function App() {
   <Route path='/' element={<Main />} />;
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path='/PostTest' element={<PostTest />} />
 
         <Route path='/Write' element={<Write />} />
+
+        <Route path='/preparing' element={<Preparing />} />
       </Routes>
     </Router>
   );
