@@ -15,8 +15,8 @@ export default function MovePageBox(props) {
         // { pageName: '이메일', pageSite:"UserEmailBox"},
         { pageName: '보유 ATP', pageSite: 'UserATPBox' },
         { pageName: '내 커뮤니티 글', pageSite: 'PostList' },
-        { pageName: '내가 작성한 댓글', pageSite: 'PostList' },
-        { pageName: '내가 추천한 글', pageSite: 'PostList' },
+        // { pageName: '내가 작성한 댓글', pageSite: 'PostList' },
+        // { pageName: '내가 추천한 글', pageSite: 'PostList' },
         // { pageName: '도움말', pageSite:"HelpUserBox"},
       ];
   
