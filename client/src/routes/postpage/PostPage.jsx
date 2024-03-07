@@ -315,7 +315,7 @@ const PostPage = () => {
   }, []);
 
   return (
-    <>
+    <div className='scroll'>
       <HeaderPost />
 
       <div className='body'>
@@ -429,7 +429,7 @@ const PostPage = () => {
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

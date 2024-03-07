@@ -3,6 +3,12 @@
   margin: 5vh 17vh;
 }
 
+.scroll {
+  overflow: auto;
+  width: 100vw;
+  height: 100vh;
+}
+
 a {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-decoration-line: none;
