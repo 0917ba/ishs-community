@@ -15,7 +15,6 @@ export default function UserDemeritBox(props) {
   
     return (
       <div>
-        <h1 className={styles.MySelectTitle}>누적 벌점</h1>
         <div>
           {isLoading ? (
             <div>Loading...</div>
