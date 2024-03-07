@@ -1,3 +1,8 @@
+.body {
+  padding: 0;
+  margin: 5vh 17vh;
+}
+
 .box1 {
   position: relative;
   padding: 10px;
@@ -9,6 +14,13 @@
   right: 10px;
   border: 1px #797979 solid;
   border-radius: 8px;
+}
+
+.PostNumber {
+  margin-top: 10px;
+  padding-right: 2px;
+  position: absolute;
+  right: 10px;
 }
 
 .btnSearch {
@@ -114,4 +126,10 @@
 
 .text:hover {
   color: #085ba3;
+}
+
+.scroll {
+  overflow: auto;
+  width: 100vw;
+  height: 100vh;
 }

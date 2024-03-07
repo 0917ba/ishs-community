@@ -8,6 +8,7 @@ import './PostPage.css';
 import HeaderPost from '../../layout/HeaderPost';
 import Footer from '../../layout/Footer';
 import moment from 'moment';
+import Comment from '../../component/Post/Comment';
 import report from '../../component/img/report.svg';
 
 const PostPage = () => {
@@ -157,7 +158,7 @@ const PostPage = () => {
 
   const fetchPost = async (uid) => {
     if (!loaded) {
-      const response = await fetch(`http://app.ishs.co.kr/post?uid=${uid}`);
+      const response = await fetch(`/post?uid=${uid}`);
       // const response = await fetch(`http://app.ishs.co.kr/post/list?start=0&end=10`);
       let data = await response.json();
       // console.log(data);
@@ -176,11 +177,12 @@ const PostPage = () => {
         console.log(comments);
         for (let i = 0; i < comments.length; i++) {
           const temp = (
-            <div className='comment_box'>
-              <p className='comment_author'>{comments[i].author}</p>
-              <p className='comment_content'>{comments[i].content}</p>
-              <img src={report} alt='report' className='report' />
-              <p className='comment_time'>{comments[i].createdAt}</p>
+            <div className='comment_box' key={'comment' + i}>
+              {/* <p className='comment_author' key={"author" + i}>{comments[i].author}</p>
+              <p className='comment_content' key={"content" + i}>{comments[i].content}</p>
+              <img src={report} alt='report' className='report' key={"image" + i}/>
+              <p className='comment_time' key={"createdAt" + i}>{comments[i].createdAt}</p> */}
+              <Comment comments={comments} />
             </div>
           );
           setCommentRender(comment_render.push(temp));
@@ -207,7 +209,16 @@ const PostPage = () => {
       }),
     };
 
-    const res = await fetch(`/reaction`, formData);
+    await fetch(`/reaction`, formData);
+
+    const getresLIKE = await (
+      await fetch(`/reaction?userId=${authorUid}&type={POST}&targetId=${uid}`, {
+        mode: 'cors',
+        credentials: 'include',
+      })
+    ).json();
+    console.log(getresLIKE);
+    setLike(getresLIKE.content.like);
   };
 
   const onClickDISLIKE = async () => {
@@ -242,6 +253,8 @@ const PostPage = () => {
         targetId: targetId,
         status: status,
       }),
+    }).then(() => {
+      fetchPost(uid);
     });
     let data = await response.json();
     setLike(data.like);
@@ -300,106 +313,116 @@ const PostPage = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <HeaderPost />
-      <div className='post_information'>
-        <p className='title'>{title}</p>
-        <div className='post_info'>
-          {uuid === author && (
-            <a href='/' className='edit'>
-              수정
-            </a>
-          )}
-          {uuid === author && admin && (
-            <a href='/' className='delete'>
-              삭제
-            </a>
-          )}
-          <p className='post_time'>{createdAt}</p>
+
+      <div className='body'>
+        <div className='post_information'>
+          <p className='title'>{title}</p>
+          <div className='post_info'>
+            {uuid === author && (
+              <a href='/' className='edit'>
+                수정
+              </a>
+            )}
+            {uuid === author && admin && (
+              <a href='/' className='delete'>
+                삭제
+              </a>
+            )}
+            <p className='post_time'>{createdAt}</p>
+          </div>
         </div>
-      </div>
-      <hr className='line'></hr>
-      <div className='post_content'>
-        <p className='content'>{content}</p>
-      </div>
-      <div className='like_dislike'>
-        <div className='like'>
-          <img
-            src={dopamine}
-            alt='dopamine'
-            className='dopamine'
-            onClick={onClickLIKE}
-          />
-          <p className='like_count'>{like}</p>
+
+        <div className='post_content'>
+          <p className='content'>{content}</p>
         </div>
-        <div className='dislike'>
-          <img
-            src={apoptosis}
-            alt='apoptosis'
-            className='apoptosis'
-            onClick={onClickDISLIKE}
-          />
-          <p className='dislike_count'>{dislike}</p>
+        <div className='like_dislike'>
+          <div className='like'>
+            <img
+              src={dopamine}
+              alt='dopamine'
+              className='dopamine'
+              onClick={onClickLIKE}
+            />
+            <p className='like_count'>{like} Dopamine</p>
+          </div>
+          <div className='dislike'>
+            <img
+              src={apoptosis}
+              alt='apoptosis'
+              className='apoptosis'
+              onClick={onClickDISLIKE}
+            />
+            <p className='dislike_count'>{dislike} Apoptosis</p>
+          </div>
         </div>
-      </div>
-      <div className='report'>
-        <img src={report} alt='report' className='report_img' />
-        <div className={'btn-wrapper'}>
-          <button onClick={() => setModalOpen(true)}>신고하기</button>
-          {modalOpen && (
-            <div
-              className={'modal-container'}
-              ref={modalBackground}
-              onClick={(e) => {
-                if (e.target === modalBackground.current) {
-                  setModalOpen(false);
-                }
-              }}
-            >
-              <div className={'modal-content'}>
-                <label>신고사유 | </label>
-                <input
-                  type='text'
-                  name='신고사유'
-                  placeholder='신고사유를 작성해주세요.'
-                  value={postReportMean}
-                  onChange={onChangePostReportMean}
-                />
-                <button
-                  type='button'
-                  onClick={onClickPostReport}
-                  disabled={PostDataCheck()}
-                >
-                  신고하기
-                </button>
-                <button
-                  className={'modal-close-btn'}
-                  onClick={() => setModalOpen(false)}
-                >
-                  닫기
-                </button>
+        <div className='report'>
+          <div className={'btn-wrapper'}>
+            <button onClick={() => setModalOpen(true)} className='singobtn'>
+              신고하기
+            </button>
+            {modalOpen && (
+              <div
+                className={'modal-container'}
+                ref={modalBackground}
+                onClick={(e) => {
+                  if (e.target === modalBackground.current) {
+                    setModalOpen(false);
+                  }
+                }}
+              >
+                <div className={'modal-content'}>
+                  <p className='singosingo'>신고 사유</p>
+                  <input
+                    type='text'
+                    name='신고사유'
+                    placeholder=' 신고사유를 작성해주세요.'
+                    value={postReportMean}
+                    onChange={onChangePostReportMean}
+                    className='singoSaU'
+                  />
+                  <button
+                    type='button'
+                    onClick={onClickPostReport}
+                    disabled={PostDataCheck()}
+                    className='singobtn2'
+                  >
+                    신고하기
+                  </button>
+                  <button
+                    className={'modal-close-btn'}
+                    onClick={() => setModalOpen(false)}
+                  >
+                    닫기
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        </div>
+
+        <hr></hr>
+
+        <div className='comment_write'>
+          <input
+            type='text'
+            className='comment_input'
+            placeholder='댓글을 입력하세요.'
+            value={inputComment}
+            onChange={onChangeinputComment}
+          />
+          <button className='comment_button' onClick={onClickinputComment}>
+            등록
+          </button>
+        </div>
+        <div className='comment'>
+          <Comment comments={comments} />
         </div>
       </div>
 
-      <hr className='line_comment'></hr>
-      <div className='comment_write'>
-        <input
-          type='text'
-          className='comment_input'
-          placeholder='댓글을 입력하세요.'
-          value={inputComment}
-          onChange={onChangeinputComment}
-        />
-        <button className='comment_button' onClick={onClickinputComment}>
-          등록
-        </button>
-      </div>
-      <div className='comment'>{renderComment()}</div>
       <Footer />
-    </div>
+    </>
   );
 };
 

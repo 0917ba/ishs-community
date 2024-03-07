@@ -1,81 +1,55 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import TextSearch from '../../layout/TextSearch';
+import { useNavigate } from 'react-router-dom';
 import './PostList.module.css';
+import BoardListComponent from '../../routes/Board/BoardListComponent';
+import styled from 'styled-components';
 
-const PostBox = () => {
+const PostBox = ({authorId}) => {
   const [postList, setPostList] = useState([]);
-  const [sResult, setsResult] = useState([]);
-  const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
   
-  const getPostList = async (start, end) => {
-    const resp = await fetch(`http://app.ishs.co.kr/post/list?start=${start}&end=${end}`)
+  const getPostList = async (author) => {
+    const resp = await fetch(`/post/search/author?author=${author}`)
     let json = await resp.json()
     console.log(json.content)
     setPostList(json.content);
   }
 
-  const search = (keyword, start, end) => {
-    fetch(`http://app.ishs.co.kr/post/search?keyword=${keyword}&start=${start}&end=${end}`).then(res => {
-      res.json().then(data => {
-        setsResult(data.content)
-        console.log(data.content)
-      })
-    })
-}
+  useEffect(() => {
+    (async () => {
+      await getPostList(authorId);
+      setIsLoading(false);
+    })();
+    // setIsLoading(false);
+    // getPostList(props.authorId);
+  }, [authorId]);
 
-  useEffect( () => {
-    getPostList(0, 20);
-  }, [] );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  let [count, setCount] = useState(1);
- 
- 
- 
-  return (
-    <>
-    
+  return (  
     <div>
-      <div className='lists'>
-
-        <ul className='PostList'>
-          
-          <div className='PostA'>
-            <div className='post1'>제목</div>
-            <div className='post2'>추천</div>
-            <div className='post3'>조회</div>
-          </div>
-
-
-        {postList.map((board) => (
-          <div className='Post'>
-            <div className='post1'> <li> {board.title} </li></div>
-            <div className='post2'> <li> {board.like} </li></div>
-            <div className='post3'> <li> {board.view} </li></div>
-          </div>
-
-        ))}
-
-        
-        {sResult.map((result) => (
-          <li>{result.title}</li>
-        ))}
-        </ul>
-      </div>
-
+      <BoardListComponent boardList={postList} limit={5} offset={offset}/>
     </div>
-    
-    </>
-    
   );
-
-
 };
 
-function PostList() {
+function PostList({authorId}) {
   return (
     <div>
-      <PostBox />
+      <PostBox authorId={authorId}/>
     </div>
   );
 }
+
+const Layout = styled.div`
+  position: relative;
+  right: 1vw;
+`;
 
 export default PostList;

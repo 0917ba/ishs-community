@@ -1,0 +1,45 @@
+.editor {
+    box-shadow: 0px 0px 20px 0px rgba(76, 87, 125, 0.02);
+    background: #fff;
+    padding: 20px 30px;
+    width: 60%;
+    margin: 50px auto;
+  }
+  
+  body {
+    background: #f5f8fa;
+  }
+  
+  #editorjs-container {
+    background-color: #f9f9f9;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+  }
+  
+  .ce-toolbar__content, .ce-block__content {
+    max-width: unset;
+    width: 92% !important;
+  }
+  
+  .editorjs-codeFlask_Wrapper .editorjs-codeFlask_LangDisplay {
+    max-width: unset;
+    height: unset !important;
+  }
+  
+  .editor button {
+    border: none;
+    padding: 10px 20px;
+    background: #2cd3ff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .Titleeditor {
+    box-shadow: 0px 0px 20px 0px rgba(76, 87, 125, 0.02);
+    background: #fff;
+    padding: 20px 30px;
+    width: 60%;
+    margin: 30px auto;
+    font-size: 30px;
+  }

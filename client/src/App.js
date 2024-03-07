@@ -17,20 +17,20 @@ import MyPage from './routes/mypage/MyPage';
 import BigBangBar from './component/BigBang/BingBang';
 
 import PostTest from './routes/PostTest';
+import Write from './routes/Write/Write';
 
 function App() {
-  <Route path='main' element={<Main />} />;
+  <Route path='/' element={<Main />} />;
   return (
     <Router>
       <Routes>
-        <Route path='/main' element={<Main />} />
-
+        <Route path='/' element={<Main />} />
         <Route path='/register' element={<Signup />} />
         <Route path='/register/success' element={<SignupSuccess />} />
         <Route path='/login' element={<Signin />} />
         <Route path='/findpw' element={<FindPw />} />
 
-        <Route path='/Board' element={<BoardList />} />
+        <Route path='/BigBang' element={<BoardList />} />
         <Route path='/postpage' element={<PostPage />} />
 
         <Route path='/mypage' element={<MyPage />} />
@@ -38,6 +38,8 @@ function App() {
         <Route path='/post/bigbang' element={<BigBangBar />} />
 
         <Route path='/PostTest' element={<PostTest />} />
+
+        <Route path='/Write' element={<Write />} />
       </Routes>
     </Router>
   );
