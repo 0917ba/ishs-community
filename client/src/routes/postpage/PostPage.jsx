@@ -31,6 +31,8 @@ const PostPage = () => {
   const [title, setTitle] = useState('Title');
   const [content, setContent] = useState('Content');
   const [admin, setAdmin] = useState(false);
+  const [authorNickname, setAuthorNickname] = useState('ㅇㅇ');
+  const [inputComment, setInputComment] = useState('');
 
   const onChangeCommentReportMean = (e) => {
     setCommentReportMean(e.target.value);
@@ -177,7 +179,7 @@ const PostPage = () => {
         console.log(comments);
         for (let i = 0; i < comments.length; i++) {
           const temp = (
-            <div className='comment_box' key={"comment" + i}>
+            <div className='comment_box' key={'comment' + i}>
               {/* <p className='comment_author' key={"author" + i}>{comments[i].author}</p>
               <p className='comment_content' key={"content" + i}>{comments[i].content}</p>
               <img src={report} alt='report' className='report' key={"image" + i}/>
@@ -192,8 +194,57 @@ const PostPage = () => {
     }
   };
 
+  const onClickLIKE = async () => {
+    console.log('LIKE');
+    const formData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        type: 'POST',
+        userId: authorUid,
+        targetId: uid,
+        status: 'LIKE',
+      }),
+    };
+
+    await fetch(`/reaction`, formData);
+
+    const getresLIKE = await (
+      await fetch(`/reaction?userId=${authorUid}&type={POST}&targetId=${uid}`, {
+        mode: 'cors',
+        credentials: 'include',
+      })
+    ).json();
+    console.log(getresLIKE);
+    setLike(getresLIKE.content.like);
+  };
+
+  const onClickDISLIKE = async () => {
+    console.log('DISLIKE');
+    const formData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        type: 'POST',
+        userId: authorUid,
+        targetId: uid,
+        status: 'DISLIKE',
+      }),
+    };
+
+    const res = await fetch(`/reaction`, formData);
+  };
+
   const fetchReaction = async (type, userId, targetId, status) => {
-    await fetch(`/reaction`, {
+    const response = await fetch(`/reaction`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -207,10 +258,34 @@ const PostPage = () => {
     }).then(() => {
       fetchPost(uid);
     });
+    let data = await response.json();
+    setLike(data.like);
+    setDislike(data.dislike);
   };
 
-  const clickReactionButton = async (type, userId, targetId, status) => {
-    fetchReaction(type, userId, targetId, status);
+  const onChangeinputComment = (e) => {
+    setInputComment(e.target.value);
+  };
+
+  const onClickinputComment = async () => {
+    const formData = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        authorId: authorUid,
+        author: authorNickname,
+        postId: uid,
+        target: null,
+        content: inputComment,
+      }),
+    };
+
+    const resc = await fetch(`/comment`, formData);
+    setInputComment('');
   };
 
   const renderComment = () => {
@@ -231,38 +306,35 @@ const PostPage = () => {
       ).json();
       console.log(res);
 
-      setUuid(res.content.uid);
+      setAuthorUid(res.content.uid);
+      setAuthorNickname(res.content.nickname);
       console.log(authorUid);
     })();
 
     fetchPost(uid);
   }, []);
-  
+
   return (
     <>
-    <HeaderPost/>
+      <HeaderPost />
 
-    <div className='body'>
-      
-      <div className='post_information'>
-        <p className='title'>{title}</p>
-        <div className='post_info'>
-          {uuid === author && (
-            <a href='/' className='edit'>
-              수정
-            </a>
-          )}
-          {uuid === author && admin && (
-            <a href='/' className='delete'>
-              삭제
-            </a>
-          )}
-          <p className='post_time'>{createdAt}</p>
+      <div className='body'>
+        <div className='post_information'>
+          <p className='title'>{title}</p>
+          <div className='post_info'>
+            {uuid === author && (
+              <a href='/' className='edit'>
+                수정
+              </a>
+            )}
+            {uuid === author && admin && (
+              <a href='/' className='delete'>
+                삭제
+              </a>
+            )}
+            <p className='post_time'>{createdAt}</p>
+          </div>
         </div>
-        
-      </div>
-
-
       <div className='post_content'>
         <div>
           {
@@ -272,91 +344,91 @@ const PostPage = () => {
           }
         </div>
       </div>
-      <div className='like_dislike'>
-        <div className='like'>
-          <img
-            src={dopamine}
-            alt='dopamine'
-            className='dopamine'
-            onClick={() => {
-              clickReactionButton('POST', uuid, uid, 'LIKE');
-            }}
-          />
-          <p className='like_count'>{like} Dopamine</p>
+        <div className='like_dislike'>
+          <div className='like'>
+            <img
+              src={dopamine}
+              alt='dopamine'
+              className='dopamine'
+              onClick={onClickLIKE}
+            />
+            <p className='like_count'>{like} Dopamine</p>
+          </div>
+          <div className='dislike'>
+            <img
+              src={apoptosis}
+              alt='apoptosis'
+              className='apoptosis'
+              onClick={onClickDISLIKE}
+            />
+            <p className='dislike_count'>{dislike} Apoptosis</p>
+          </div>
         </div>
-        <div className='dislike'>
-          <img
-            src={apoptosis}
-            alt='apoptosis'
-            className='apoptosis'
-            onClick={() => {
-              clickReactionButton('POST', uuid, uid, 'DISLIKE');
-            }}
-          />
-          <p className='dislike_count'>{dislike} Apoptosis</p>
-        </div>
-      </div>
-      <div className='report'>
-        <div className={'btn-wrapper'}>
-          <button onClick={() => setModalOpen(true)} className='singobtn'>신고하기</button>
-          {modalOpen && (
-            <div
-              className={'modal-container'}
-              ref={modalBackground}
-              onClick={(e) => {
-                if (e.target === modalBackground.current) {
-                  setModalOpen(false);
-                }
-              }}
-            >
-              <div className={'modal-content'}>
-                <p className='singosingo'>신고 사유</p>
-                <input
-                  type='text'
-                  name='신고사유'
-                  placeholder=' 신고사유를 작성해주세요.'
-                  value={postReportMean}
-                  onChange={onChangePostReportMean}
-                  className='singoSaU'
-                />
-                <button
-                  type='button'
-                  onClick={onClickPostReport}
-                  disabled={PostDataCheck()}
-                  className='singobtn2'
-                >
-                  신고하기
-                </button>
-                <button
-                  className={'modal-close-btn'}
-                  onClick={() => setModalOpen(false)}
-                >
-                  닫기
-                </button>
+        <div className='report'>
+          <div className={'btn-wrapper'}>
+            <button onClick={() => setModalOpen(true)} className='singobtn'>
+              신고하기
+            </button>
+            {modalOpen && (
+              <div
+                className={'modal-container'}
+                ref={modalBackground}
+                onClick={(e) => {
+                  if (e.target === modalBackground.current) {
+                    setModalOpen(false);
+                  }
+                }}
+              >
+                <div className={'modal-content'}>
+                  <p className='singosingo'>신고 사유</p>
+                  <input
+                    type='text'
+                    name='신고사유'
+                    placeholder=' 신고사유를 작성해주세요.'
+                    value={postReportMean}
+                    onChange={onChangePostReportMean}
+                    className='singoSaU'
+                  />
+                  <button
+                    type='button'
+                    onClick={onClickPostReport}
+                    disabled={PostDataCheck()}
+                    className='singobtn2'
+                  >
+                    신고하기
+                  </button>
+                  <button
+                    className={'modal-close-btn'}
+                    onClick={() => setModalOpen(false)}
+                  >
+                    닫기
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        </div>
+
+        <hr></hr>
+
+        <div className='comment_write'>
+          <input
+            type='text'
+            className='comment_input'
+            placeholder='댓글을 입력하세요.'
+            value={inputComment}
+            onChange={onChangeinputComment}
+          />
+          <button className='comment_button' onClick={onClickinputComment}>
+            등록
+          </button>
+        </div>
+        <div className='comment'>
+          <Comment comments={comments} />
         </div>
       </div>
 
-      <hr></hr>
-
-
-      <div className='comment_write'>
-        <input
-          type='text'
-          className='comment_input'
-          placeholder='댓글을 입력하세요.'
-        />
-        <button className='comment_button'>등록</button>
-      </div>
-      <div className='comment'>
-        <Comment comments={comments} />
-      </div>
-
-    </div>
-    
-    <Footer />
+      <Footer />
     </>
   );
 };

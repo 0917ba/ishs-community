@@ -1,4 +1,4 @@
-.body{
+.body {
   padding: 0;
   margin: 5vh 17vh;
 }
@@ -23,7 +23,7 @@ a {
   font-weight: bold;
   position: absolute;
   top: 50%;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
 }
 
 .post_information {
@@ -33,7 +33,6 @@ a {
   margin-bottom: 5vh;
 }
 
-
 .edit,
 .delete {
   margin-top: 7%;
@@ -41,10 +40,10 @@ a {
 }
 
 .post_time {
-  position: absolute;  
+  position: absolute;
   top: 50%;
   right: 0;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
 }
 
 .post_info {
@@ -61,7 +60,7 @@ a {
   margin-bottom: 5%;
   font-size: medium;
   margin: 0;
-  margin-bottom:20vh;
+  margin-bottom: 20vh;
 }
 
 .like_dislike {
@@ -70,7 +69,6 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
 .like,
@@ -78,6 +76,7 @@ a {
   align-items: center;
   text-align: center;
   margin: 0 18px;
+  cursor: pointer;
 }
 
 .like_count,
@@ -88,9 +87,8 @@ a {
 }
 
 .dopamine,
-.apoptosis{
+.apoptosis {
   width: 65px;
-  
 }
 
 .comment_input {
@@ -102,7 +100,7 @@ a {
   font-size: 15px;
 }
 
-.comment_input:focus{
+.comment_input:focus {
   outline: none;
 }
 
@@ -169,40 +167,40 @@ a {
   justify-content: center;
 }
 
-.singobtn{
+.singobtn {
   background-color: #e9e9e9;
   padding: 2px 7px;
   border: solid 1px #7f7f7f;
 }
 
-.singobtn2{
+.singobtn2 {
   padding: 2px 7px;
   border: solid 1px #7f7f7f;
   margin-left: 33%;
   margin-right: 10px;
 }
 
-.modal-close-btn{  
+.modal-close-btn {
   padding: 2px 7px;
   border: solid 1px #7f7f7f;
   margin-right: 30%;
 }
 
-.singosingo{
+.singosingo {
   font-size: large;
   padding-bottom: 1vh;
   border-bottom: solid 0.5px #c2c2c2;
   margin: 2vh 0 4vh 0;
 }
 
-.singoSaU{
+.singoSaU {
   display: block;
   height: 70%;
   width: 100%;
   margin-bottom: 5%;
 }
 
-.singoSaU:focus{
+.singoSaU:focus {
   outline: solid 0.8px rgb(162, 162, 162);
 }
 

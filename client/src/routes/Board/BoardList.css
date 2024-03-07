@@ -1,4 +1,4 @@
-.body{
+.body {
   padding: 0;
   margin: 5vh 17vh;
 }
@@ -126,4 +126,10 @@
 
 .text:hover {
   color: #085ba3;
+}
+
+.scroll {
+  overflow: auto;
+  width: 100vw;
+  height: 100vh;
 }
