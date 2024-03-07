@@ -41,6 +41,7 @@ const PostPage = () => {
 
   const onClickCommentReport = async () => {
     console.log(commentReportMean);
+    setModalOpen(false);
     const resp = await fetch(`/report`, {
       method: 'POST',
       headers: {
@@ -126,7 +127,8 @@ const PostPage = () => {
 
   const onClickPostReport = async () => {
     console.log(postReportMean);
-    const resp = await fetch(`/report`, {
+    setModalOpen(false);
+    await fetch(`/report`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -137,6 +139,12 @@ const PostPage = () => {
         authorId: authorUid,
         content: postReportMean,
       }),
+    }).then((res) => {
+      if (res.status === 200) {
+        alert('신고가 접수되었습니다.');
+      } else {
+        alert('신고에 실패했습니다.');
+      }
     });
   };
 
@@ -399,7 +407,7 @@ const PostPage = () => {
                   </button>
                   <button
                     className={'modal-close-btn'}
-                    onClick={() => setModalOpen(false)}
+                    onClick={() => onClickPostReport()}
                   >
                     닫기
                   </button>
