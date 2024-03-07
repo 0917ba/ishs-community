@@ -68,32 +68,40 @@ function Signin() {
     navigate('/findpw');
   };
 
+  const handleOnKeyPress = e => {
+    if (e.key === 'Enter') {
+      onClickSignin();
+    }
+  };
+
   return (
     <div className={styles.all}>
       <div className={styles.modal}></div>
         <div className={styles.font}>Login</div>
-        <div>
-          {/* <label htmlFor='input_id'>ID | </label> */}
-          <input
-            placeholder='ID'
-            type='text'
-            name='input_id'
-            value={inputId}
-            onChange={onChangeId}
-            className={styles.input}
-          />
-        </div>
-        <div>
-          {/* <label htmlFor='input_pw'>PW | </label> */}
-          <input
-            placeholder='Password'
-            type='password'
-            name='input_pw'
-            value={inputPw}
-            onChange={onChangePw}
-            className={styles.input2}
-          />
-        </div>
+        <form onKeyPress={handleOnKeyPress}>
+          <div>
+            {/* <label htmlFor='input_id'>ID | </label> */}
+            <input
+              placeholder='ID'
+              type='text'
+              name='input_id'
+              value={inputId}
+              onChange={onChangeId}
+              className={styles.input}
+            />
+          </div>
+          <div>
+            {/* <label htmlFor='input_pw'>PW | </label> */}
+            <input
+              placeholder='Password'
+              type='password'
+              name='input_pw'
+              value={inputPw}
+              onChange={onChangePw}
+              className={styles.input2}
+            />
+          </div>
+        </form>
         <div>
           <p>{message}</p>
         </div>
