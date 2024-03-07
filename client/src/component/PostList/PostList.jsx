@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import TextSearch from '../../layout/TextSearch';
 import { useNavigate } from 'react-router-dom';
 import './PostList.module.css';
 import BoardListComponent from '../../routes/Board/BoardListComponent';
-import styled from 'styled-components';
+import BasicPagination from "../../routes/Board/test"
 
 const PostBox = ({authorId}) => {
   const [postList, setPostList] = useState([]);
+  const [uidList, setUidList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(3);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   
@@ -17,8 +17,10 @@ const PostBox = ({authorId}) => {
     let json = await resp.json()
     console.log(json.content)
     setPostList(json.content);
+    setUidList(json.content.map((board) => board.uid));
   }
 
+  console.log(uidList);
   useEffect(() => {
     (async () => {
       await getPostList(authorId);
@@ -34,7 +36,15 @@ const PostBox = ({authorId}) => {
 
   return (  
     <div>
-      <BoardListComponent boardList={postList} limit={5} offset={offset}/>
+      <BoardListComponent boardList={postList} limit={limit} offset={offset}/>
+      <footer>
+        <BasicPagination 
+          total={postList.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      </footer>
     </div>
   );
 };
@@ -47,9 +57,5 @@ function PostList({authorId}) {
   );
 }
 
-const Layout = styled.div`
-  position: relative;
-  right: 1vw;
-`;
 
 export default PostList;
