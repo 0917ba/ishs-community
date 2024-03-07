@@ -10,6 +10,8 @@ import Footer from '../../layout/Footer';
 import moment from 'moment';
 import Comment from '../../component/Post/Comment';
 import report from '../../component/img/report.svg';
+import ReadOnlyEditor from '../Write/ReadOnlyEditor';
+// import '../Write/Write.css';
 
 const PostPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -150,7 +152,7 @@ const PostPage = () => {
 
   const checkUser = async () => {
     let uuid = await Session.get('uid');
-    setUuid(uuid);
+    setUuid(uuid);      
     // if (uid === null) {
     //     navigate("/login");
     // }
@@ -316,7 +318,7 @@ const PostPage = () => {
   }, []);
 
   return (
-    <>
+    <div className='scroll'>
       <HeaderPost />
 
       <div className='body'>
@@ -339,10 +341,15 @@ const PostPage = () => {
             </p>
           </div>
         </div>
-
-        <div className='post_content'>
-          <p className='content'>{content}</p>
+      <div className='post_content'>
+        <div>
+          {
+            (loaded) ? <ReadOnlyEditor data={JSON.parse(content)}/> : (
+              <></>
+            )
+          }
         </div>
+      </div>
         <div className='like_dislike'>
           <div className='like'>
             <img
@@ -428,7 +435,7 @@ const PostPage = () => {
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

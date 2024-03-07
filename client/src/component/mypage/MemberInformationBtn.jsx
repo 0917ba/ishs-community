@@ -5,6 +5,12 @@ import styles from "./MyPage.module.css";
 export default function MemberInformationBtn() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  const [userid, setUserid] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [user_pw, setUser_pw] = useState('');
+  const [user_email, setUser_email] = useState('');
+  const [user_nickname, setUser_nickname] = useState('');
+  const [user_date, setUser_date] = useState('');
 
   const openModal = () => {
     setIsOpen(true);
@@ -13,8 +19,25 @@ export default function MemberInformationBtn() {
     setIsOpen(false);
   };
 
-  const openModal2 = () => {
-    setIsOpen2(true);
+  const openModal2 = async () => {
+    fetch(`/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        id: userid,
+        password: pwd,
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        setIsOpen2(true);
+      } else {
+        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      }
+    });
   };
   const closeModal2 = () => {
     setIsOpen2(false);
@@ -22,8 +45,36 @@ export default function MemberInformationBtn() {
   };
 
   const save = () => {
-    setIsOpen2(false);
-    setIsOpen(false);
+    fetch('/user/info', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        password: user_pw,
+        email: user_email,
+        nickname: user_nickname,
+        birthday: user_date,
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        setIsOpen2(false);
+        setIsOpen(false);
+        alert('회원 정보가 변경되었습니다.');
+      } else {
+        setIsOpen2(false);
+        setIsOpen(false);
+        alert('회원 정보 변경에 실패했습니다.');
+      }
+    })
+  };
+
+  const handleOnKeyPress = e => {
+    if (e.key === 'Enter') {
+      openModal2();
+    }
   };
 
   const customStyles = {
@@ -44,12 +95,13 @@ export default function MemberInformationBtn() {
         className={styles.modal}
       >
         <div className={styles.modalTitle}>회원 인증</div>
-        <form className={styles.modalAll}>
+        <form className={styles.modalAll} onKeyPress={handleOnKeyPress}>
           <input
             placeholder='ID'
             className={styles.modalIntput}
             id='userid'
             type='text'
+            onChange={(e) => { setUserid(e.target.value); }}
           />
           <br></br>
           <input
@@ -57,6 +109,7 @@ export default function MemberInformationBtn() {
             className={styles.modalIntput}
             id='pwd'
             type='password'
+            onChange={(e) => { setPwd(e.target.value); }}
           />
         </form>
         <button className={styles.modalButton} onClick={openModal2}>
@@ -80,6 +133,7 @@ export default function MemberInformationBtn() {
             id='user_pw'
             type='password'
             maxlength='10'
+            onChange={(e) => { setUser_pw(e.target.value); }}
             required
           />
           <input
@@ -87,6 +141,7 @@ export default function MemberInformationBtn() {
             placeholder='Email'
             id='user_email'
             type='email'
+            onChange={(e) => { setUser_email(e.target.value); }}
             required
           />
           <input
@@ -95,6 +150,7 @@ export default function MemberInformationBtn() {
             id='user_nickname'
             type='text'
             maxlength='10'
+            onChange={(e) => { setUser_nickname(e.target.value); }}
             required
           />
           <div></div>
@@ -105,6 +161,7 @@ export default function MemberInformationBtn() {
             type='date'
             max='3000-12-31'
             min='1900-01-01'
+            onChange={(e) => { setUser_date(e.target.value); }}
             required
           />
           <br />
