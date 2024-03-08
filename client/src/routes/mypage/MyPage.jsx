@@ -3,8 +3,11 @@ import { useEffect, useState } from 'react';
 import HeaderPost from '../../layout/HeaderPost'
 import MovePageBox from '../../component/mypage/MovePageBox';
 import Notification from '../../component/mypage/Notification';
+import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
+
+  let navigate = useNavigate();
 
   let [data, setData] = useState({});
   let [isLoading, setIsLoading] = useState(true);
@@ -20,15 +23,17 @@ function MyPage() {
         crecredentials: 'include',
       };
 
-      const res = await (await fetch('/check_session', formData)).json();
-      // const resl = await (
-      //   await fetch(`/user/info?id=${res.content.id}`, formData)
-      // ).json();
-
-      console.log(res);
-      console.log(res.content);
-      setData(res.content);
-      setIsLoading(false);
+      const res = await fetch('/check_session', formData)
+      if (res.status === 200) {
+        const resdata = await res.json();
+        console.log(resdata);
+        console.log(resdata.content);
+        setData(resdata.content);
+        setIsLoading(false);
+      } else {
+        alert('로그인이 필요한 서비스입니다.');
+        navigate('/login');
+      }
     })();
   }, []);
 
