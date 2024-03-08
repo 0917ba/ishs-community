@@ -316,6 +316,22 @@ const PostPage = () => {
     })();
   }, []);
 
+  const onClickDelete = async () => {
+    const response = await fetch(`/post`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        uid: uid,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <div className='scroll'>
       <HeaderPost />
@@ -330,7 +346,7 @@ const PostPage = () => {
               </a>
             )}
             {(userUid == authorUid || admin) && (
-              <a href='/' className='delete'>
+              <a className='delete' onClick={onClickDelete}>
                 삭제
               </a>
             )}
