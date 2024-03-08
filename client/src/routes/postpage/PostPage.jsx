@@ -18,11 +18,11 @@ const PostPage = () => {
   const modalBackground = useRef();
   const [postReportMean, setPostReportMean] = useState('');
   const [commentReportMean, setCommentReportMean] = useState('');
-  const [authorUid, setAuthorUid] = useState('');
+  const [userUid, setUserUid] = useState('');
   const location = useLocation();
   const [loaded, setLoaded] = useState(false);
-  const [uuid, setUuid] = useState('');
   const [author, setAuthor] = useState('ㅇㅇ');
+  const [authorUid, setAuthorUid] = useState('');
   const [like, setLike] = useState(0);
   const [dislike, setDislike] = useState(0);
   const [view, setView] = useState(0);
@@ -31,7 +31,7 @@ const PostPage = () => {
   const [title, setTitle] = useState('Title');
   const [content, setContent] = useState('Content');
   const [admin, setAdmin] = useState(false);
-  const [authorNickname, setAuthorNickname] = useState('ㅇㅇ');
+  const [userNickname, setUserNickname] = useState('ㅇㅇ');
   const [inputComment, setInputComment] = useState('');
 
   const onChangeCommentReportMean = (e) => {
@@ -41,6 +41,7 @@ const PostPage = () => {
 
   const onClickCommentReport = async () => {
     console.log(commentReportMean);
+    setModalOpen(false);
     const resp = await fetch(`/report`, {
       method: 'POST',
       headers: {
@@ -51,7 +52,7 @@ const PostPage = () => {
       body: JSON.stringify({
         type: 'COMMENT',
         targetId: uid,
-        authorId: authorUid,
+        authorId: userUid,
         content: commentReportMean,
       }),
     });
@@ -126,7 +127,8 @@ const PostPage = () => {
 
   const onClickPostReport = async () => {
     console.log(postReportMean);
-    const resp = await fetch(`/report`, {
+    setModalOpen(false);
+    await fetch(`/report`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -134,9 +136,15 @@ const PostPage = () => {
       body: JSON.stringify({
         type: 'POST',
         targetId: uid,
-        authorId: authorUid,
+        authorId: userUid,
         content: postReportMean,
       }),
+    }).then((res) => {
+      if (res.status === 200) {
+        alert('신고가 접수되었습니다.');
+      } else {
+        alert('신고에 실패했습니다.');
+      }
     });
 
     setModalOpen(false);
@@ -150,17 +158,6 @@ const PostPage = () => {
     return false;
   };
 
-  const checkUser = async () => {
-    let uuid = await Session.get('uid');
-    setUuid(uuid);      
-    // if (uid === null) {
-    //     navigate("/login");
-    // }
-    if (Session.get('role') === 'ADMIN') {
-      setAdmin(true);
-    }
-  };
-
   const fetchPost = async (uid) => {
     if (!loaded) {
       const response = await fetch(`/post?uid=${uid}`);
@@ -170,6 +167,7 @@ const PostPage = () => {
       if (data.status === 200) {
         setLoaded(true);
         data = data.content;
+        setAuthorUid(data.authorId);
         setAuthor(data.author);
         setLike(data.like);
         setDislike(data.dislike);
@@ -194,6 +192,7 @@ const PostPage = () => {
         }
         console.log(comment_render);
       }
+      console.log(authorUid, userUid);
     }
   };
 
@@ -208,7 +207,7 @@ const PostPage = () => {
       credentials: 'include',
       body: JSON.stringify({
         type: 'POST',
-        userId: authorUid,
+        userId: userUid,
         targetId: uid,
         status: 'LIKE',
       }),
@@ -217,7 +216,7 @@ const PostPage = () => {
     await fetch(`/reaction`, formData);
 
     const getresLIKE = await (
-      await fetch(`/reaction?userId=${authorUid}&type={POST}&targetId=${uid}`, {
+      await fetch(`/reaction?userId=${userUid}&type={POST}&targetId=${uid}`, {
         mode: 'cors',
         credentials: 'include',
       })
@@ -237,7 +236,7 @@ const PostPage = () => {
       credentials: 'include',
       body: JSON.stringify({
         type: 'POST',
-        userId: authorUid,
+        userId: userUid,
         targetId: uid,
         status: 'DISLIKE',
       }),
@@ -279,8 +278,8 @@ const PostPage = () => {
       mode: 'cors',
       credentials: 'include',
       body: JSON.stringify({
-        authorId: authorUid,
-        author: authorNickname,
+        authorId: userUid,
+        author: userNickname,
         postId: uid,
         target: null,
         content: inputComment,
@@ -307,15 +306,31 @@ const PostPage = () => {
           credentials: 'include',
         })
       ).json();
-      console.log(res);
+      console.log("check_session: " + res);
 
-      setAuthorUid(res.content.uid);
-      setAuthorNickname(res.content.nickname);
-      console.log(authorUid);
+      setUserUid(res.content.uid);
+      setUserNickname(res.content.nickname);
+      console.log(res.content.uid, res.content.nickname);
+
+      fetchPost(uid);
     })();
-
-    fetchPost(uid);
   }, []);
+
+  const onClickDelete = async () => {
+    const response = await fetch(`/post`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        uid: uid,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
 
   return (
     <div className='scroll'>
@@ -324,14 +339,14 @@ const PostPage = () => {
       <div className='body'>
         <div className='post_information'>
           <p className='title'>{title}</p>
-          <div className='post_info'>
-            {uuid === author && (
+          {(loaded) ? (<div className='post_info'>
+            {userUid == authorUid && (
               <a href='/' className='edit'>
                 수정
               </a>
             )}
-            {uuid === author && admin && (
-              <a href='/' className='delete'>
+            {(userUid == authorUid || admin) && (
+              <a className='delete' onClick={onClickDelete}>
                 삭제
               </a>
             )}
@@ -339,7 +354,7 @@ const PostPage = () => {
             <p className='post_time'>
               {author}/{createdAt}
             </p>
-          </div>
+          </div>) : (<div></div>)}
         </div>
       <div className='post_content'>
         <div>
@@ -405,7 +420,7 @@ const PostPage = () => {
                   </button>
                   <button
                     className={'modal-close-btn'}
-                    onClick={() => setModalOpen(false)}
+                    onClick={() => onClickPostReport()}
                   >
                     닫기
                   </button>
