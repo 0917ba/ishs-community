@@ -35,16 +35,15 @@ const PostPage = () => {
   const [admin, setAdmin] = useState(false);
   const [userNickname, setUserNickname] = useState('ㅇㅇ');
   const [inputComment, setInputComment] = useState('');
+  const navigate = useNavigate();
 
   const onRemove = () => {
     if (window.confirm("정말 삭제합니까?")) {
-
+      onClickDelete();
       alert("삭제되었습니다.");
-
+      navigate('/BigBang');
     } else {
-
       alert("취소합니다.");
-
     }
 
   };
@@ -310,6 +309,10 @@ const PostPage = () => {
   };
 
   useEffect(() => {
+    if (!uid) {
+      alert('잘못된 접근입니다.');
+      window.location.href = '/';
+    }
     (async () => {
       const res = await (
         await fetch(`/check_session`, {
@@ -356,9 +359,9 @@ const PostPage = () => {
           <p className='title'>{title}</p>
           {(loaded) ? (<div className='post_info'>
             {userUid == authorUid && (
-              <a href='/' className='edit'>
+              <button className='edit' onClick={() => navigate('/Write', { state: { type: 'e', title: title, data: JSON.parse(content), uid: uid } })}>
                 수정
-              </a>
+              </button>
             )}
             {(userUid == authorUid || admin) && (
               <div>

@@ -37,6 +37,10 @@ const BoardList = () => {
     });
   };
 
+  const onClickWrite = () => {
+    navigate('/Write', { state: { type: "w" } });
+  };
+
   useEffect(() => {
     getBoardList(0, 10000);
   }, []);
@@ -54,9 +58,7 @@ const BoardList = () => {
               <div  className='Writing'>
               <button
                   className='goWriting'
-                  onClick={() => {
-                    
-                  }}
+                  onClick={onClickWrite}
                 >
                   글쓰기
                 </button>
