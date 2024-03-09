@@ -39,10 +39,20 @@ a {
   margin-bottom: 5vh;
 }
 
-.edit,
+.edit {
+  margin-top: 7%;
+  margin-bottom: 12%;
+  position: relative;
+  left: 67vw;
+  top: 0.85vh;
+}
+
 .delete {
   margin-top: 7%;
   margin-bottom: 12%;
+  position: relative;
+  left: 55vw;
+  top: 0.1vh;
 }
 
 .post_time {

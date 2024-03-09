@@ -51,6 +51,16 @@ const BoardList = () => {
             <TitleBigBang />
 
             <div className='box1'>
+              <div  className='Writing'>
+              <button
+                  className='goWriting'
+                  onClick={() => {
+                    
+                  }}
+                >
+                  글쓰기
+                </button>
+              </div>
               <div className='search1'>
                 <TextSearch />
                 <button

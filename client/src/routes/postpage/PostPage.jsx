@@ -11,10 +11,12 @@ import moment from 'moment';
 import Comment from '../../component/Post/Comment';
 import report from '../../component/img/report.svg';
 import ReadOnlyEditor from '../Write/ReadOnlyEditor';
+import Modal from 'react-modal';
 // import '../Write/Write.css';
 
 const PostPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isdelete, setIsdelete] = useState(false);
   const modalBackground = useRef();
   const [postReportMean, setPostReportMean] = useState('');
   const [commentReportMean, setCommentReportMean] = useState('');
@@ -33,6 +35,19 @@ const PostPage = () => {
   const [admin, setAdmin] = useState(false);
   const [userNickname, setUserNickname] = useState('ㅇㅇ');
   const [inputComment, setInputComment] = useState('');
+
+  const onRemove = () => {
+    if (window.confirm("정말 삭제합니까?")) {
+
+      alert("삭제되었습니다.");
+
+    } else {
+
+      alert("취소합니다.");
+
+    }
+
+  };
 
   const onChangeCommentReportMean = (e) => {
     setCommentReportMean(e.target.value);
@@ -346,9 +361,19 @@ const PostPage = () => {
               </a>
             )}
             {(userUid == authorUid || admin) && (
-              <a className='delete' onClick={onClickDelete}>
+              <div>
+              <button className='delete' onClick={onRemove}>
                 삭제
-              </a>
+              </button>
+                {/* <Modal
+                isOpen={isdelete}
+                onRequestClose={YesDelete}
+                >
+                <button >
+                  확인
+                </button>
+              </Modal> */}
+              </div>
             )}
 
             <p className='post_time'>
