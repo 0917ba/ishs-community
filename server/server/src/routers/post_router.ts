@@ -40,7 +40,7 @@ postRouter.patch('/', async (req: Request, res: Response, next: NextFunction) =>
 
     if (checker.notNull(uid, title, content)) {
         let post = await postDatabase.getPostByUid(uid);
-        if (!checker.notNull(post)) {
+        if (checker.notNull(post)) {
             if (role != Role.ADMIN) {
                 if (post?.getAuthorId() != userUid) {
                     res.status(403).send(respRest(403, 1));
@@ -55,6 +55,8 @@ postRouter.patch('/', async (req: Request, res: Response, next: NextFunction) =>
             } else {
                 res.status(403).send(respRest(403, 1));
             }
+        } else {
+            res.status(404).send(respRest(404, 1));
         }
     } else {
         res.status(400).send(respRest(400, 1));
