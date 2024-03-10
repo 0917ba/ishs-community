@@ -1,5 +1,7 @@
 import { Request } from "express";
 import multer, { FileFilterCallback, diskStorage } from "multer";
+import fs from "fs";
+import { UUID } from "./uuid_generator";
 
 type FileType = {
     [key: string]: string[],
@@ -13,7 +15,7 @@ export class FileUploadBuilder {
     type: string | null;
     filterList: string[];
     fileType: FileType = {
-        image: ["jpeg", "png", "gif", "webp", "jpg"],
+        image: ["png", "jpeg", "gif", "webp", "jpg"],
         video: ["mp4", "webm"],
         audio: ["mp3", "wav"]
     }
@@ -21,6 +23,14 @@ export class FileUploadBuilder {
     constructor() {
         this.type = null;
         this.filterList = [];
+        try {
+            fs.readdirSync("./uploads");
+        } catch (err) {
+            fs.mkdirSync("./uploads");
+            fs.mkdirSync("./uploads/image");
+            fs.mkdirSync("./uploads/video");
+            fs.mkdirSync("./uploads/audio");
+        }
     }
 
     setType(type: string) {
@@ -52,7 +62,7 @@ export class FileUploadBuilder {
                 cb(null, `./uploads/${this.type}/`);
             },
             filename: (req, file, cb) => {
-                cb(null, file.originalname);
+                cb(null, new UUID().generateUUID() + "." + this.filterList[0]);
             },
         });
         return storage;
