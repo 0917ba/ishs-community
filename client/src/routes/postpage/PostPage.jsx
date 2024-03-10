@@ -314,23 +314,27 @@ const PostPage = () => {
       window.location.href = '/';
     }
     (async () => {
-      const res = await (
-        await fetch(`/check_session`, {
+      const res = await fetch(`/check_session`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
           mode: 'cors',
           credentials: 'include',
-        })
-      ).json();
-      console.log("check_session: " + res);
+      });
+      if (res.status === 404) {
+        alert('로그인이 필요한 서비스입니다.');
+        navigate('/login');
+      } else if (res.status === 200) {
+        const data = await res.json();
+        console.log('check_session: ' + data);
 
-      setUserUid(res.content.uid);
-      setUserNickname(res.content.nickname);
-      console.log(res.content.uid, res.content.nickname);
+        setUserUid(data.content.uid);
+        setUserNickname(data.content.nickname);
+        console.log(data.content.uid, data.content.nickname);
 
-      fetchPost(uid);
+        fetchPost(uid);
+      }
     })();
   }, []);
 

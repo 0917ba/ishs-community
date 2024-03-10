@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Write.css";
 import Editor from "./Editor";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Initial Data
 const INITIAL_DATA = {
@@ -19,6 +19,7 @@ const INITIAL_DATA = {
 
 function Write() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [data, setData] = useState();
   const [title, setTitle] = useState();
   const [author, setAuthor] = useState();
@@ -35,8 +36,8 @@ function Write() {
       credentials: "include"
     });
     if (response.status === 404) {
-      alert("로그인이 필요합니다.");
-      window.location.href = "/login";
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/login");
     } else if (response.status === 200) {
       const json = await response.json();
       setAuthor(json.content);
@@ -59,7 +60,7 @@ function Write() {
     const status = response.status;
     if (status === 200) {
       alert("글이 성공적으로 수정되었습니다.");
-      window.location.href = "/BigBang";
+      navigate("/BigBang");
     } else {
       alert("글 수정에 실패했습니다.");
     }
@@ -82,7 +83,7 @@ function Write() {
     const status = response.status;
     if (status === 200) {
       alert("글이 성공적으로 저장되었습니다.");
-      window.location.href = "/BigBang";
+      navigate("/BigBang");
     } else {
       alert("글 저장에 실패했습니다.");
     }

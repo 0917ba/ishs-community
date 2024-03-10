@@ -17,6 +17,7 @@ export default function UserInformationBox(props) {
           userStudentID: '2402',
           userbirthday: data.birthday,
           userEmail: data.email,
+          userNickname: data.nickname,
         },
       ];
       // setTimeout(() => {
@@ -51,6 +52,7 @@ export default function UserInformationBox(props) {
                   UserStudentID={userInformation.userStudentID}
                   UserBirthday={userInformation.userbirthday}
                   UserEmail={userInformation.userEmail}
+                  UserNickname={userInformation.userNickname}
                 />
               );
             })
