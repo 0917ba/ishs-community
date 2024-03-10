@@ -6,6 +6,9 @@ export default function UserInformation(props) {
         <div className={styles.HrUserInformation}>
           사용자 명 : {props.UserName}
         </div>
+        <div className={styles.HrUserInformation}>
+          사용자 닉네임 : {props.UserNickname}
+        </div>
         <div className={styles.HrUserInformation}>사용자 ID : {props.UserId}</div>
         <div className={styles.HrUserInformation}>
           사용자 학번 : {props.UserStudentID}
