@@ -37,6 +37,10 @@ const BoardList = () => {
     });
   };
 
+  const onClickWrite = () => {
+    navigate('/Write', { state: { type: "w" } });
+  };
+
   useEffect(() => {
     getBoardList(0, 10000);
   }, []);
@@ -51,6 +55,14 @@ const BoardList = () => {
             <TitleBigBang />
 
             <div className='box1'>
+              <div  className='Writing'>
+              <button
+                  className='goWriting'
+                  onClick={onClickWrite}
+                >
+                  글쓰기
+                </button>
+              </div>
               <div className='search1'>
                 <TextSearch />
                 <button

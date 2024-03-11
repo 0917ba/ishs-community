@@ -255,15 +255,6 @@ body {
   margin-bottom: 3vh;
 }
 
-.UserAuthority {
-  position: relative;
-  float: center;
-  top: 22vh;
-  right: 22vw;
-  width: auto;
-  font-size: 3vmin;
-}
-
 .Guidemodal {
   position: relative;
   width: 60vw;
@@ -280,7 +271,7 @@ body {
 
 .explanationUserAuthority {
   position: relative;
-  top: 22vh;
+  top: 35vh;
   left: 13vw;
   width: auto;
   height: auto;
@@ -299,7 +290,7 @@ body {
 
 .explanationUserAuthority:hover {
   position: relative;
-  top: 22vh;
+  top: 35vh;
   left: 13vw;
   width: auto;
   height: auto;

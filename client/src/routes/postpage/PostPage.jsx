@@ -11,18 +11,20 @@ import moment from 'moment';
 import Comment from '../../component/Post/Comment';
 import report from '../../component/img/report.svg';
 import ReadOnlyEditor from '../Write/ReadOnlyEditor';
+import Modal from 'react-modal';
 // import '../Write/Write.css';
 
 const PostPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isdelete, setIsdelete] = useState(false);
   const modalBackground = useRef();
   const [postReportMean, setPostReportMean] = useState('');
   const [commentReportMean, setCommentReportMean] = useState('');
-  const [authorUid, setAuthorUid] = useState('');
+  const [userUid, setUserUid] = useState('');
   const location = useLocation();
   const [loaded, setLoaded] = useState(false);
-  const [uuid, setUuid] = useState('');
   const [author, setAuthor] = useState('ㅇㅇ');
+  const [authorUid, setAuthorUid] = useState('');
   const [like, setLike] = useState(0);
   const [dislike, setDislike] = useState(0);
   const [view, setView] = useState(0);
@@ -31,8 +33,19 @@ const PostPage = () => {
   const [title, setTitle] = useState('Title');
   const [content, setContent] = useState('Content');
   const [admin, setAdmin] = useState(false);
-  const [authorNickname, setAuthorNickname] = useState('ㅇㅇ');
+  const [userNickname, setUserNickname] = useState('ㅇㅇ');
   const [inputComment, setInputComment] = useState('');
+  const navigate = useNavigate();
+
+  const onRemove = () => {
+    if (window.confirm('정말 삭제합니까?')) {
+      onClickDelete();
+      alert('삭제되었습니다.');
+      navigate('/BigBang');
+    } else {
+      alert('취소합니다.');
+    }
+  };
 
   const onChangeCommentReportMean = (e) => {
     setCommentReportMean(e.target.value);
@@ -41,6 +54,7 @@ const PostPage = () => {
 
   const onClickCommentReport = async () => {
     console.log(commentReportMean);
+    setModalOpen(false);
     const resp = await fetch(`/report`, {
       method: 'POST',
       headers: {
@@ -51,7 +65,7 @@ const PostPage = () => {
       body: JSON.stringify({
         type: 'COMMENT',
         targetId: uid,
-        authorId: authorUid,
+        authorId: userUid,
         content: commentReportMean,
       }),
     });
@@ -126,7 +140,8 @@ const PostPage = () => {
 
   const onClickPostReport = async () => {
     console.log(postReportMean);
-    const resp = await fetch(`/report`, {
+    setModalOpen(false);
+    await fetch(`/report`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -134,9 +149,15 @@ const PostPage = () => {
       body: JSON.stringify({
         type: 'POST',
         targetId: uid,
-        authorId: authorUid,
+        authorId: userUid,
         content: postReportMean,
       }),
+    }).then((res) => {
+      if (res.status === 200) {
+        alert('신고가 접수되었습니다.');
+      } else {
+        alert('신고에 실패했습니다.');
+      }
     });
 
     setModalOpen(false);
@@ -150,17 +171,6 @@ const PostPage = () => {
     return false;
   };
 
-  const checkUser = async () => {
-    let uuid = await Session.get('uid');
-    setUuid(uuid);      
-    // if (uid === null) {
-    //     navigate("/login");
-    // }
-    if (Session.get('role') === 'ADMIN') {
-      setAdmin(true);
-    }
-  };
-
   const fetchPost = async (uid) => {
     if (!loaded) {
       const response = await fetch(`/post?uid=${uid}`);
@@ -170,6 +180,7 @@ const PostPage = () => {
       if (data.status === 200) {
         setLoaded(true);
         data = data.content;
+        setAuthorUid(data.authorId);
         setAuthor(data.author);
         setLike(data.like);
         setDislike(data.dislike);
@@ -194,6 +205,7 @@ const PostPage = () => {
         }
         console.log(comment_render);
       }
+      console.log(authorUid, userUid);
     }
   };
 
@@ -208,7 +220,7 @@ const PostPage = () => {
       credentials: 'include',
       body: JSON.stringify({
         type: 'POST',
-        userId: authorUid,
+        userId: userUid,
         targetId: uid,
         status: 'LIKE',
       }),
@@ -217,7 +229,7 @@ const PostPage = () => {
     await fetch(`/reaction`, formData);
 
     const getresLIKE = await (
-      await fetch(`/reaction?userId=${authorUid}&type={POST}&targetId=${uid}`, {
+      await fetch(`/reaction?userId=${userUid}&type={POST}&targetId=${uid}`, {
         mode: 'cors',
         credentials: 'include',
       })
@@ -237,7 +249,7 @@ const PostPage = () => {
       credentials: 'include',
       body: JSON.stringify({
         type: 'POST',
-        userId: authorUid,
+        userId: userUid,
         targetId: uid,
         status: 'DISLIKE',
       }),
@@ -279,8 +291,8 @@ const PostPage = () => {
       mode: 'cors',
       credentials: 'include',
       body: JSON.stringify({
-        authorId: authorUid,
-        author: authorNickname,
+        authorId: userUid,
+        author: userNickname,
         postId: uid,
         target: null,
         content: inputComment,
@@ -296,26 +308,50 @@ const PostPage = () => {
   };
 
   useEffect(() => {
+    if (!uid) {
+      alert('잘못된 접근입니다.');
+      window.location.href = '/';
+    }
     (async () => {
-      const res = await (
-        await fetch(`/check_session`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          mode: 'cors',
-          credentials: 'include',
-        })
-      ).json();
-      console.log(res);
+      const res = await fetch(`/check_session`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
+      });
+      if (res.status === 404) {
+        alert('로그인이 필요한 서비스입니다.');
+        navigate('/login');
+      } else if (res.status === 200) {
+        const data = await res.json();
+        console.log('check_session: ' + data);
 
-      setAuthorUid(res.content.uid);
-      setAuthorNickname(res.content.nickname);
-      console.log(authorUid);
+        setUserUid(data.content.uid);
+        setUserNickname(data.content.nickname);
+        console.log(data.content.uid, data.content.nickname);
+
+        fetchPost(uid);
+      }
     })();
-
-    fetchPost(uid);
   }, []);
+
+  const onClickDelete = async () => {
+    const response = await fetch(`/post`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        uid: uid,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
 
   return (
     <div className='scroll'>
@@ -324,32 +360,54 @@ const PostPage = () => {
       <div className='body'>
         <div className='post_information'>
           <p className='title'>{title}</p>
-          <div className='post_info'>
-            {uuid === author && (
-              <a href='/' className='edit'>
-                수정
-              </a>
-            )}
-            {uuid === author && admin && (
-              <a href='/' className='delete'>
-                삭제
-              </a>
-            )}
+          {loaded ? (
+            <div className='post_info'>
+              {userUid == authorUid && (
+                <button
+                  className='edit'
+                  onClick={() =>
+                    navigate('/Write', {
+                      state: {
+                        type: 'e',
+                        title: title,
+                        data: JSON.parse(content),
+                        uid: uid,
+                      },
+                    })
+                  }
+                >
+                  수정
+                </button>
+              )}
+              {(userUid == authorUid || admin) && (
+                <div>
+                  <button className='delete' onClick={onRemove}>
+                    삭제
+                  </button>
+                  {/* <Modal
+                isOpen={isdelete}
+                onRequestClose={YesDelete}
+                >
+                <button >
+                  확인
+                </button>
+              </Modal> */}
+                </div>
+              )}
 
-            <p className='post_time'>
-              {author}/{createdAt}
-            </p>
+              <p className='post_time'>
+                {author}/{createdAt}
+              </p>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div className='post_content'>
+          <div>
+            {loaded ? <ReadOnlyEditor data={JSON.parse(content)} /> : <></>}
           </div>
         </div>
-      <div className='post_content'>
-        <div>
-          {
-            (loaded) ? <ReadOnlyEditor data={JSON.parse(content)}/> : (
-              <></>
-            )
-          }
-        </div>
-      </div>
         <div className='like_dislike'>
           <div className='like'>
             <img
@@ -405,7 +463,7 @@ const PostPage = () => {
                   </button>
                   <button
                     className={'modal-close-btn'}
-                    onClick={() => setModalOpen(false)}
+                    onClick={() => onClickPostReport()}
                   >
                     닫기
                   </button>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PostList.module.css';
-import BoardListComponent from '../../routes/Board/BoardListComponent';
+import PostListComponent from './PostListComponent';
 import BasicPagination from "../../routes/Board/test"
 
 const PostBox = ({authorId}) => {
@@ -36,7 +36,7 @@ const PostBox = ({authorId}) => {
 
   return (  
     <div>
-      <BoardListComponent boardList={postList} limit={limit} offset={offset}/>
+      <PostListComponent boardList={postList} limit={limit} offset={offset}/>
       <footer>
         <BasicPagination 
           total={postList.length}

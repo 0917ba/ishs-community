@@ -16,6 +16,23 @@
   border-radius: 8px;
 }
 
+.Writing {
+  position: relative;
+  top: 25px;
+  left: 40px;
+}
+
+.goWriting {
+  margin-right: 10px;
+  padding: 9px;
+  width: auto;
+  height: auto;
+  font-size: 25px;
+  border-radius: 8px 8px 8px 8px;
+  background-color: rgb(8, 90, 162);
+  color: rgba(255, 255, 255, 0.877);
+}
+
 .PostNumber {
   margin-top: 10px;
   padding-right: 2px;

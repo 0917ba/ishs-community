@@ -116,10 +116,8 @@ function BoardDetail() {
         credentials: 'include',
       })
     ).json();
-    console.log(getresLIKE);
-    setLike(getresLIKE.content.like);
 
-    //renderReaction();
+    renderReaction();
   };
 
   const onClickDISLIKE = async () => {
