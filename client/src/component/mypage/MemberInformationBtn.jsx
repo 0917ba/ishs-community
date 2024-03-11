@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from 'react-modal';
 import styles from "./MyPage.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function MemberInformationBtn() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,7 @@ export default function MemberInformationBtn() {
   const [user_email, setUser_email] = useState('');
   const [user_nickname, setUser_nickname] = useState('');
   const [user_date, setUser_date] = useState('');
+  const navigate = useNavigate();
 
   const openModal = () => {
     setIsOpen(true);
@@ -63,6 +65,7 @@ export default function MemberInformationBtn() {
         setIsOpen2(false);
         setIsOpen(false);
         alert('회원 정보가 변경되었습니다.');
+        navigate('/mypage')
       } else {
         setIsOpen2(false);
         setIsOpen(false);
