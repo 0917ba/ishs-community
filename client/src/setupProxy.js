@@ -25,7 +25,7 @@ module.exports = function (app) {
       '/file',
     ],
     createProxyMiddleware({
-      target: 'http://app.ishs.co.kr:5000',
+      target: 'http://app.ishs.co.kr:4000',
       changeOrigin: true,
     })
   );
