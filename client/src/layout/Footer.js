@@ -1,16 +1,16 @@
 import React from 'react';
-import "./Footer.css";
-
+import './Footer.css';
+import img from '../component/img/exPic.png';
 const Footer = () => {
   return (
     <>
-    <div className='empty'></div>
+      <div className='empty'></div>
 
-    <div className='footer'>
-      <img className='exPic' alt = 'exPic' src='./exPic.png'></img>
-      <img className='exPic' alt = 'exPic' src='./exPic.png'></img>
-      <img className='exPic' alt = 'exPic' src='./exPic.png'></img>
-    </div>
+      <div className='footer'>
+        <img className='exPic' alt='exPic' src={img}></img>
+        <img className='exPic' alt='exPic' src={img}></img>
+        <img className='exPic' alt='exPic' src={img}></img>
+      </div>
     </>
   );
 };
