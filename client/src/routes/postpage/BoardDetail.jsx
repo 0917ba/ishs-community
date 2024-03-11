@@ -14,6 +14,7 @@ import ReadOnlyEditor from '../Write/ReadOnlyEditor';
 
 function BoardDetail() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   //post_report
   const [modalOpen, setModalOpen] = useState(false);
@@ -194,6 +195,7 @@ function BoardDetail() {
   };
 
   const onClickinputComment = async () => {
+    console.log(inputComment);
     const formData = {
       method: 'POST',
       headers: {
@@ -209,9 +211,59 @@ function BoardDetail() {
         content: inputComment,
       }),
     };
-
+    console.log(inputComment);
     await fetch(`/comment`, formData);
+    console.log(inputComment);
     setInputComment('');
+    renderComment();
+  };
+
+  const renderComment = async () => {
+    const resComments = await (
+      await fetch(`/post?uid=${uid}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
+      })
+    ).json();
+
+    console.log(resComments);
+    setComments(resComments.content.comments);
+  };
+  const onRemove = () => {
+    if (window.confirm('정말 삭제합니까?')) {
+      onClickDelete();
+      alert('삭제되었습니다.');
+      navigate('/BigBang');
+    } else {
+      alert('취소합니다.');
+    }
+  };
+
+  const onClickDelete = async () => {
+    const response = await fetch(`/post`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: JSON.stringify({
+        uid: uid,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
+  const onKeyDownInputComment = (e) => {
+    if (e.key === 'Enter') {
+      console.log('enter');
+      onClickinputComment();
+    }
   };
 
   useEffect(() => {
@@ -248,14 +300,26 @@ function BoardDetail() {
           <p className='title'>{title}</p>
           <div className='post_info'>
             {usernickname === authorNickname && (
-              <a href='/' className='edit'>
+              <button
+                className='edit'
+                onClick={() =>
+                  navigate('/Write', {
+                    state: {
+                      type: 'e',
+                      title: title,
+                      data: JSON.parse(content),
+                      uid: uid,
+                    },
+                  })
+                }
+              >
                 수정
-              </a>
+              </button>
             )}
             {usernickname === authorNickname && admin && (
-              <a href='/' className='delete'>
+              <button className='delete' onClick={onRemove}>
                 삭제
-              </a>
+              </button>
             )}
 
             <p className='post_time'>
@@ -342,6 +406,7 @@ function BoardDetail() {
             placeholder='댓글을 입력하세요.'
             value={inputComment}
             onChange={onChangeinputComment}
+            onKeyDown={onKeyDownInputComment}
           />
           <button className='comment_button' onClick={onClickinputComment}>
             등록
