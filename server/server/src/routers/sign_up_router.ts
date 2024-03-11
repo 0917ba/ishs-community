@@ -45,9 +45,8 @@ signUpRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
             let privilege = PrivilegeEnum.DEFAULT;
             let role = Role.STUDENT;
             let penalty = 0;
-            let classNumber = parseInt(key.toString().split("")[1]);
-            let studentNumber = parseInt(key.toString().substring(2));      
-            userDatabase.signup(id, password, nickname, email, studentName, 0, classNumber, studentNumber, privilege, role, penalty, 0).then((result: boolean) => {
+            let studentNumber = parseInt(key.toString());      
+            userDatabase.signup(id, password, nickname, email, studentName, 0, studentNumber, privilege, role, penalty, 0).then((result: boolean) => {
                 if (result) {
                     req.session.key = key;
                     req.session.userid = id;
