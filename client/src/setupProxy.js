@@ -20,10 +20,7 @@ module.exports = function (app) {
     })
   );
   app.use(
-    [
-      '/upload',
-      '/file',
-    ],
+    ['/upload', '/file'],
     createProxyMiddleware({
       target: 'http://app.ishs.co.kr:4000',
       changeOrigin: true,

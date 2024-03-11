@@ -38,14 +38,13 @@ const PostPage = () => {
   const navigate = useNavigate();
 
   const onRemove = () => {
-    if (window.confirm("정말 삭제합니까?")) {
+    if (window.confirm('정말 삭제합니까?')) {
       onClickDelete();
-      alert("삭제되었습니다.");
+      alert('삭제되었습니다.');
       navigate('/BigBang');
     } else {
-      alert("취소합니다.");
+      alert('취소합니다.');
     }
-
   };
 
   const onChangeCommentReportMean = (e) => {
@@ -315,12 +314,12 @@ const PostPage = () => {
     }
     (async () => {
       const res = await fetch(`/check_session`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          mode: 'cors',
-          credentials: 'include',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
       });
       if (res.status === 404) {
         alert('로그인이 필요한 서비스입니다.');
@@ -361,18 +360,31 @@ const PostPage = () => {
       <div className='body'>
         <div className='post_information'>
           <p className='title'>{title}</p>
-          {(loaded) ? (<div className='post_info'>
-            {userUid == authorUid && (
-              <button className='edit' onClick={() => navigate('/Write', { state: { type: 'e', title: title, data: JSON.parse(content), uid: uid } })}>
-                수정
-              </button>
-            )}
-            {(userUid == authorUid || admin) && (
-              <div>
-              <button className='delete' onClick={onRemove}>
-                삭제
-              </button>
-                {/* <Modal
+          {loaded ? (
+            <div className='post_info'>
+              {userUid == authorUid && (
+                <button
+                  className='edit'
+                  onClick={() =>
+                    navigate('/Write', {
+                      state: {
+                        type: 'e',
+                        title: title,
+                        data: JSON.parse(content),
+                        uid: uid,
+                      },
+                    })
+                  }
+                >
+                  수정
+                </button>
+              )}
+              {(userUid == authorUid || admin) && (
+                <div>
+                  <button className='delete' onClick={onRemove}>
+                    삭제
+                  </button>
+                  {/* <Modal
                 isOpen={isdelete}
                 onRequestClose={YesDelete}
                 >
@@ -380,23 +392,22 @@ const PostPage = () => {
                   확인
                 </button>
               </Modal> */}
-              </div>
-            )}
+                </div>
+              )}
 
-            <p className='post_time'>
-              {author}/{createdAt}
-            </p>
-          </div>) : (<div></div>)}
+              <p className='post_time'>
+                {author}/{createdAt}
+              </p>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
-      <div className='post_content'>
-        <div>
-          {
-            (loaded) ? <ReadOnlyEditor data={JSON.parse(content)}/> : (
-              <></>
-            )
-          }
+        <div className='post_content'>
+          <div>
+            {loaded ? <ReadOnlyEditor data={JSON.parse(content)} /> : <></>}
+          </div>
         </div>
-      </div>
         <div className='like_dislike'>
           <div className='like'>
             <img

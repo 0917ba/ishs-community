@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './signup.module.css';
+import logo from '../../component/img/log_ishs_image.png';
 
 function Signup() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ function Signup() {
     setInputBirthday(e.target.value);
   };
 
-  const handleOnKeyPress = e => {
+  const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
       onClickSignup();
     }
@@ -134,6 +135,10 @@ function Signup() {
     return false;
   };
 
+  const onClickToMain = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     if (inputPassword_check === '') {
       setPWMessage('');
@@ -145,6 +150,9 @@ function Signup() {
   }, [inputPassword, inputPassword_check]);
   return (
     <div className={styles.all}>
+      <div>
+        <img className={styles.logo} src={logo} onClick={onClickToMain} />
+      </div>
       <div className={styles.modal}></div>
       <div className={styles.font}>Sign Up</div>
       <form onKeyPress={handleOnKeyPress}>
