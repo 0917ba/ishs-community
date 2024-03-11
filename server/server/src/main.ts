@@ -110,6 +110,6 @@ app.post('*', (res: Response) => {
 });
 
 // LISTEN START!
-server.listen(80, () => {
-    logger.info(`Server started on port ${80}`)
+server.listen(cf.server.port, () => {
+    logger.info(`Server started on port ${cf.server.port}`)
 });
