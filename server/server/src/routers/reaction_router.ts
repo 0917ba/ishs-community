@@ -25,6 +25,7 @@ reactionRouter.post('/',  async (req: Request, res: Response, next: NextFunction
                 commentDatabase.updateReaction(targetId, ReactionStatus.NONE, reaction.getStatus());
             }
             if (reaction.getStatus() != status) {
+                reactionDatabase.createReaction(type, userId, targetId, status);
                 if (type == ReactionType.POST) {
                     postDatabase.updateReaction(targetId, status, reaction.getStatus());
                 } else if (type == ReactionType.COMMENT) {
