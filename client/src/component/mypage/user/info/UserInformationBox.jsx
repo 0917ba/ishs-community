@@ -14,7 +14,7 @@ export default function UserInformationBox(props) {
         {
           userName: data.studentName,
           userId: data.id,
-          userStudentID: '2402',
+          userStudentID: data.studentNumber,
           userbirthday: data.birthday,
           userEmail: data.email,
           userNickname: data.nickname,

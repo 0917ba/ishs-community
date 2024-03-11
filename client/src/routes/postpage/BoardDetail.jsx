@@ -267,28 +267,32 @@ function BoardDetail() {
   };
 
   useEffect(() => {
+    if (!uid) {
+      alert('잘못된 접근입니다.');
+      window.location.href = '/';
+    }
     (async () => {
-      const res = await (
-        await fetch(`/check_session`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          mode: 'cors',
-          credentials: 'include',
-        })
-      ).json();
-      console.log(res);
+      const res = await fetch(`/check_session`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
+      });
+      if (res.status === 404) {
+        alert('로그인이 필요한 서비스입니다.');
+        navigate('/login');
+      } else if (res.status === 200) {
+        const data = await res.json();
+        console.log('check_session: ' + data);
 
-      setUseruid(res.content.uid);
-      setUsernickname(res.content.nickname);
+        setUseruid(data.content.uid);
+        setUsernickname(data.content.nickname);
 
-      if (res.content.role === 'ADMIN') {
-        setAdmin(true);
+        fetchPost(uid);
       }
     })();
-
-    fetchPost(uid);
   }, []);
 
   return (

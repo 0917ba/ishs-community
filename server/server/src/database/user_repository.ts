@@ -14,7 +14,7 @@ export class UserDatabase {
     constructor() {
     }
 
-    signup(id: string, password: string, nickname: string, email: string, studentName: string, generation: number, classNumber: number, studentNumber: number, privilege: number, role: string, penalty: number, atp: number): Promise<boolean> {
+    signup(id: string, password: string, nickname: string, email: string, studentName: string, generation: number, studentNumber: number, privilege: number, role: string, penalty: number, atp: number): Promise<boolean> {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
@@ -22,8 +22,8 @@ export class UserDatabase {
                     reject(err);
                 }
                 connection.query(
-                    `INSERT INTO user (uid, id, password, nickname, email, profileImage, studentName, generation, classNumber, studentNumber, birthday, privilege, role, penalty, atp)
-                    VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?, ?)`, [uid, id, password, nickname, email, '', studentName, generation, classNumber, studentNumber, null, privilege, role, penalty, atp],
+                    `INSERT INTO user (uid, id, password, nickname, email, profileImage, studentName, generation, studentNumber, birthday, privilege, role, penalty, atp)
+                    VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`, [uid, id, password, nickname, email, '', studentName, generation, studentNumber, null, privilege, role, penalty, atp],
                     (err: any, res: any) => {
                     if (err) {
                         reject(err);

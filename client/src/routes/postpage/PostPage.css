@@ -135,31 +135,29 @@ a {
   align-items: center;
 }
 
-.report {
-  right: 0;
-  margin-bottom: 2vh;
-}
-
 .report_img {
   margin-right: 2%;
 }
 
 .comment_box {
-  margin-left: 10%;
+  /* margin-left: 10%; */
   display: flex;
-  margin-right: 10%;
-  margin-bottom: -7px;
+  /* margin-right: 10%; */
   align-items: center;
+  margin-top: 1.5vh;
+  margin-bottom: 1.5vh;
 }
 
 .comment_author {
   font-weight: 900;
   font-size: 17px;
+  width: 6vw;
 }
 
 .comment_content {
   margin-left: 2%;
   font-size: 17px;
+  width: 60vw;
 }
 
 .comment_container {
@@ -167,6 +165,10 @@ a {
   display: flex;
 
   width: 90%;
+}
+
+.comment_time {
+  margin-left: 1vw;
 }
 
 .comment_info {
