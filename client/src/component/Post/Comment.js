@@ -36,19 +36,19 @@ export default function Comment(props) {
                         <p className='comment_author'>{comment.author}</p>
                         <p className='comment_content'>{comment.content}</p>
                         <img src={report} alt='report' className='report'/>
-                        <p className='comment_time'>{comment.createdAt}</p>
+                        <p className='comment_time'>{comment.createdAt.replace("T", " ").split(".")[0]}</p>
                     </div>
-                    {comment.children.map((child, index) => {
+                    {/* {comment.children.map((child, index) => {
                         return (
                             <div key={index} className='comment_box'>
                                 <p className='comment_author'>{child.author}</p>
                                 <p className='comment_content'>{child.content}</p>
                                 <img src={report} alt='report' className='report'/>
-                                <p className='comment_time'>{child.createdAt}</p>
+                                <p className='comment_time'>{child.createdAt.replace("T", " ").split(".")[0]}</p>
                             </div>
                         );
                     })
-                    }
+                    } */}
                     <hr className='line_comment'></hr>
                 </div>
             );
