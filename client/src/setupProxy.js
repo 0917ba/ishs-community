@@ -15,7 +15,7 @@ module.exports = function (app) {
       '/signout',
     ],
     createProxyMiddleware({
-      target: 'http://app.ishs.co.kr:3000', // 가장 베이스가 되는 것, 배열 맨 앞 api의 주소
+      target: 'http://app.ishs.co.kr:3000',
       changeOrigin: true,
     })
   );
