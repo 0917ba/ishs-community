@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './signin.module.css';
+import logo from '../../component/img/log_ishs_image.png';
 
 function Signin() {
   /*
@@ -75,8 +76,15 @@ function Signin() {
     }
   };
 
+  const onClickToMain = () => {
+    navigate('/');
+  };
+
   return (
     <div className={styles.all}>
+      <div>
+        <img className={styles.logo} src={logo} onClick={onClickToMain} />
+      </div>
       <div className={styles.modal}></div>
       <div className={styles.font}>Login</div>
       <div>
