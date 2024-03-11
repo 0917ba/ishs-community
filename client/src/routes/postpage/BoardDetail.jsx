@@ -290,10 +290,6 @@ function BoardDetail() {
         setUseruid(data.content.uid);
         setUsernickname(data.content.nickname);
 
-        if (res.content.role === 'ADMIN') {
-          setAdmin(true);
-        }
-
         fetchPost(uid);
       }
     })();
