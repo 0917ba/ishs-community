@@ -11,6 +11,7 @@ import FindPw from './routes/signin/findPW';
 
 import BoardList from './routes/Board/BoardList';
 import PostPage from './routes/postpage/PostPage';
+import BoardDetail from './routes/postpage/BoardDetail.jsx';
 
 import MyPage from './routes/mypage/MyPage';
 
@@ -34,6 +35,7 @@ function App() {
 
         <Route path='/BigBang' element={<BoardList />} />
         <Route path='/postpage' element={<PostPage />} />
+        <Route path='/board/detail' element={<BoardDetail />} />
 
         <Route path='/mypage' element={<MyPage />} />
 

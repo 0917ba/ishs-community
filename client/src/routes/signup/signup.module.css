@@ -1,220 +1,221 @@
-.modal{
-    position: absolute;
-    width: 70vw;
-    height: 70vh;
-    left: 10vw;
-    top: 15vh;
-    background-image: url("../../../public/img/ishs.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    opacity: 0.5;
+.modal {
+  position: absolute;
+  width: 70vw;
+  height: 70vh;
+  left: 10vw;
+  top: 15vh;
+  background-image: url('../../../public/img/ishs.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.5;
 }
-
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans+KR&display=swap');
 
 /* <uniquifier>: Use a unique and descriptive class name
 <weight>: Use a value from 400 to 700 */
-
+.logo {
+  cursor: pointer;
+}
 .dancing-script-uniquifier {
-  font-family: "Dancing Script", cursive;
+  font-family: 'Dancing Script', cursive;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
-.font{
-    font-family: "Dancing Script", cursive;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 10vmin;
-    
-    position: absolute;
-    left: 53vw;
-    bottom: 80vh;
-    border-bottom: 0.3vw solid;
-    padding-bottom: 0.2vh;
+.font {
+  font-family: 'Dancing Script', cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 10vmin;
+
+  position: absolute;
+  left: 53vw;
+  bottom: 80vh;
+  border-bottom: 0.3vw solid;
+  padding-bottom: 0.2vh;
 }
 
-.StudentID{
-    position: absolute;
-    left: 62vw;
-    bottom: 70vh;
-    font-size: 2vmin;
+.StudentID {
+  position: absolute;
+  left: 62vw;
+  bottom: 70vh;
+  font-size: 2vmin;
 }
 
-.IntputStudentID{
-    position: absolute;
-    left: 6vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.IntputStudentID {
+  position: absolute;
+  left: 6vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.ID{
-    position: absolute;
-    left: 61.5vw;
-    bottom: 66vh;
-    font-size: 2vmin;
+.ID {
+  position: absolute;
+  left: 61.5vw;
+  bottom: 66vh;
+  font-size: 2vmin;
 }
 
-.IntputID{
-    position: absolute;
-    left: 6.5vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.IntputID {
+  position: absolute;
+  left: 6.5vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.Password{
-    position: absolute;
-    left: 61vw;
-    bottom: 62vh;
-    font-size: 2vmin;
+.Password {
+  position: absolute;
+  left: 61vw;
+  bottom: 62vh;
+  font-size: 2vmin;
 }
 
-.IntputPassword{
-    position: absolute;
-    left: 7vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.IntputPassword {
+  position: absolute;
+  left: 7vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.checkPassword{
-    position: absolute;
-    left: 60vw;
-    bottom: 58vh;
-    font-size: 2vmin;
+.checkPassword {
+  position: absolute;
+  left: 60vw;
+  bottom: 58vh;
+  font-size: 2vmin;
 }
 
-.checkIntputPassword{
-    position: absolute;
-    left: 8vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.checkIntputPassword {
+  position: absolute;
+  left: 8vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.checkMessage{
-    position: absolute;
-    left: 65.75vw;
-    bottom: 49vh;
-    font-size: 2vmin;
+.checkMessage {
+  position: absolute;
+  left: 65.75vw;
+  bottom: 49vh;
+  font-size: 2vmin;
 }
 
-.code{
-    position: absolute;
-    left: 60.75vw;
-    bottom: 45vh;
-    font-size: 2vmin;
+.code {
+  position: absolute;
+  left: 60.75vw;
+  bottom: 45vh;
+  font-size: 2vmin;
 }
 
-.Intputcode{
-    position: absolute;
-    left: 7.25vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.Intputcode {
+  position: absolute;
+  left: 7.25vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.email{
-    position: absolute;
-    left: 61.5vw;
-    bottom: 41vh;
-    font-size: 2vmin;
+.email {
+  position: absolute;
+  left: 61.5vw;
+  bottom: 41vh;
+  font-size: 2vmin;
 }
 
-.Intputemail{
-    position: absolute;
-    left: 6.5vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.Intputemail {
+  position: absolute;
+  left: 6.5vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.name{
-    position: absolute;
-    left: 62vw;
-    bottom: 37vh;
-    font-size: 2vmin;
+.name {
+  position: absolute;
+  left: 62vw;
+  bottom: 37vh;
+  font-size: 2vmin;
 }
 
-.Intputname{
-    position: absolute;
-    left: 6vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.Intputname {
+  position: absolute;
+  left: 6vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.Nickname{
-    position: absolute;
-    left: 61.5vw;
-    bottom: 33vh;
-    font-size: 2vmin;
+.Nickname {
+  position: absolute;
+  left: 61.5vw;
+  bottom: 33vh;
+  font-size: 2vmin;
 }
 
-.IntputNickname{
-    position: absolute;
-    left: 6.5vw;
-    width: 15vw;
-    outline: 0.2vmin black;
-    font-size: 2vmin;
+.IntputNickname {
+  position: absolute;
+  left: 6.5vw;
+  width: 15vw;
+  outline: 0.2vmin black;
+  font-size: 2vmin;
 }
 
-.signupMessage{
-    position: absolute;
-    left: 63vw;
-    bottom: 23vh;
-    font-size: 2vmin;
+.signupMessage {
+  position: absolute;
+  left: 63vw;
+  bottom: 23vh;
+  font-size: 2vmin;
 }
 
-.signup{
-    position: absolute;
-    width: auto;
-    height: auto;
-    left: 67.5vw;
-    bottom: 18vh;
-    font-size: 1.4vmin;
-    max-width: 100%;
-    padding-top: 0.5vh;
-    padding-bottom: 0.5vh;
-    padding-left: 1vw;
-    border-radius: 20vw;
-    border: 0.2vmin solid rgb(114, 165, 204);
-    padding-right: 1vw;
-    color: rgb(114, 165, 204);
-    background: #ffffff;
+.signup {
+  position: absolute;
+  width: auto;
+  height: auto;
+  left: 67.5vw;
+  bottom: 18vh;
+  font-size: 1.4vmin;
+  max-width: 100%;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  padding-left: 1vw;
+  border-radius: 20vw;
+  border: 0.2vmin solid rgb(114, 165, 204);
+  padding-right: 1vw;
+  color: rgb(114, 165, 204);
+  background: #ffffff;
 }
 
-.signup:hover{
-    position: absolute;
-    width: auto;
-    height: auto;
-    left: 67.5vw;
-    bottom: 18vh;
-    font-size: 1.4vmin;
-    max-width: 100%;
-    padding-top: 0.5vh;
-    padding-bottom: 0.5vh;
-    padding-left: 1vw;
-    border-radius: 20vw;
-    border: 0.2vmin solid #ffffff;
-    padding-right: 1vw;
-    color: #ffffff;
-    background: rgb(114, 165, 204);
+.signup:hover {
+  position: absolute;
+  width: auto;
+  height: auto;
+  left: 67.5vw;
+  bottom: 18vh;
+  font-size: 1.4vmin;
+  max-width: 100%;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  padding-left: 1vw;
+  border-radius: 20vw;
+  border: 0.2vmin solid #ffffff;
+  padding-right: 1vw;
+  color: #ffffff;
+  background: rgb(114, 165, 204);
 }
 
-.all{
-    width: 100%;
-    height: 100%;
-    border:none;
+.all {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .all:after {
-    content: "";
-    display: block;
-    border:none;
+  content: '';
+  display: block;
+  border: none;
 }
