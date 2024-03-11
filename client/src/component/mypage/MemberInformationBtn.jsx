@@ -12,7 +12,6 @@ export default function MemberInformationBtn() {
   const [user_email, setUser_email] = useState('');
   const [user_nickname, setUser_nickname] = useState('');
   const [user_date, setUser_date] = useState('');
-  const navigate = useNavigate();
 
   const openModal = () => {
     setIsOpen(true);
@@ -65,7 +64,7 @@ export default function MemberInformationBtn() {
         setIsOpen2(false);
         setIsOpen(false);
         alert('회원 정보가 변경되었습니다.');
-        navigate('/mypage')
+        window.location.reload();
       } else {
         setIsOpen2(false);
         setIsOpen(false);
