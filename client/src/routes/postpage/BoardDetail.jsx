@@ -290,6 +290,10 @@ function BoardDetail() {
         setUseruid(data.content.uid);
         setUsernickname(data.content.nickname);
 
+        if (data.content.role === 'ADMIN') {
+          setAdmin(true);
+        }
+
         fetchPost(uid);
       }
     })();
@@ -320,7 +324,7 @@ function BoardDetail() {
                 수정
               </button>
             )}
-            {usernickname === authorNickname && admin && (
+            {(usernickname === authorNickname || admin === 'True') && (
               <button className='delete' onClick={onRemove}>
                 삭제
               </button>
