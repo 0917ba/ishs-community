@@ -290,6 +290,10 @@ function BoardDetail() {
         setUseruid(data.content.uid);
         setUsernickname(data.content.nickname);
 
+        if (data.content.role == 'ADMIN' || data.content.role == 'DEVELOPER') {
+          setAdmin(true);
+        }
+
         fetchPost(uid);
       }
     })();
@@ -303,7 +307,7 @@ function BoardDetail() {
         <div className='post_information'>
           <p className='title'>{title}</p>
           <div className='post_info'>
-            {usernickname === authorNickname && (
+            {usernickname === authorNickname || admin && (
               <button
                 className='edit'
                 onClick={() =>
@@ -320,7 +324,7 @@ function BoardDetail() {
                 수정
               </button>
             )}
-            {usernickname === authorNickname && admin && (
+            {usernickname === authorNickname || admin && (
               <button className='delete' onClick={onRemove}>
                 삭제
               </button>
