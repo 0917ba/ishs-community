@@ -5,25 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function PostListComponent({boardList, limit, offset}) {
 
-  const [sResult, setsResult] = useState([]);
   const [content, setContent] = useState('');
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   
   const onChangeUid = (uid) => {
-      navigate(`/postpage`, { state: uid });
-  };
-
-  const search = (keyword, start, end) => {
-    fetch(
-      `http://app.ishs.co.kr/post/search?keyword=${keyword}&start=${start}&end=${end}`
-    ).then((res) => {
-      res.json().then((data) => {
-        setsResult(data.content);
-        console.log(data.content);
-      });
-    });
+      navigate(`/board/detail`, { state: uid });
   };
 
   // sort boardlist by created date
@@ -89,10 +77,6 @@ export default function PostListComponent({boardList, limit, offset}) {
                   <li> {board.view} </li>
                 </div>
               </div>
-            ))}
-
-            {sResult.map((result) => (
-              <li>{result.title}</li>
             ))}
           </ul>
         </div>
