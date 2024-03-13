@@ -14,12 +14,24 @@ export default function PostListComponent({boardList, limit, offset}) {
       navigate(`/board/detail`, { state: uid });
   };
 
+  const search = (content, start, end) => {
+    let result = [];
+    for (let i = start; i < end; i++) {
+        if (boardList[i].title.includes(content)) {
+            result.push(boardList[i]);
+        }
+    }
+    setPosts(result)
+  }
+
   // sort boardlist by created date
   boardList.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
   });
 
-  console.log(offset);
+  useEffect(() => {
+    setPosts(boardList);
+  }, [boardList]);
 
   return (
     <Layout>
@@ -34,7 +46,7 @@ export default function PostListComponent({boardList, limit, offset}) {
           <button
             className='btnSearch'
             onClick={() => {
-              if (content.length > 2) search(content, 0, 1);
+              search(content, 0, boardList.length);
             }}
           >
             검색
@@ -42,7 +54,7 @@ export default function PostListComponent({boardList, limit, offset}) {
           <input
             className='input'
             onInput={(e) => {
-              if (e.target.value.length > 2) setContent(e.target.value);
+              setContent(e.target.value);
             }}
           ></input>
         </div>
@@ -58,7 +70,7 @@ export default function PostListComponent({boardList, limit, offset}) {
               <div className='post3'>조회</div>
             </div>
 
-            {boardList.slice(offset, offset + limit).map((board) => (
+            {posts.slice(offset, offset + limit).map((board) => (
               <div className='Post'>
                 <div className='post1'>
                   <li

@@ -36,7 +36,7 @@ const PostBox = ({authorId}) => {
 
   return (  
     <div>
-      <PostListComponent boardList={postList} limit={limit} offset={offset}/>
+      <PostListComponent boardList={postList} limit={limit} offset={offset} />
       <footer>
         <BasicPagination 
           total={postList.length}
