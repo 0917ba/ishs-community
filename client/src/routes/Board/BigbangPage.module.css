@@ -164,12 +164,10 @@
 }
 
 .board {
-    width: 60vw;
-    height: 17vh;
+    width: 80vw;
+    height: 9vh;
     font-size: 20px;
-    margin-top: 1vh;
     cursor: pointer;
-    border-top: 1px solid #e9ecef;
     border-bottom: 1px solid #e9ecef;
     display: flex;
     justify-content: space-between;
@@ -187,7 +185,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 1vh;
-    font-size: 1.2vmax;
+    font-size: 1vmax;
     font-weight: bold;
     grid-template-columns: auto auto;
 }
@@ -232,28 +230,20 @@
 .writer {
     display: flex;
     justify-content: space-between;
-    margin-top: 1vh;
     font-size: 1vmax;
-    color: grey;
-    margin-top: 1vh;
+    font-weight: bold;
     grid-template-columns: auto auto;
+    display: inline-block;
 }
 
-.thumbnail {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    width: 20%;
-}
-
-.thumbnail > img {
-    height: 15vh;
-    margin-right: 1vw;
-    border-radius: 5px;
-}
 /* 
 .scroll {
     overflow: auto;
     height: 100vh;
     width: 100vw;
 } */
+
+.conContainer{
+    display: inline-block;
+    width: 80%;
+}

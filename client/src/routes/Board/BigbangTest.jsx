@@ -134,14 +134,14 @@ const TestBoardList = ({boardList}) => {
         <div>
             <div className={styles.boardlist}>
                 {boardList.sort((a, b) => {return new Date(b.createdAt) - new Date(a.createdAt);}).map((board) => (
-                    <BoardComponent uid={board.uid} title={board.title} views={board.view} recommends={board.like} comments={board.comments} writer={board.author} thumbnail={"https://via.placeholder.com/150"} />
+                    <BoardComponent uid={board.uid} title={board.title} views={board.view} recommends={board.like} comments={board.comments} writer={board.author}/>
                 ))}
             </div>
         </div>
     );
 }
 
-const BoardComponent = ({uid, title, views, recommends, comments, writer, thumbnail}) => {
+const BoardComponent = ({uid, title, views, recommends, comments, writer}) => {
 
     const navigate = useNavigate();
 
@@ -153,6 +153,7 @@ const BoardComponent = ({uid, title, views, recommends, comments, writer, thumbn
     return (
         <div className={styles.board}>
             <div className={styles.boardelement} onClick={() => {onClickBoard(uid)}}>
+                <div className={styles.conContainer}>
                 <div className={styles.title}>{title}</div>
                 <div className={styles.countContainer}>
                     <div className={styles.views}>조회 {views}</div>
@@ -165,10 +166,8 @@ const BoardComponent = ({uid, title, views, recommends, comments, writer, thumbn
                         &nbsp;{comments}
                     </div>
                 </div>
+                </div>
                 <div className={styles.writer}>{writer}</div>
-            </div>
-            <div className={styles.thumbnail}>
-                <img src={thumbnail} alt="thumbnail" />
             </div>
         </div>
     );
