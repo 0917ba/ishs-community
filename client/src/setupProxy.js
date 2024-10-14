@@ -15,7 +15,7 @@ module.exports = function (app) {
       '/signout',
     ],
     createProxyMiddleware({
-      target: 'http://ishs29.kro.kr:3000',
+      target: 'http://localhost:3000',
       changeOrigin: true,
     })
   );

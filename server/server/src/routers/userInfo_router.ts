@@ -7,17 +7,17 @@ import { Role } from "../util/role";
 const userInfoRouter = require('express').Router();
 
 userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =>{
-    let id = req.query.id;
+    let userid = req.query.userid;
     let requestUserId: string = req.session.uid;
     let checker = new QueryChecker();
-    if (checker.notNull(id, requestUserId)) {
+    if (checker.notNull(userid, requestUserId)) {
         userDatabase.getUserByUid(requestUserId).then((user) => {
             if (!checker.notNull(user)) {
                 res.status(404).send(respRest(404, 0));
                 return;
             }
-            if (user && user.getId() == id || user && user.getRole() == Role.DEVELOPER || user && user.getRole() == Role.ADMIN) {
-                userDatabase.getUserById(String(id)).then((user) => {
+            if (user && user.getUserId() == userid || user && user.getRole() == Role.DEVELOPER || user && user.getRole() == Role.ADMIN) {
+                userDatabase.getUserById(String(userid)).then((user) => {
                     if (!checker.notNull(user)) {
                         res.status(404).send(respRest(404, 0));
                         return;
@@ -27,7 +27,7 @@ userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =
                     res.status(500).send(respRest(500, 2));
                 });
             } else {
-                userDatabase.getUserById(String(id)).then((user) => {
+                userDatabase.getUserById(String(userid)).then((user) => {
                     if (!checker.notNull(user)) {
                         res.status(404).send(respRest(404, 0));
                         return;
@@ -53,7 +53,7 @@ userInfoRouter.get('/info/', (req: Request, res: Response, next: NextFunction) =
 });
 
 userInfoRouter.patch('/info', (req: Request, res: Response, next: NextFunction) => {
-    let key: number = req.body.key;
+    let studentNumber: number = req.body.studentNumber;
     let password: string = req.body.password;
     let email: string = req.body.email;
     let nickname: string = req.body.nickname;
@@ -98,8 +98,8 @@ userInfoRouter.patch('/info', (req: Request, res: Response, next: NextFunction) 
                     res.status(400).send(respRest(400, 1));
                 }
             } else {
-                if (checker.notNull(key)) {
-                    userDatabase.setStudentNumber(requestUserId, key);
+                if (checker.notNull(studentNumber)) {
+                    userDatabase.setStudentNumber(requestUserId, studentNumber);
                 }
                 if (checker.notNull(password)) {
                     userDatabase.setPassword(requestUserId, password);

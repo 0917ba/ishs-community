@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, query } from "express";
+import { NextFunction, Request, Response } from "express";
 import { QueryChecker } from "../util/query_checker";
 import { respRest } from "../rest/rest_producer";
 import { ContentStatus } from "../util/content_status";
@@ -6,8 +6,9 @@ import { commentDatabase } from "../database/comment_repository";
 import { postDatabase } from "../database/post_repository";
 import { now } from "../util/time_templete";
 import { reportDatabase } from "../database/report_repository";
-import { Comment } from "../dto/comment";
 import { Role } from "../util/role";
+import { TargetBoard } from "../util/target_board";
+import { userDatabase } from "../database/user_repository";
 
 const postRouter = require('express').Router();
 
@@ -17,11 +18,12 @@ postRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
     let author: string = req.body.author;
     let title: string = req.body.title;
     let content: string = req.body.content;
+    let board: string = req.body.board;
 
     let checker = new QueryChecker();
 
     if (checker.notNull(authorId, author, title, content)) {
-        postDatabase.createPost(authorId, author, title, content, 0, 0, 0, now(), ContentStatus.GOOD);
+        postDatabase.createPost(authorId, author, title, content, 0, 0, 0, now(), board, ContentStatus.GOOD);
         res.status(200).send(respRest(200, 0));
     } else {
         res.status(400).send(respRest(400, 1));
@@ -124,19 +126,32 @@ postRouter.delete('/', async (req: Request, res: Response, next: NextFunction) =
 });
 
 postRouter.get('/list', async (req: Request, res: Response, next: NextFunction) => {
-    let start = req.query.start;
-    let end = req.query.end;
-
+    let board = req.query.board;
+    let generation = req.session.generation;
     let checker = new QueryChecker();
-    if (checker.notNull(start, end)) {
-        let posts = await postDatabase.getPostsInAscendingOrder(Number(start), Number(end))
+    if (checker.notNull(board)) {
+        let posts = await postDatabase.getPostsInAscendingOrderFromBoard(TargetBoard[String(board) as keyof typeof TargetBoard])
         let result: any[] = [];
         await (async () => {
             for (let post of posts) {
-                if (post.getStatus() == ContentStatus.GOOD) {
-                    let p = post.toObject();
-                    p['comments'] = (await commentDatabase.getCommentsByPostId(p['uid'])).length;
-                    result.push(p);
+                if (board == TargetBoard.GRADE && generation) {
+                    let author = await userDatabase.getUserByUid(post.getAuthor());
+                    if (author) {
+                        let authorGeneration = (new Date().getFullYear() % 100) - Math.floor(author.getStudentNumber() / 1000) + 8;
+                        if (authorGeneration == Number(generation)) {
+                            if (post.getStatus() == ContentStatus.GOOD) {
+                                let p = post.toObject();
+                                p['comments'] = (await commentDatabase.getCommentsByPostId(p['uid'])).length;
+                                result.push(p);
+                            }
+                        }
+                    }
+                } else {
+                    if (post.getStatus() == ContentStatus.GOOD) {
+                        let p = post.toObject();
+                        p['comments'] = (await commentDatabase.getCommentsByPostId(p['uid'])).length;
+                        result.push(p);
+                    }
                 }
             }
             

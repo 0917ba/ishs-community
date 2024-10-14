@@ -1,6 +1,4 @@
-import { logger } from '../logging/central_log';
 import { cf } from '../config/config';
-import { UUID } from '../util/uuid_generator';
 import { User } from '../dto/user';
 
 export class UserDatabase {
@@ -14,16 +12,15 @@ export class UserDatabase {
     constructor() {
     }
 
-    signup(id: string, password: string, nickname: string, email: string, studentName: string, generation: number, studentNumber: number, role: string, penalty: number, atp: number): Promise<boolean> {
-        let uid = new UUID().generateUUID();
+    signup(uid: string, userid: string, password: string, nickname: string, email: string, studentName: string, studentNumber: number, role: string, penalty: number, atp: number): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
                 connection.query(
-                    `INSERT INTO user (uid, id, password, nickname, email, profileImage, studentName, generation, studentNumber, birthday, role, penalty, atp)
-                    VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,? ,?)`, [uid, id, password, nickname, email, '', studentName, generation, studentNumber, null, role, penalty, atp],
+                    `INSERT INTO user (uid, userid, password, nickname, email, profileImage, studentName, studentNumber, birthday, role, penalty, atp)
+                    VALUES (?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,? ,?)`, [uid, userid, password, nickname, email, '', studentName, studentNumber, null, role, penalty, atp],
                     (err: any, res: any) => {
                     if (err) {
                         reject(err);
@@ -35,13 +32,13 @@ export class UserDatabase {
         });
     }
 
-    signin(id: string, password: string) {
+    signin(userid: string, password: string) {
         return new Promise<boolean>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                connection.query(`SELECT * FROM user WHERE id='${id}' AND password='${password}'`, (err: any, result: any) => {
+                connection.query(`SELECT * FROM user WHERE userid='${userid}' AND password='${password}'`, (err: any, result: any) => {
                     if (err) {
                         reject(err);
                     }
@@ -74,13 +71,13 @@ export class UserDatabase {
         });
     }
 
-    getUserById(id: string) {
+    getUserById(userid: string) {
         return new Promise<User|null>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                connection.query(`SELECT * FROM user WHERE id='${id}'`, (err: any, result: any) => {
+                connection.query(`SELECT * FROM user WHERE userid='${userid}'`, (err: any, result: any) => {
                     if (err) {
                         reject(err);
                     }

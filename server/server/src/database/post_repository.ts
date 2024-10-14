@@ -3,6 +3,7 @@ import { cf } from '../config/config';
 import { UUID } from '../util/uuid_generator';
 import { Post } from '../dto/post';
 import { ReactionStatus } from '../util/reaction_status';
+import { TargetBoard } from '../util/target_board';
 
 export class PostDatabase {
     mysql = require('mysql');
@@ -15,7 +16,7 @@ export class PostDatabase {
     constructor() {
     }
 
-    createPost(authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, status: string) {
+    createPost(authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, board: string, status: string) {
         let uid = new UUID().generateUUID();
         return new Promise<boolean>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
@@ -23,8 +24,8 @@ export class PostDatabase {
                     reject(err);
                 }
                 connection.query(
-                    `INSERT INTO post (uid, authorId, author, title, content, \`like\`, dislike, view, createdAt, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [uid, authorId, author, title, content, like, dislike, view, createdAt, status],
+                    `INSERT INTO post (uid, authorId, author, title, content, \`like\`, dislike, view, createdAt, board, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [uid, authorId, author, title, content, like, dislike, view, createdAt, board, status],
                     (err: any, res: any) => {
                     if (err) {
                         reject(err);
@@ -93,13 +94,13 @@ export class PostDatabase {
         });
     }
 
-    getPostsInAscendingOrder(start: number, end: number) {
+    getPostsInAscendingOrderFromBoard(board: TargetBoard) {
         return new Promise<Post[]>((resolve, reject) => {
             this.db.getConnection((err: any, connection: any) => {
                 if (err) {
                     reject(err);
                 }
-                connection.query(`SELECT * FROM post ORDER BY createdAt ASC LIMIT ${start}, ${end}`, (err: any, result: any) => {
+                connection.query(`SELECT * FROM post WHERE board='${board}' ORDER BY createdAt ASC`, (err: any, result: any) => {
                     if (err) {
                         reject(err);
                     }

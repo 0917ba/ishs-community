@@ -13,7 +13,7 @@ export default function UserInformationBox(props) {
       const _userInformation = [
         {
           userName: data.studentName,
-          userId: data.id,
+          userId: data.userid,
           userStudentID: data.studentNumber,
           userbirthday: data.birthday,
           userEmail: data.email,

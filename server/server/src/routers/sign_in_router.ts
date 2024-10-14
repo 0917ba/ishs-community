@@ -26,7 +26,6 @@ loginRouter.post('/', (req: Request, res: Response, next: NextFunction) => {
                             req.session.email = user.getEmail();
                             req.session.studentName = user.getStudentName();
                             req.session.generation = user.getGeneration();
-                            req.session.classNumber = user.getClassNumber();
                             req.session.studentNumber = user.getStudentNumber();
                             req.session.birthday = user.getBirthday();
                             req.session.role = user.getRole();

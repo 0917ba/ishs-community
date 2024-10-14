@@ -54,18 +54,42 @@ const BoardComponent = ({uid, title, views, recommends, comments, writer, thumbn
 
 const BigbangPage = () => {
 
+    let navigate = useNavigate();
+    let [data, setData] = useState({});
     let [checked, setChecked] = useState(false);
     const [boardList, setBoardList] = useState([]);
 
-    const getBoardList = async (start, end) => {
-        const resp = await fetch(`/post/list?start=${start}&end=${end}`);
+    const getBoardList = async (board) => {
+        const resp = await fetch(`/post/list?board=${board}`);
         let json = await resp.json();
         console.log(json.content);
         setBoardList(json.content);
-      };
+    };
+
+    const check_session = async () => {
+        const formData = {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            crecredentials: 'include',
+        };
+    
+        const res = await fetch('/check_session', formData)
+        if (res.status === 200) {
+            const resdata = await res.json();
+            setData(resdata.content);
+        } else {
+            alert('로그인이 필요한 서비스입니다.');
+            navigate('/login');
+        }
+    }
 
     useEffect(() => {
-        getBoardList(0, 10000);
+        check_session().then(() => {
+            getBoardList(data.generation, 0, 10000)
+        })
     }, []);
 
     return (

@@ -19,30 +19,28 @@
 export class User {
     
     private readonly uid: string;
-    private id: string;
+    private userid: string;
     private password: string;
     private nickname: string;
     private email: string;
     private profileImage: string;
     private readonly studentName: string;
     private generation: number;
-    private classNumber: number;
     private studentNumber: number;
     private birthday: string;
     private role: string;
     private penalty: number;
     private atp: number;
 
-    constructor(uid: string, id: string, password: string, nickname: string, email: string, profileImage: string, studentName: string, generation: number, classNumber: number, studentNumber: number, birthday: string, role: string, penalty: number, atp: number) {
+    constructor(uid: string, userid: string, password: string, nickname: string, email: string, profileImage: string, studentName: string, generation: number, studentNumber: number, birthday: string, role: string, penalty: number, atp: number) {
         this.uid = uid;
-        this.id = id;
+        this.userid = userid;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
         this.profileImage = profileImage;
         this.studentName = studentName;
         this.generation = generation;
-        this.classNumber = classNumber;
         this.studentNumber = studentNumber;
         this.birthday = birthday;
         this.role = role;
@@ -54,8 +52,8 @@ export class User {
         return this.uid;
     }
 
-    public getId(): string {
-        return this.id;
+    public getUserId(): string {
+        return this.userid;
     }
 
     public getPassword(): string {
@@ -82,10 +80,6 @@ export class User {
         return this.generation;
     }
 
-    public getClassNumber(): number {
-        return this.classNumber;
-    }
-
     public getStudentNumber(): number {
         return this.studentNumber;
     }
@@ -106,8 +100,8 @@ export class User {
         return this.atp;
     }
 
-    public setId(id: string) {
-        this.id = id;
+    public setUserId(userid: string) {
+        this.userid = userid;
     }
 
     public setPassword(password: string) {
@@ -128,10 +122,6 @@ export class User {
 
     public setGeneration(generation: number) {
         this.generation = generation;
-    }
-
-    public setClassNumber(classNumber: number) {
-        this.classNumber = classNumber;
     }
 
     public setStudentNumber(studentNumber: number) {
@@ -157,14 +147,13 @@ export class User {
     public toObject(): any {
         return {
             uid: this.uid,
-            id: this.id,
+            userid: this.userid,
             password: this.password,
             nickname: this.nickname,
             email: this.email,
             profileImage: this.profileImage,
             studentName: this.studentName,
             generation: this.generation,
-            classNumber: this.classNumber,
             studentNumber: this.studentNumber,
             birthday: this.birthday,
             role: this.role,
@@ -178,7 +167,7 @@ export class User {
     }
 
     public static fromObject(obj: any): User {
-        return new User(obj.uid, obj.id, obj.password, obj.nickname, obj.email, obj.profileImage, obj.studentName, obj.generation, obj.classNumber, obj.studentNumber, obj.birthday, obj.role, obj.penalty, obj.atp);
+        return new User(obj.uid, obj.userid, obj.password, obj.nickname, obj.email, obj.profileImage, obj.studentName, obj.generation, obj.studentNumber, obj.birthday, obj.role, obj.penalty, obj.atp);
     }
 
     public static fromString(str: string): User {

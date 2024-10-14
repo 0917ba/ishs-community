@@ -15,7 +15,7 @@ function BigbangPage2() {
       };
 
     useEffect(() => {
-        getBoardList(0, 10000);
+        getBoardList();
     }, []);
     
     return(

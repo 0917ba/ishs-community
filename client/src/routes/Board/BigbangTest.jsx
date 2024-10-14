@@ -180,15 +180,15 @@ const BigbangPage = () => {
     let [checked, setChecked] = useState(false);
     const [boardList, setBoardList] = useState([]);
 
-    const getBoardList = async (start, end) => {
-        const resp = await fetch(`/post/list?start=${start}&end=${end}`);
+    const getBoardList = async (board) => {
+        const resp = await fetch(`/post/list?board=${board}`);
         let json = await resp.json();
         console.log(json.content);
         setBoardList(json.content);
       };
 
     useEffect(() => {
-        getBoardList(0, 10000);
+        getBoardList("GRADE");
     }, []);
 
     return (

@@ -1,4 +1,5 @@
 import { ContentStatus } from "../util/content_status";
+import { TargetBoard } from "../util/target_board";
 
 export class Post {
     // uid, authorId, author, title, content, like, dislike, view, createdAt, comments, status
@@ -12,9 +13,10 @@ export class Post {
     private view: number;
     private createdAt: string;
     private comments: number;
+    private board: TargetBoard;
     private status: ContentStatus;
 
-    constructor(uid: string, authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, comments: number, status: ContentStatus) {
+    constructor(uid: string, authorId: string, author: string, title: string, content: string, like: number, dislike: number, view: number, createdAt: string, comments: number, board: TargetBoard, status: ContentStatus) {
         this.uid = uid;
         this.authorId = authorId;
         this.author = author;
@@ -25,6 +27,7 @@ export class Post {
         this.view = view;
         this.createdAt = createdAt;
         this.comments = comments;
+        this.board = board;
         this.status = status;
     }
 
@@ -68,6 +71,10 @@ export class Post {
         return this.comments;
     }
 
+    public getBoard(): TargetBoard {
+        return this.board;
+    }
+
     public getStatus(): string {
         return this.status;
     }
@@ -108,6 +115,10 @@ export class Post {
         this.comments = comments;
     }
 
+    public setBoard(board: TargetBoard): void {
+        this.board = board;
+    }
+
     public setStatus(status: ContentStatus): void {
         this.status = status;
     }
@@ -124,6 +135,7 @@ export class Post {
             view: this.view,
             createdAt: this.createdAt,
             comments: this.comments,
+            board: this.board,
             status: this.status
         };
     }
@@ -133,7 +145,7 @@ export class Post {
     }
 
     public static fromObject(obj: any): Post {
-        return new Post(obj.uid, obj.authorId, obj.author, obj.title, obj.content, obj.like, obj.dislike, obj.view, obj.createdAt, obj.comments, obj.status);
+        return new Post(obj.uid, obj.authorId, obj.author, obj.title, obj.content, obj.like, obj.dislike, obj.view, obj.createdAt, obj.comments, obj.board, obj.status);
     }
 
     public static fromObjectList(objList: any[]): Post[] {
