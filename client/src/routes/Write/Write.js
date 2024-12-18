@@ -72,6 +72,7 @@ function Write() {
       author: author.nickname,
       title: title,
       content: JSON.stringify(data),
+      board: "GRADE"
     };
     const response = await fetch("/post", {
       method: "POST",

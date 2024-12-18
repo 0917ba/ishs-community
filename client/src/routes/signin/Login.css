@@ -1,8 +1,8 @@
-
+/* 
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: white;
-  }
+  } */
   
   .login_box{
     position: absolute;
@@ -12,9 +12,9 @@ body {
     transform: translate(-50%, -50%);
   }
   
-  * {
+  /* * {
     box-sizing: border-box;
-  }
+  } */
   
   /* Add padding to containers */
   .login_container {
@@ -47,16 +47,16 @@ body {
   }
   
   
-  input[type=text]:focus, input[type=password]:focus {
+  .login_container > input[type=text]:focus, .login_container > input[type=password]:focus {
     outline: none;
     border: 0.5px solid #2d6ef0e4 ;
   }
   
   /* Overwrite default styles of hr */
-  hr {
+  /* hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
-  }
+  } */
   
   /* Set a style for the submit button */
   .loginbtn {

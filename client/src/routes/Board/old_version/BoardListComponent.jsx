@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import BasicPagination from './test';
 import { useNavigate } from 'react-router-dom';
 
 export default function BoardListComponent({ boardList, limit, offset }) {

@@ -15,14 +15,14 @@ module.exports = function (app) {
       '/signout',
     ],
     createProxyMiddleware({
-      target: 'http://localhost:3000',
+      target: 'http://ishs.kr:3000',
       changeOrigin: true,
     })
   );
   app.use(
     ['/upload', '/file'],
     createProxyMiddleware({
-      target: 'http://ishs29.kro.kr:4000',
+      target: 'http://ishs.kr:4000',
       changeOrigin: true,
     })
   );

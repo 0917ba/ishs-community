@@ -2,57 +2,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* background-color: #7792c1;
-    border-bottom: 1px solid #e9ecef; */
     background-color: #7792c1;
+    border-bottom: 1px solid #e9ecef;
     position: fixed;
     width: 100%;
     top: 0;
 }
 
-.navContainer {
-    height: 20vh;
-}
-
-.bigbang_title{
-    font-family: 'establishRoomNo703OTF';
-    font-size: 4vw;
-    color: black;
-    margin: 0 0 0 2vw;
-    text-align: left;
-    cursor: default;
-}
-
-.bigbang_message{
-    font-family: 'establishRoomNo703OTF';
-    font-size: 1.5vw;
-    color: black;
-    display: inline-block;
-    margin: -1vh 0 0 2vw;
-    cursor: default;
-}
-
-@font-face {
-    font-family: 'establishRoomNo703OTF';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRoomNo703OTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-.bigbang_menu1, .bigbang_menu2, .bigbang_menu3, .bigbang_menu4 {
-    font-family: 'establishRoomNo703OTF';
-    font-size: 1.5vw;
-    color: black;
-    display: inline-block;
-    /* margin: -1vh 0 0 10vw; */
-}
-
-.navbar > ul {
-    padding: 0;
-    margin-right: 5vw;
-}
-
-/* .logo {
+.logo {
     padding-left: 1vw;
     width: 10vw;
     margin: 0;
@@ -65,31 +22,45 @@
 
 .search {
     display: flex;
-    justify-content: center;
     align-items: center;
     margin-right: 1vw;
     background-color: white;
     border-radius: 2.5vh;
-} */
-
-/* .search > input {
-    all: unset;
     width: 50vw;
+    font-size: 1.5rem;
+    justify-content: center;
+}
+
+.search > input {
+    /* all: unset; */
+    width: 35vw;
     height: 5vh;
     border: none;
     padding-left: 0.5rem;
-} */
+}
 
+.search > input:focus { outline: none ; box-shadow: none; }
 
-/* .searchIcon {
+.search > select {
+    width: 8vw;
+    height: 4vh;
+    border: none;
+    border-left: 2px solid black;
+    margin-left: 3vw;
+    padding-left: 0.5vw;
+}
+
+.search > select:active, .search > select:focus { outline: none; box-shadow: none; }
+
+.searchIcon {
     width: 1.5rem;
     height: 1.5rem;
     margin-right: 0.5rem;
     margin-left: 1rem;
-} */
+}
 
 /* menu is hamberger menu */
-/* .menu .menubar {
+.menu .menubar {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -118,7 +89,7 @@
     transform: translateX(0%);
     transition: transform 0.2s, ease-in-out;
     margin-left: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
 }
 
@@ -154,21 +125,23 @@
 .pagelogo {
     width: 12vw;
     height: 30%;
-} */
+}
 
 .boardlist {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 14vh;
 }
 
 .board {
-    width: 80vw;
-    height: 9vh;
+    width: 60vw;
+    height: 14.5vh;
     font-size: 20px;
+    margin-top: 1vh;
     cursor: pointer;
-    border-bottom: 1px solid #e9ecef;
+    border-top: 1px solid #e9ecef;
     display: flex;
     justify-content: space-between;
 }
@@ -177,15 +150,15 @@
     width: 100%;
 }
 
-.board:hover {
+/* .board:hover {
     background-color: #e9ecef;
-}
+} */
 
 .title {
     display: flex;
     justify-content: space-between;
     margin-top: 1vh;
-    font-size: 1vmax;
+    font-size: 20px;
     font-weight: bold;
     grid-template-columns: auto auto;
 }
@@ -196,8 +169,8 @@
 
 .countContainer {
     display: flex;
-    margin-top: 1vh;
-    font-size: 1vmax;
+    margin-top: 0.5vh;
+    font-size: 15px;
     color: grey;
     margin-top: 1vh;
     width: 50%;
@@ -230,20 +203,31 @@
 .writer {
     display: flex;
     justify-content: space-between;
-    font-size: 1vmax;
-    font-weight: bold;
+    margin-top: 0.1vh;
+    font-size: 15px;
+    /* color: grey; */
     grid-template-columns: auto auto;
-    display: inline-block;
 }
 
-/* 
-.scroll {
-    overflow: auto;
-    height: 100vh;
-    width: 100vw;
-} */
+.thumbnail {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 20%;
+}
 
-.conContainer{
-    display: inline-block;
-    width: 80%;
+.thumbnail > img {
+    height: 12vh;
+    margin-right: 1vw;
+    border-radius: 5px;
+}
+
+.limitContainer {
+    display: flex;
+    justify-content: end;
+    margin-right: 1vw;
+}
+
+body {
+    overflow-x: hidden;
 }

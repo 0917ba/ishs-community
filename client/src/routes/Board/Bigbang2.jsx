@@ -8,7 +8,7 @@ function BigbangPage2() {
     const [boardList, setBoardList] = useState([]);
 
     const getBoardList = async (start, end) => {
-        const resp = await fetch(`/post/list?start=${start}&end=${end}`);
+        const resp = await fetch(`/post/list?board=GRADE`);
         let json = await resp.json();
         console.log(json.content);
         setBoardList(json.content);

@@ -28,7 +28,7 @@ a {
   font-size: 35px;
   font-weight: bold;
   position: absolute;
-  top: 50%;
+  top: 40%;
   transform: translate(0, -50%);
   padding-bottom: 30px;
 }

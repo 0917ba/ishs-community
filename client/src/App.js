@@ -2,11 +2,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import React from 'react';
 
-import Main from './routes/main/main.jsx';
+// import Main from './routes/main/main.jsx';
 
-import Signup from './routes/signup/signup';
+// import Signup from './routes/signup/signup';
 import SignupSuccess from './routes/signup/signupSuccess';
-import Login from './routes/signin/signin';
+// import Login from './routes/signin/signin';
 import FindPw from './routes/signin/findPW';
 
 import PostPage from './routes/postpage/PostPage';
@@ -20,11 +20,11 @@ import PostTest from './routes/PostTest';
 import Write from './routes/Write/Write';
 
 import Preparing from './routes/preparing/preparing.jsx';
-import BigbangPage from './routes/Board/BigbangTest.jsx';
+import BigbangPage from './routes/Board/Bigbang2.jsx';
 import Main2 from './routes/main/Main2.jsx';
 import Login2 from './routes/signin/Login.jsx';
 import Signup2 from './routes/signup/Signup2.jsx';
-import BigbangPage2 from './routes/Board/Bigbang2.jsx';
+import BigbangPage2 from './routes/Board/ver2/BigbangTest.jsx';
 import BoardDetail from './routes/postpage/old_version/BoardDetail.jsx';
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
         <Route path='/login' element={<Login2 />} />
         <Route path='/findpw' element={<FindPw />} />
 
-        <Route path='/BigBang' element={<BigbangPage />} />
+        <Route path='/BigBang' element={<BigbangPage2 />} />
         <Route path='/postpage' element={<PostPage />} />
         <Route path='/board/detail' element={<BoardDetail />} />
 
