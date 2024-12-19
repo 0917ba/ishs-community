@@ -37,11 +37,12 @@
 .Titleeditor {
   box-shadow: 0px 0px 20px 0px rgba(76, 87, 125, 0.02);
   background: #fff;
-  padding: 20px 30px;
-  margin: 30px auto;
-  font-size: 30px;
 }
 
 .container {
   width: 55%;
+}
+
+.container > div {
+  display: flex;
 }
